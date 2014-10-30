@@ -1,0 +1,13 @@
+<button class="btn btn-default" ng-repeat="note in music.notes" ng-click="music.chooseKey($index)">{{note}}</button>
+<p>Current Key:</p>
+<p>{{music.key}}</p>
+
+<br>
+<p>Create chord:</p>
+<button class="btn btn-warning" ng-repeat="chord in music.chords" ng-click="music.buildChord($index)">{{chord.type}}</button>
+
+<p>Current Chord:</p>
+<p>{{music.chord}}</p>
+
+<p>Notes in current chord:</p>
+<p>{{music.chordNotes}}</p>
