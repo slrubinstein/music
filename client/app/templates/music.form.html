@@ -1,13 +1,24 @@
-<button class="btn btn-default" ng-repeat="note in music.notes" ng-click="music.chooseKey($index)">{{note}}</button>
-<p>Current Key:</p>
-<p>{{music.key}}</p>
+<div class="col-sm-3 col-md-2 sidebar jumbotron container">
+	
+	<div id="keyButtons">
+		<button  class="btn btn-default" ng-repeat="note in notes" ng-click="music.chooseRoot($index)">{{note}}</button>
+	</div>
+	<p>Current Root:</p>
+	<p>{{music.root}}</p>
 
-<br>
-<p>Create chord:</p>
-<button class="btn btn-warning" ng-repeat="chord in music.chords" ng-click="music.buildChord($index)">{{chord.type}}</button>
+	<br>
+	<p>Create chord:</p>
+	<button class="btn btn-warning" ng-repeat="chord in music.chords" ng-click="music.buildChord($index)">{{chord.type}}</button>
 
-<p>Current Chord:</p>
-<p>{{music.chord}}</p>
+	<p id='test'></p>
 
-<p>Notes in current chord:</p>
-<p>{{music.chordNotes}}</p>
+	<p>Current Chord:</p>
+	<p>{{music.chord}}</p>
+
+	<p>Notes in current chord:</p>
+	<p>{{music.chordNotes}}</p>
+</div>
+<p>{{}}</p>
+<div class="col-sm-9 col-md-10 jumbotron container">
+	<music-sandbox></music-sandbox>
+</div>

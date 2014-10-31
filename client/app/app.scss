@@ -21,3 +21,9 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 @import 'admin/admin.scss';
 @import 'main/main.scss';
 // endinjector
+
+#score {
+	background-color: lightblue;
+	height: 500px;
+	width: 800px;
+}

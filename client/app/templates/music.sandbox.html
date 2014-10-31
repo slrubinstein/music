@@ -1,0 +1,31 @@
+
+<div class="col-md-2 col-lg-2">
+	<button class="btn btn-default" ng-click="sand.addMeasures()">Add Measures</button>
+  <button class="btn btn-default" ng-click="sand.buildSubs(music.id)">Build subs</button>
+  <p>{{music.root}}</p>
+</div>
+
+<div class="col-md-12 col-lg-12">
+	<div id="score" class="col-md-12 col-lg-12">
+
+<!--     <div class="btn-group">
+      <button type="button" class="btn btn-default dropdown-toggle" ng-click="sand.dropdown()">
+      	<p>{{sand.substitutions}}</p>
+        {{music.chord}} <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu">
+      	<li ng-repeat="sub in sand.substitutions">{{sub}}</li>
+        <li class="divider"></li>
+        <li><a href="#">Separated link</a></li>
+      </ul>
+    </div> -->
+
+
+    <ul>
+      <li ng-repeat="(name, chord) in music.chordShapes">{{name}}{{chord}}</li>
+
+    </ul>
+
+
+	</div>
+</div>
