@@ -19,49 +19,20 @@ angular.module('musicApp')
   	this.chooseRoot = function(i) {
   		this.root = $scope.notes[i];
   		this.id = i;
+      this.play(this.root);
   	}
 
-    this.chordShapes = chordBuilder.chords;
+    this.chords = chordBuilder.chords;
+    this.buildChord = function(root, index, notes) {
+      return chordBuilder.buildChord(root, index, notes);
+    }
 
-  	this.chords = [{
-  		type: 'minor', build: [3, 7]
-  	}, {
-  		type: 'major', build: [4, 7]
-  	}, {
-  		type: 'dominant7', build: [4, 7, 10]
-  	}, {
-  		type: 'minor7', build: [3, 7, 10]
-  	}]
-
-  	this.chord = '';
-  	this.chordNotes = '';
-
-  	this.buildChord = function(chordIndex) {
-  		this.chordNotes = '';
-  		var chordType = this.chords[chordIndex].type;
-  		this.chord = this.root + ' ' + chordType;
-
- 			// push current root into current notes
-  		var currentNotes = [];
-  		currentNotes.push(this.root);
-
-  		// get intervals for chord
-  		var intervals = this.chords[chordIndex].build;
-
-  		// push notes into currentNotes based on chord build
-  		intervals.forEach(function(i) {
-  			var intv = self.id + i;
-  			if (intv > 11) {
-  				intv -= 12;
-  			}
-  			currentNotes.push($scope.notes[intv]);
-  		});
-
-  		currentNotes.forEach(function(n) {  			
-  			self.chordNotes = self.chordNotes + ' ' + n;  		
-  		})
-
-  	}
+    this.play = function(chord) {
+      console.log(chord)
+      var search = '#' + chord + '-chord'
+      console.log()
+      $(search)[0].play();
+    }
 
   })
   .directive('musicForm', function() {
@@ -80,15 +51,31 @@ angular.module('musicApp')
   		controllerAs: 'sand'
   	}
   })
+  .directive('musicRoom', function() {
+    return {
+      restrict: 'E',
+      templateUrl: 'app/templates/music.room.html',
+      controller: 'MusicRoomCtrl',
+      controllerAs: 'room'
+    }
+  }
+
+
+    )
   .directive('draggable', function($document) {
     return function(scope, element, attr) {
       var startX = 0, startY = 0, x = 0, y = 0;
+      var startingPosition = {}
       element.css({
-       position: 'relative'
-      });
+       position: 'relative',
+          'z-index': 2
+        });
+      var clone;
       element.on('mousedown', function(event) {
         // Prevent default dragging of selected content
         event.preventDefault();
+        // clone = element.clone();
+        // clone.appendTo(element);
         startX = event.screenX - x;
         startY = event.screenY - y;
         $document.on('mousemove', mousemove);
@@ -107,7 +94,7 @@ angular.module('musicApp')
       function mouseup() {
         $document.off('mousemove', mousemove);
         $document.off('mouseup', mouseup);
-        element.remove();
+        // element.remove();
       }
     };
   });

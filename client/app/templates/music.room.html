@@ -1,0 +1,11 @@
+<h1>testing</h1>
+
+<p>{{room.chords}}</p>
+
+<button ng-repeat="note in room.notes | limitTo : 12" ng-click="room.pickRoot($index)">{{note}}</button>
+
+<p>Root: {{room.root}}  {{room.id}}</p>
+<button ng-click="room.createChords(room.id)">Chords</button>
+
+<p>Chord makeups:</p>
+<li ng-repeat="(sub, makeup) in room.subs">{{sub}} {{makeup}}</li>

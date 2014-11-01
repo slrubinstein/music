@@ -1,14 +1,14 @@
 <div class="col-sm-3 col-md-2 sidebar jumbotron container">
 	
 	<div id="keyButtons">
-		<button  class="btn btn-default" ng-repeat="note in notes" ng-click="music.chooseRoot($index)">{{note}}</button>
+		<button draggable class="btn btn-default" ng-repeat="note in notes" ng-click="music.chooseRoot($index)">{{note}}</button>
 	</div>
 	<p>Current Root:</p>
 	<p>{{music.root}}</p>
 
 	<br>
 	<p>Create chord:</p>
-	<button class="btn btn-warning" ng-repeat="chord in music.chords" ng-click="music.buildChord($index)">{{chord.type}}</button>
+	<button class="btn btn-warning" ng-repeat="chord in music.chords" ng-click="music.buildChord(music.root, $index, notes)">{{chord.type}}</button>
 
 	<p id='test'></p>
 
@@ -19,6 +19,6 @@
 	<p>{{music.chordNotes}}</p>
 </div>
 <p>{{}}</p>
-<div class="col-sm-9 col-md-10 jumbotron container">
+<div class="col-sm-9 col-md-10 ">
 	<music-sandbox></music-sandbox>
-</div>
+</div>gi
