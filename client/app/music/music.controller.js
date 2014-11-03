@@ -4,23 +4,13 @@ angular.module('musicApp')
   .controller('MusicCtrl', function ($scope, $http, chordBuilder) {
   	var self = this;
 
-  	// $scope.notes = ['A', 'Bb', 'B', 'C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab']
-  	// this.recreateNotes = function() {
-  	// 	return $scope.notes;
-  	// }
-  	this.keyboard = [];
-		for (var i = 1; i <= 8; i++) {
-			this.keyboard.push($scope.notes);
-		}
+  // 	this.keyboard = [];
+		// for (var i = 1; i <= 8; i++) {
+		// 	this.keyboard.push($scope.notes);
+		// }
 
-  	this.root = '';
-  	this.id;
-
-  	// this.chooseRoot = function(i) {
-  	// 	this.root = $scope.notes[i];
-  	// 	this.id = i;
-   //    this.play(this.root);
-  	// }
+  	// this.root = '';
+  	// this.id;
 
     this.chords = chordBuilder.chords;
     this.buildChord = function(root, index, notes) {
@@ -36,22 +26,6 @@ angular.module('musicApp')
     }
 
   })
-  // .directive('musicSidebar', function() {
-  // 	return {
-  // 		restrict: 'E',
-  // 		templateUrl: 'app/sidebar/music.sidebar.html',
-  // 		controller: 'MusicCtrl',
-  // 		controllerAs: 'music'
-  // 	}
-  // // })
-  // .directive('musicSandbox', function() {
-  // 	return {
-  // 		restrict: 'E',
-  // 		templateUrl: 'app/templates/music.sandbox.html',
-  // 		controller: 'MusicSandboxCtrl',
-  // 		controllerAs: 'sand'
-  // 	}
-  // })
   .directive('musicRoom', function() {
     return {
       restrict: 'E',
@@ -95,4 +69,11 @@ angular.module('musicApp')
         // element.remove();
       }
     };
+  })
+  .factory('musicNotesFactory', function() {
+    return {
+      notes: ['A', 'Bb', 'B', 'C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab',
+              'A', 'Bb', 'B', 'C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab',
+              'A', 'Bb', 'B', 'C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab',]
+    }
   });

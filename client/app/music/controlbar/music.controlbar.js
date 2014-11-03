@@ -7,13 +7,17 @@ angular.module('musicApp')
         controllerAs: 'controlbar'
     }
   })
-    .controller('ControlbarCtrl', function ($scope, buildSubsFactory, chordBuilder) {
+    .controller('ControlbarCtrl', function ($scope, chordBuilder, measuresFactory) {
 
-    this.measures = ['/ / / /'];
+    // this.measures = ['/ / / /'];
 
-    this.addMeasures = function() {
-        this.measures.push('/ / / /')
-    }
+    // this.addMeasures = function() {
+    //     this.measures.push('/ / / /')
+    // }
+
+    this.measures = measuresFactory.currentMeasures;
+
+    this.addMeasures = measuresFactory.addMeasures;
 
     this.dropdown = function(index) {
       $('.dropdown-menu').eq(index).toggle();
@@ -23,4 +27,12 @@ angular.module('musicApp')
     this.chords = chordBuilder.chords
 
     this.measureNumber = [];
+	})
+  .factory('measuresFactory', function() {
+  	return {
+  		currentMeasures: [{root: ' / / / / '}],
+  		addMeasures: function() {
+  			this.measures.push({root: ' / / / / '})
+  		}
+  	}
   });

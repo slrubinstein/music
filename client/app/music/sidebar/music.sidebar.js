@@ -1,19 +1,4 @@
 angular.module('musicApp')
-	.controller('SidebarCtrl', function ($scope) {
-  	var self = this;
-
-  	$scope.notes = ['A', 'Bb', 'B', 'C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab']
-  	this.recreateNotes = function() {
-  		return $scope.notes;
-  	}
-
-  	this.clickChord = function(i) {
-  		this.root = $scope.notes[i];
-  		this.id = i;
-    //   this.play(this.root);
-  	}
-  })
-
   .directive('musicSidebar', function() {
   	return {
   		restrict: 'E',
@@ -21,4 +6,30 @@ angular.module('musicApp')
   		controller: 'SidebarCtrl',
   		controllerAs: 'sidebar'
   	}
+  })
+  .controller('SidebarCtrl', function ($scope, musicChordsFactory,
+                                        musicNotesFactory,
+                                        measuresFactory,
+                                        newChordRootFactory,
+                                        chordNotesFactory,
+                                        renameChords) {
+    var self = this;
+    
+    this.root = '';
+    this.notes = musicNotesFactory.notes;
+    this.measures = measuresFactory.currentMeasures;
+
+    this.recreateNotes = function() {
+      return $scope.notes;
+    }
+
+    this.clickChord = function(index) {
+      this.root = self.notes[index];
+      this.id = index;
+
+      var measureObj = newChordRootFactory.newChord(this);
+      measureObj.chords = new musicChordsFactory();
+      measureObj.chords = chordNotesFactory.chordNotes(measureObj.chords, measureObj.id, measureObj. root, this);
+      this.measures[this.measures.length-1] = measureObj;
+    }
   })

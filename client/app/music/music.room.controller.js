@@ -2,8 +2,7 @@
 
 angular.module('musicApp')
   .controller('MusicRoomCtrl', function (musicChordsFactory,
-                                         musicNotesFactory,
-                                         clickChordFactory) {
+                                         musicNotesFactory) {
     var self = this;
     // this.newRoot = musicChordsFactory;
 
@@ -22,7 +21,7 @@ angular.module('musicApp')
 
     this.createChords = function(id) {
       var chordRoot = {};
-      chordRoot.chords = new musicChordsFactory;
+      chordRoot.chords = new musicChordsFactory();
       chordRoot.root = this.root;
       console.log(chordRoot.chords)
       chordRoot.id = this.id;
@@ -31,32 +30,5 @@ angular.module('musicApp')
       this.subs = chordRoot.chords;
       console.log(this.subs)
     }
-
-    this.chordNotes = function(chordRoot) {
-      // chord is the array of nums in each chordRoot.chords
-      for (var chord in chordRoot.chords) {
-      
-      // create a new arr to hold the transformed nums to letters
-      var arr = (chordRoot.chords[chord]).map(function(num) {
-          num = self.notes[num + chordRoot.id]
-          return num;
-        })
-        // replace the chord of nums with chord of letters in each
-        chordRoot.chords[chord] = arr;
-      }
-      return chordRoot;
-    }
   })
 
-  .factory('musicNotesFactory', function() {
-    return {
-      // each note three times to account for wraparound
-      notes: ['A', 'Bb', 'B', 'C', 'C#', 'D', 
-              'Eb', 'E', 'F', 'F#', 'G', 'Ab',
-              'A', 'Bb', 'B', 'C', 'C#', 'D', 
-              'Eb', 'E', 'F', 'F#', 'G', 'Ab',
-              'A', 'Bb', 'B', 'C', 'C#', 'D', 
-              'Eb', 'E', 'F', 'F#', 'G', 'Ab']
-
-      }
-  });

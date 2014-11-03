@@ -1,8 +1,10 @@
 <!-- controller: SidebarCtrl as sidebar -->
+
 <div class="col-sm-3 col-md-2 sidebar jumbotron container">
 	
 	<div id="keyButtons">
-		<button class="btn btn-default" ng-repeat="note in notes" ng-click="sidebar.clickChord($index)">{{note}}</button>
+
+		<button class="btn btn-default" ng-repeat="note in sidebar.notes | limitTo: 12" ng-click="sidebar.clickChord($index)">{{note}}</button>
 	</div>
 	<p>Current Root:</p>
 	<p>{{sidebar.root}} id: {{sidebar.id}}</p>
@@ -19,7 +21,7 @@
 	<p>Notes in current chord:</p>
 	<p>{{music.chordNotes}}</p>
 </div>
-<p>{{}}</p>
+
 <div class="col-sm-9 col-md-10 ">
 	<music-sandbox></music-sandbox>
-</div>gi
+</div>
