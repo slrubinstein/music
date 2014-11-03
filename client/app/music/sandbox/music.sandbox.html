@@ -1,0 +1,35 @@
+<!-- controller: MusicSandboxCtrl as sand -->
+<controlbar></controlbar>
+
+<music-audio></music-audio>
+
+
+<div class="col-md-12 col-lg-12">
+	<div id="score" class="col-md-12 col-lg-12">
+    <div class="btn-group btn-group-lg" ng-repeat="measure in controlbar.measures track by $index">
+      
+      <button draggable class="btn btn-default dropdown-toggle" ng-click="sand.dropdown($index)">{{measure}}<span class="caret"></span></button>
+      <ul class="dropdown-menu" role="menu">
+        <li>1</li>
+        <li>2</li>
+      </ul>
+      
+    </div>
+
+
+
+<!-- 
+    <div class="btn-group">
+      <button type="button" class="btn btn-default dropdown-toggle" ng-click="sand.dropdown()">
+      	<p>{{sand.substitutions}}</p>
+        {{music.chord}} <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu">
+      	<li ng-repeat="sub in sand.substitutions">{{sub}}</li>
+        <li class="divider"></li>
+        <li><a href="#">Separated link</a></li>
+      </ul>
+    </div> -->
+
+	</div>
+</div>

@@ -4,10 +4,10 @@ angular.module('musicApp')
   .controller('MusicCtrl', function ($scope, $http, chordBuilder) {
   	var self = this;
 
-  	$scope.notes = ['A', 'Bb', 'B', 'C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab']
-  	this.recreateNotes = function() {
-  		return $scope.notes;
-  	}
+  	// $scope.notes = ['A', 'Bb', 'B', 'C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab']
+  	// this.recreateNotes = function() {
+  	// 	return $scope.notes;
+  	// }
   	this.keyboard = [];
 		for (var i = 1; i <= 8; i++) {
 			this.keyboard.push($scope.notes);
@@ -16,11 +16,11 @@ angular.module('musicApp')
   	this.root = '';
   	this.id;
 
-  	this.chooseRoot = function(i) {
-  		this.root = $scope.notes[i];
-  		this.id = i;
-      this.play(this.root);
-  	}
+  	// this.chooseRoot = function(i) {
+  	// 	this.root = $scope.notes[i];
+  	// 	this.id = i;
+   //    this.play(this.root);
+  	// }
 
     this.chords = chordBuilder.chords;
     this.buildChord = function(root, index, notes) {
@@ -30,27 +30,28 @@ angular.module('musicApp')
     this.play = function(chord) {
       console.log(chord)
       var search = '#' + chord + '-chord'
-      console.log()
-      $(search)[0].play();
+      if ($(search)[0]) {
+        $(search)[0].play();
+      }
     }
 
   })
-  .directive('musicForm', function() {
-  	return {
-  		restrict: 'E',
-  		templateUrl: 'app/templates/music.form.html',
-  		controller: 'MusicCtrl',
-  		controllerAs: 'music'
-  	}
-  })
-  .directive('musicSandbox', function() {
-  	return {
-  		restrict: 'E',
-  		templateUrl: 'app/templates/music.sandbox.html',
-  		controller: 'MusicSandboxCtrl',
-  		controllerAs: 'sand'
-  	}
-  })
+  // .directive('musicSidebar', function() {
+  // 	return {
+  // 		restrict: 'E',
+  // 		templateUrl: 'app/sidebar/music.sidebar.html',
+  // 		controller: 'MusicCtrl',
+  // 		controllerAs: 'music'
+  // 	}
+  // // })
+  // .directive('musicSandbox', function() {
+  // 	return {
+  // 		restrict: 'E',
+  // 		templateUrl: 'app/templates/music.sandbox.html',
+  // 		controller: 'MusicSandboxCtrl',
+  // 		controllerAs: 'sand'
+  // 	}
+  // })
   .directive('musicRoom', function() {
     return {
       restrict: 'E',
@@ -58,10 +59,7 @@ angular.module('musicApp')
       controller: 'MusicRoomCtrl',
       controllerAs: 'room'
     }
-  }
-
-
-    )
+  })
   .directive('draggable', function($document) {
     return function(scope, element, attr) {
       var startX = 0, startY = 0, x = 0, y = 0;

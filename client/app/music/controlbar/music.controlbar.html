@@ -1,0 +1,15 @@
+<div class="col-md-2 col-lg-2">
+	<button class="btn btn-default" ng-click="controlbar.addMeasures()">Add Measures</button>
+  <button class="btn btn-default" ng-click="controlbar.buildSubs(music.id)">Build subs</button>
+  <p>{{music.root}}</p>
+</div>
+
+
+<div class="col-md-2 col-lg-2">
+  <button class="btn btn-default" ng-click="sand.play()">Play</button>
+  <button class="btn btn-default dropdown-toggle" ng-click="sand.dropdown($index)">Measure #<span class="caret"></span></button>
+  <ul class="dropdown-menu" role="menu">
+        <li>1</li>
+        <li>2</li>
+      </ul>
+</div>

@@ -1,4 +1,4 @@
-<h1>testing</h1>
+<h1>Music Room</h1>
 
 <p>{{room.chords}}</p>
 
@@ -7,5 +7,6 @@
 <p>Root: {{room.root}}  {{room.id}}</p>
 <button ng-click="room.createChords(room.id)">Chords</button>
 
+<p>new chord obj: {{room.musicChordsFactory}}</p>
 <p>Chord makeups:</p>
 <li ng-repeat="(sub, makeup) in room.subs">{{sub}} {{makeup}}</li>

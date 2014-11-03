@@ -2,9 +2,10 @@
 
 angular.module('musicApp')
   .controller('MusicRoomCtrl', function (musicChordsFactory,
-                                         musicNotesFactory) {
+                                         musicNotesFactory,
+                                         clickChordFactory) {
     var self = this;
-    this.newRoot = musicChordsFactory;
+    // this.newRoot = musicChordsFactory;
 
     this.notes = musicNotesFactory.notes;
 
@@ -15,12 +16,15 @@ angular.module('musicApp')
     this.pickRoot = function(index) {
       this.root = this.notes[index]
       this.id = index;
+      // clickChordFactory.updateMeasure(this.root, sand.measures[sand.measures.length-1])
+
     }
 
     this.createChords = function(id) {
       var chordRoot = {};
-      chordRoot.chords = this.newRoot;
+      chordRoot.chords = new musicChordsFactory;
       chordRoot.root = this.root;
+      console.log(chordRoot.chords)
       chordRoot.id = this.id;
       console.log('new chord root', chordRoot)
       this.chordNotes(chordRoot);
@@ -43,18 +47,7 @@ angular.module('musicApp')
       return chordRoot;
     }
   })
-  .factory('musicChordsFactory', function() {
-    var newRoot = {};
-    newRoot.majorTriad = [0, 4, 7];
-    newRoot.maj6 = [0, 4, 7, 9];
-    newRoot.maj7 = [0, 4, 7, 11];
-    newRoot.minorTriad = [0, 3, 7];
-    newRoot.m6 = [0, 3, 7, 9];
-    newRoot.m7 = [0, 3, 7, 10];
-    newRoot.vim7 = [9, 0, 4, 7];
-    newRoot.iiim7 = [4, 7, 11, 2];   
-    return newRoot;
-  })
+
   .factory('musicNotesFactory', function() {
     return {
       // each note three times to account for wraparound
