@@ -2,6 +2,7 @@
 
 angular.module('musicApp')
   .value('currentHover', {hover:null})
+  .value('activeMeasure', {m:null})
   .controller('MusicCtrl', function ($scope, $http, chordBuilder) {
   	var self = this;
 
@@ -110,6 +111,7 @@ angular.module('musicApp')
         var measureObj = newChordRootFactory.newChord(rootNote, rootIndex);
         measureObj.chords = new musicChordsFactory();
         chordNotesFactory.chordNotes(measureObj)
+        // console.log(measureObj)
         scope.$apply(function() {
           measuresFactory.currentMeasures[measureNumber] = measureObj;
         });

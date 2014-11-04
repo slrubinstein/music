@@ -4,13 +4,11 @@
 	
 	<div id="keyButtons">
 
-		<button draggable class="btn btn-default keyButtons" ng-repeat="note in sidebar.notes | limitTo: 12" ng-click="sidebar.clickChord($index)">{{note}}</button>
+		<button draggable class="btn btn-default keyButtons" ng-repeat="note in sidebar.notes | limitTo: 12">{{note}}</button>
 	</div>
-	<p>Current Root:</p>
-	<p>{{sidebar.root}} id: {{sidebar.id}}</p>
 	<br>
 
-	<button class="btn btn-default" ng-repeat="num in sidebar.majorNumerals" ng-click="sidebar.clickNumerals($index)">{{num}}</button>
+	<button class="btn btn-default" ng-repeat="num in sidebar.majorNumerals">{{num}}</button>
 
 </div>
 
