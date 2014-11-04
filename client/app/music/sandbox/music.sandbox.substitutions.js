@@ -14,32 +14,32 @@ angular.module('musicApp')
   })
   .factory('newChordRootFactory', function() {
   	return {
-  		newChord: function(self) {
+  		newChord: function(rootNote, rootIndex) {
   			var chordRoot = {};
-	      chordRoot.root = self.root;
-	      chordRoot.id = self.id;
+	      chordRoot.root = rootNote;
+	      chordRoot.id = rootIndex;
 	      return chordRoot;
 	    }
   	}
   })
-  .factory('chordNotesFactory', function() {
+  .factory('chordNotesFactory', function(musicNotesFactory) {
 		return {
-			chordNotes: function(chords, id, root, self) {
+			chordNotes: function(measureObj) {
 	      // chord is the array of nums in each chordObj.chords
-	      for (var chord in chords) {
+	      for (var chord in measureObj.chords) {
 	      	// rename chord with root (zero index in build property)
-	      	var chordroot = self.notes[id + chords[chord].build[0]]
-	      	chords[chord].name = chordroot + ' ' + chord;
+	      	var chordroot = musicNotesFactory.notes[measureObj.id + measureObj.chords[chord].build[0]]
+	      	measureObj.chords[chord].name = chordroot + ' ' + chord;
 		      // create a new arr to hold the transformed nums to letters
-		      var arr = (chords[chord].build).map(function(num) {
-	          num = self.notes[num + id]
+		      var arr = (measureObj.chords[chord].build).map(function(num) {
+	          num = musicNotesFactory.notes[num + measureObj.id]
 	          return num;
 	        })
 	        
 	        // replace the chord of nums with chord of letters in each
-	        chords[chord].build = arr;
+	        measureObj.chords[chord].build = arr;
 	      }
-	      return chords;
+	      return measureObj;
 	    }
 	  }
 	})
@@ -56,3 +56,28 @@ angular.module('musicApp')
 			}
 		}
 	});
+
+
+
+
+	//   .factory('chordNotesFactory', function() {
+	// 	return {
+	// 		chordNotes: function(chords, id, root, self) {
+	//       // chord is the array of nums in each chordObj.chords
+	//       for (var chord in chords) {
+	//       	// rename chord with root (zero index in build property)
+	//       	var chordroot = self.notes[id + chords[chord].build[0]]
+	//       	chords[chord].name = chordroot + ' ' + chord;
+	// 	      // create a new arr to hold the transformed nums to letters
+	// 	      var arr = (chords[chord].build).map(function(num) {
+	//           num = self.notes[num + id]
+	//           return num;
+	//         })
+	        
+	//         // replace the chord of nums with chord of letters in each
+	//         chords[chord].build = arr;
+	//       }
+	//       return chords;
+	//     }
+	//   }
+	// })

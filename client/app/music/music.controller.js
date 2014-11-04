@@ -1,6 +1,7 @@
 'use strict';
 
 angular.module('musicApp')
+  .value('currentHover', {hover:null})
   .controller('MusicCtrl', function ($scope, $http, chordBuilder) {
   	var self = this;
 
@@ -10,7 +11,6 @@ angular.module('musicApp')
     }
 
     this.play = function(chord) {
-      console.log(chord)
       var search = '#' + chord + '-chord'
       if ($(search)[0]) {
         $(search)[0].play();
@@ -26,7 +26,7 @@ angular.module('musicApp')
       controllerAs: 'room'
     }
   })
-  .directive('draggable', function($document, changeTargetMeasureFactory) {
+  .directive('draggable', function($document, currentHover, changeTargetMeasureFactory) {
     return function(scope, element, attr) {
       var startX = 0, startY = 0, x = 0, y = 0;
       element.css({
@@ -37,11 +37,11 @@ angular.module('musicApp')
         // Prevent default dragging of selected content
         event.preventDefault();
         var clone = element.clone();
-        clone.appendTo(element)
+        clone.appendTo(element);
         clone.offset({
           top: event.pageY,
           left: event.pageX
-        })
+        });
         startX = event.screenX - x;
         startY = event.screenY - y;
 
@@ -50,9 +50,8 @@ angular.module('musicApp')
       });
 
       function mousemove(event) {
-        // console.log('event.screenY', event.screenY)
-        y = event.screenY - startY;
-        x = event.screenX - startX;
+        y = event.screenY - startY + 5;
+        x = event.screenX - startX + 5;
         var clone = event.data;
         
         clone.css({
@@ -68,24 +67,29 @@ angular.module('musicApp')
         $document.off('mouseup', mouseup);
         y = 0;
         x = 0;
+        if (currentHover.hover !== null) {
+          var targetMeasure = currentHover.hover;
+          var rootNote = clone.text();
+          var rootIndex = element.index();
+          var measureNumber = targetMeasure.attr('id').slice(8)
+          changeTargetMeasureFactory.targetMeasure(rootNote, rootIndex, measureNumber, scope)
+        }
         clone.remove();
-        var targetMeasure = event.target;
-        console.log($('.mouse-over'));
-        // console.log(event);
-        // changeTargetMeasureFactory.targetMeasure(targetMeasure)
       }
     };
   })
-  .directive('droppable', function($document) {
+  .directive('droppable', function($document, currentHover) {
     return function(scope, element, attr) {
 
       element.on('mouseover', function(event) {
         event.preventDefault();
-        element.addClass('mouse-over');
+        currentHover.hover = element
+        // element.addClass('mouse-over');
       });
       element.on('mouseleave', function(event) {
         event.preventDefault();
-        element.removeClass('mouse-over');
+        currentHover.hover = null;
+        // element.removeClass('mouse-over');
       })
     }
   })
@@ -96,10 +100,19 @@ angular.module('musicApp')
               'A', 'Bb', 'B', 'C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab',]
     }
   })
-  .factory('changeTargetMeasureFactory', function() {
+  .factory('changeTargetMeasureFactory', function(newChordRootFactory,
+                                                  musicNotesFactory,
+                                                  musicChordsFactory,
+                                                  chordNotesFactory,
+                                                  measuresFactory) {
     return {
-      targetMeasure: function(targetMeasure) {
-        console.log('factory', $(targetMeasure).attr('id'))
+      targetMeasure: function(rootNote, rootIndex, measureNumber, scope) {
+        var measureObj = newChordRootFactory.newChord(rootNote, rootIndex);
+        measureObj.chords = new musicChordsFactory();
+        chordNotesFactory.chordNotes(measureObj)
+        scope.$apply(function() {
+          measuresFactory.currentMeasures[measureNumber] = measureObj;
+        });
       }
     }
   });
