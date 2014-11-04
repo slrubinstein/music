@@ -26,7 +26,7 @@ angular.module('musicApp')
       controllerAs: 'room'
     }
   })
-  .directive('draggable', function($document) {
+  .directive('draggable', function($document, changeTargetMeasureFactory) {
     return function(scope, element, attr) {
       var startX = 0, startY = 0, x = 0, y = 0;
       element.css({
@@ -36,10 +36,7 @@ angular.module('musicApp')
       element.on('mousedown', function(event) {
         // Prevent default dragging of selected content
         event.preventDefault();
-        // console.log('mousedown event target', event.target)
-        // console.log(element)
         var clone = element.clone();
-        // console.log(clone)
         clone.appendTo(element)
         clone.offset({
           top: event.pageY,
@@ -48,8 +45,6 @@ angular.module('musicApp')
         startX = event.screenX - x;
         startY = event.screenY - y;
 
-        console.log('mouse down', startX)
-        console.log('mouse down', startY)
         $document.on('mousemove', clone, mousemove);
         $document.on('mouseup', clone, mouseup);
       });
@@ -67,19 +62,44 @@ angular.module('musicApp')
       }
 
       function mouseup(event) {
+        event.preventDefault();
         var clone = event.data;
         $document.off('mousemove', mousemove);
         $document.off('mouseup', mouseup);
         y = 0;
         x = 0;
         clone.remove();
+        var targetMeasure = event.target;
+        console.log($('.mouse-over'));
+        // console.log(event);
+        // changeTargetMeasureFactory.targetMeasure(targetMeasure)
       }
     };
+  })
+  .directive('droppable', function($document) {
+    return function(scope, element, attr) {
+
+      element.on('mouseover', function(event) {
+        event.preventDefault();
+        element.addClass('mouse-over');
+      });
+      element.on('mouseleave', function(event) {
+        event.preventDefault();
+        element.removeClass('mouse-over');
+      })
+    }
   })
   .factory('musicNotesFactory', function() {
     return {
       notes: ['A', 'Bb', 'B', 'C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab',
               'A', 'Bb', 'B', 'C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab',
               'A', 'Bb', 'B', 'C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab',]
+    }
+  })
+  .factory('changeTargetMeasureFactory', function() {
+    return {
+      targetMeasure: function(targetMeasure) {
+        console.log('factory', $(targetMeasure).attr('id'))
+      }
     }
   });
