@@ -25,6 +25,29 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 #score {
 	background-color: lightblue;
 	height: 500px;
-	width: 800px;
+	width: 95%;
 }
 
+#measures {
+	width: 92px;
+	margin: 10px 5px;
+}
+
+#controlbar {
+	margin: 5px;
+}
+
+.keyButtons {
+	width: 50px;
+	height: 42px;	
+}
+
+.animate-enter {
+	-webkit-transition: 1s linear all; /* Chrome */
+	transition: 1s linear all;
+	opacity: 0;
+}
+ 
+.animate-enter.animate-enter-active {
+	opacity: 1;
+}

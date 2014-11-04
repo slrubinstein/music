@@ -12,15 +12,22 @@ angular.module('musicApp')
                                         measuresFactory,
                                         newChordRootFactory,
                                         chordNotesFactory,
-                                        renameChords) {
+                                        renameChords,
+                                        romanNumeralsFactory) {
     var self = this;
     
     this.root = '';
     this.notes = musicNotesFactory.notes;
     this.measures = measuresFactory.currentMeasures;
+    this.majorNumerals = romanNumeralsFactory.major;
+    this.minorNumerals = romanNumeralsFactory.minor;
 
     this.recreateNotes = function() {
       return $scope.notes;
+    }
+
+    this.clickNumerals = function(index) {
+
     }
 
     this.clickChord = function(index) {
@@ -31,5 +38,11 @@ angular.module('musicApp')
       measureObj.chords = new musicChordsFactory();
       measureObj.chords = chordNotesFactory.chordNotes(measureObj.chords, measureObj.id, measureObj. root, this);
       this.measures[this.measures.length-1] = measureObj;
+    }
+  })
+  .factory('romanNumeralsFactory', function() {
+    return {
+      major: ['I', 'ii', 'iii', 'iv', 'V', 'vi', 'vii'],
+      minor: ['i', 'ii', 'III', 'iv', 'V', 'vi', 'VII']
     }
   })

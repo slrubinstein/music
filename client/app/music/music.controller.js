@@ -4,14 +4,6 @@ angular.module('musicApp')
   .controller('MusicCtrl', function ($scope, $http, chordBuilder) {
   	var self = this;
 
-  // 	this.keyboard = [];
-		// for (var i = 1; i <= 8; i++) {
-		// 	this.keyboard.push($scope.notes);
-		// }
-
-  	// this.root = '';
-  	// this.id;
-
     this.chords = chordBuilder.chords;
     this.buildChord = function(root, index, notes) {
       return chordBuilder.buildChord(root, index, notes);
@@ -37,36 +29,50 @@ angular.module('musicApp')
   .directive('draggable', function($document) {
     return function(scope, element, attr) {
       var startX = 0, startY = 0, x = 0, y = 0;
-      var startingPosition = {}
       element.css({
        position: 'relative',
           'z-index': 2
         });
-      var clone;
       element.on('mousedown', function(event) {
         // Prevent default dragging of selected content
         event.preventDefault();
-        // clone = element.clone();
-        // clone.appendTo(element);
+        // console.log('mousedown event target', event.target)
+        // console.log(element)
+        var clone = element.clone();
+        // console.log(clone)
+        clone.appendTo(element)
+        clone.offset({
+          top: event.pageY,
+          left: event.pageX
+        })
         startX = event.screenX - x;
         startY = event.screenY - y;
-        $document.on('mousemove', mousemove);
-        $document.on('mouseup', mouseup);
+
+        console.log('mouse down', startX)
+        console.log('mouse down', startY)
+        $document.on('mousemove', clone, mousemove);
+        $document.on('mouseup', clone, mouseup);
       });
 
       function mousemove(event) {
+        // console.log('event.screenY', event.screenY)
         y = event.screenY - startY;
         x = event.screenX - startX;
-        element.css({
+        var clone = event.data;
+        
+        clone.css({
           top: y + 'px',
           left:  x + 'px'
         });
       }
 
-      function mouseup() {
+      function mouseup(event) {
+        var clone = event.data;
         $document.off('mousemove', mousemove);
         $document.off('mouseup', mouseup);
-        // element.remove();
+        y = 0;
+        x = 0;
+        clone.remove();
       }
     };
   })
