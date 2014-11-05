@@ -15,7 +15,6 @@ angular.module('musicApp')
     this.pickRoot = function(index) {
       this.root = this.notes[index]
       this.id = index;
-      // clickChordFactory.updateMeasure(this.root, sand.measures[sand.measures.length-1])
 
     }
 

@@ -51,8 +51,8 @@ angular.module('musicApp')
       });
 
       function mousemove(event) {
-        y = event.screenY - startY + 5;
-        x = event.screenX - startX + 5;
+        y = event.screenY - startY;
+        x = event.screenX - startX + 2;
         var clone = event.data;
         
         clone.css({
@@ -72,7 +72,7 @@ angular.module('musicApp')
           var targetMeasure = currentHover.hover;
           var rootNote = clone.text();
           var rootIndex = element.index();
-          var measureNumber = targetMeasure.attr('id').slice(8)
+          var measureNumber = targetMeasure.attr('id').slice(4)
           changeTargetMeasureFactory.targetMeasure(rootNote, rootIndex, measureNumber, scope)
         }
         clone.remove();
@@ -111,7 +111,6 @@ angular.module('musicApp')
         var measureObj = newChordRootFactory.newChord(rootNote, rootIndex);
         measureObj.chords = new musicChordsFactory();
         chordNotesFactory.chordNotes(measureObj)
-        // console.log(measureObj)
         scope.$apply(function() {
           measuresFactory.currentMeasures[measureNumber] = measureObj;
         });

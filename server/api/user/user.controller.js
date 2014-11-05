@@ -80,6 +80,58 @@ exports.changePassword = function(req, res, next) {
 };
 
 /**
+ * Add new song
+ */
+exports.addSong = function(req, res, next) {
+  var userId = req.user._id;
+  var title = req.body.title;
+  var song = req.body.song;
+
+  User.findById(userId, function (err, user) {
+    if (user) {
+      var newSong = {}
+      newSong.title = title;
+      newSong.song = song;
+      user.songs.push(newSong);
+      user.save();
+      res.send(200);
+    } else {
+      res.send(403);
+    }
+  });
+};
+
+/**
+ * Find all songs
+ */
+exports.findallsongs = function(req, res, next) {
+  var userId = req.params.id;
+  User.findById(userId, function (err, user) {
+    if (user) {
+      res.json(user.songs)
+    } else {
+      res.send(403);
+    }
+  });
+};
+
+/**
+ * Load song
+ */
+exports.loadSong = function(req, res, next) {
+  var userId = req.params.id;
+  // var title = req.body.title;
+
+  User.findById(userId, function (err, user) {
+    if (user) {
+      res.json(user.songs[title])
+    } else {
+      res.send(403);
+    }
+  });
+};
+
+/**
  * Get my info
  */
 exports.me = function(req, res, next) {

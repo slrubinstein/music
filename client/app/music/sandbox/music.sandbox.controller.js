@@ -10,20 +10,37 @@ angular.module('musicApp')
     }
   })
   .controller('MusicSandboxCtrl', function ($scope, chordBuilder, 
-                                            measuresFactory, activeMeasure) {
+                                            measuresFactory, activeMeasure,
+                                            currentHover) {
 
-    this.measures = measuresFactory.currentMeasures;
+    this.song = measuresFactory.currentMeasures;
     this.substitutions = [];
 
     this.dropdown = function(index) {
-      $('.dropdown-menu').eq(index).toggle();
-      activeMeasure.m = this.measures[index]
-      this.substitutions = this.measures[index].chords;
+      if (this.song[index].chords) {
+        $('.dropdown-menu').eq(index).toggle();
+        activeMeasure.m = this.song[index]
+        this.substitutions = this.song[index].chords;
+      }
     }
 
     this.updateChord = function(index, name, chordroot) {   
       activeMeasure.m.currentChord = chordroot + name;
-      $('.dropdown-menu').eq(this.measures.indexOf(activeMeasure.m)).toggle();
+      $('.dropdown-menu').eq(this.song.indexOf(activeMeasure.m)).toggle();
       activeMeasure.m = null;
+    }
+  })
+  .directive('deleteable', function($document, currentHover) {
+    return function(scope, element, attr) {
+
+      element.on('mouseover', function(event) {
+        event.preventDefault();
+        // console.log('hovering', currentHover)
+      });
+      element.on('mouseleave', function(event) {
+        event.preventDefault();
+        currentHover.hover = null;
+        // element.removeClass('mouse-over');
+      })
     }
   });

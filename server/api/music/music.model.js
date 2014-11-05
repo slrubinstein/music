@@ -9,4 +9,15 @@ var MusicSchema = new Schema({
   active: Boolean
 });
 
-module.exports = mongoose.model('Music', MusicSchema);
+var NoteSchema = new Schema({
+	keyId: Number,
+	octave: Number,
+	noteName: String,
+	// noteNameSharp: String,
+	// noteNameFlat: String,
+	frequency: Number
+});
+
+var Note = mongoose.model('Note', NoteSchema);
+
+module.exports = {'Note': Note};

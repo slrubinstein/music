@@ -65,28 +65,3 @@ angular.module('musicApp')
 			}
 		}
 	});
-
-
-
-
-	//   .factory('chordNotesFactory', function() {
-	// 	return {
-	// 		chordNotes: function(chords, id, root, self) {
-	//       // chord is the array of nums in each chordObj.chords
-	//       for (var chord in chords) {
-	//       	// rename chord with root (zero index in build property)
-	//       	var chordroot = self.notes[id + chords[chord].build[0]]
-	//       	chords[chord].name = chordroot + ' ' + chord;
-	// 	      // create a new arr to hold the transformed nums to letters
-	// 	      var arr = (chords[chord].build).map(function(num) {
-	//           num = self.notes[num + id]
-	//           return num;
-	//         })
-	        
-	//         // replace the chord of nums with chord of letters in each
-	//         chords[chord].build = arr;
-	//       }
-	//       return chords;
-	//     }
-	//   }
-	// })

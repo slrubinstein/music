@@ -33,13 +33,14 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 	margin: 10px 5px;
 }
 
-#controlbar {
+#toolbar {
 	margin: 5px;
 }
 
 .keyButtons {
-	width: 40px;
-	height: 32px;	
+	width: 50px;
+	height: 40px;
+	font-size: 16px;
 }
 
 .animate-enter {
@@ -52,10 +53,11 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 	opacity: 1;
 }
 
-#controlbar .mouse-over {
-	background-color: green;
-}
-
 #addMeasures {
 	margin: 10px;
+}
+
+.footer{
+  border:none;
+  height: 20px;
 }

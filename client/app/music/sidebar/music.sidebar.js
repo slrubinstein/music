@@ -18,7 +18,7 @@ angular.module('musicApp')
     
     this.root = '';
     this.notes = musicNotesFactory.notes;
-    this.measures = measuresFactory.currentMeasures;
+    this.song = measuresFactory.currentMeasures;
     this.majorNumerals = romanNumeralsFactory.major;
     this.minorNumerals = romanNumeralsFactory.minor;
 
@@ -37,7 +37,7 @@ angular.module('musicApp')
       var measureObj = newChordRootFactory.newChord(this);
       measureObj.chords = new musicChordsFactory();
       measureObj.chords = chordNotesFactory.chordNotes(measureObj.chords, measureObj.id, measureObj. root, this);
-      this.measures[this.measures.length-1] = measureObj;
+      this.song[this.song.length-1] = measureObj;
     }
   })
   .factory('romanNumeralsFactory', function() {

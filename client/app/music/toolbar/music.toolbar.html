@@ -1,0 +1,41 @@
+<!-- controller: ToolbarCtrl as toolbar -->
+<!-- parent controller: MusicSandboxCtrl as sand -->
+
+<div class="col-md-12 col-lg-12">
+	<div class="col-md-6 col-lg-6">
+		<button id="addMeasures" class="btn btn-default" ng-click="toolbar.addMeasures()">Add Measures</button><br>
+  	<div class="btn-group">
+		  <p class="btn btn-default">Tempo {{toolbar.tempo}} bpm</p>
+		  
+		  <button type="button" class="btn btn-default">Up</button>
+		  <button type="button" class="btn btn-default">Dn</button>
+		</div><br>
+  	<button class="btn btn-default">Play/Pause</button>
+	</div>
+
+	<div class="col-md-6 col-lg-6">
+		<div class="input-group">
+		  <span class="input-group-addon">Title:</span>
+		  <input type="text" class="form-control" placeholder="title" ng-model="toolbar.songTitle">
+		</div>
+		<br>
+	  <button class="btn btn-default" ng-click="toolbar.saveSong()">Save This Song</button>
+
+	  <div class="btn-group">
+		  <button class="btn btn-default btn-block dropdown-toggle" ng-click="toolbar.mySongDropdown()">Load My Song <span class="caret"></span></button>
+		  <ul role="menu" class="dropdown-menu" id="my-song-dropdown-menu">
+		  	<li ng-repeat="song in toolbar.userSongs">
+          <a href="#" ng-click="toolbar.loadSong($index)">{{song.title}}</a>
+        </li>
+		  </ul>
+		</div>
+
+	  <div class="btn-group">
+		  <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+		    Load Standard <span class="caret"></span>
+		  </button>
+		  <ul role="menu">
+		  </ul>
+		</div>
+	</div>
+</div>
