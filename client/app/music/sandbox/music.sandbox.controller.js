@@ -9,11 +9,11 @@ angular.module('musicApp')
         controllerAs: 'sand'
     }
   })
-  .controller('MusicSandboxCtrl', function ($scope, 
-                                            measuresFactory, activeMeasure,
-                                            currentHover) {
+  .controller('MusicSandboxCtrl', function ($scope, measuresFactory, 
+                                            activeMeasure, currentHover,
+                                            updateChordFactory) {
 
-    this.song = measuresFactory.currentMeasures;
+    this.song = measuresFactory.currentSong;
     this.substitutions = [];
 
     this.dropdown = function(index) {
@@ -21,25 +21,34 @@ angular.module('musicApp')
         $('.dropdown-menu').eq(index).toggle();
         activeMeasure.m = this.song[index]
         this.substitutions = this.song[index].chords;
-        this.song = measuresFactory.currentMeasures;
       }
     }
 
-    this.updateChord = function(index, name, chordroot) {   
-      activeMeasure.m.currentChord = name;
-      $('.dropdown-menu').eq(this.song.indexOf(activeMeasure.m)).toggle();
-      activeMeasure.m = null;
+    this.updateChord = updateChordFactory.update;
+
+    this.deleteCurrentMeasure = function(index) {
+      this.song.splice(index, 1);
     }
   })
-  .directive('deleteable', function($document, currentHover) {
-    return function(scope, element, attr) {
-
-      element.on('mouseover', function(event) {
-        event.preventDefault();
-      });
-      element.on('mouseleave', function(event) {
-        event.preventDefault();
-        currentHover.hover = null;
-      })
+  .factory('updateChordFactory', function(activeMeasure, musicNotesFactory) {
+    return {
+      update:function(index, name, chordroot) {
+        activeMeasure.m.currentChord = name;
+        $('.dropdown-menu').eq(this.song.indexOf(activeMeasure.m)).toggle();
+        activeMeasure.m.currentroot = chordroot;
+        activeMeasure.m = null;
+      }
     }
-  });
+  })
+  // .directive('deleteable', function($document, currentHover) {
+  //   return function(scope, element, attr) {
+
+  //     element.on('mouseover', function(event) {
+  //       event.preventDefault();
+  //     });
+  //     element.on('mouseleave', function(event) {
+  //       event.preventDefault();
+  //       currentHover.hover = null;
+  //     })
+  //   }
+  // });

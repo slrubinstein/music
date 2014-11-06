@@ -105,9 +105,10 @@ angular.module('musicApp')
       targetMeasure: function(rootNote, rootIndex, measureNumber, scope) {
         var measureObj = newChordRootFactory.newChord(rootNote, rootIndex);
         measureObj.chords = new musicChordsFactory();
-        chordNotesFactory.chordNotes(measureObj)
+        chordNotesFactory.chordNotes(measureObj);
         scope.$apply(function() {
-          measuresFactory.currentMeasures[measureNumber] = measureObj;
+          measuresFactory.currentSong[measureNumber] = measureObj;
+          measureObj.currentroot = rootNote;
         });
       }
     }

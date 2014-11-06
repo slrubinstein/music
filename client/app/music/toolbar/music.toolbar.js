@@ -11,9 +11,11 @@ angular.module('musicApp')
                                           saveSongFactory, Auth,
                                           findAllSongsFactory, playerFactory) {
     var self = this;
-    this.song = measuresFactory.currentMeasures;
+    this.song = measuresFactory.currentSong;
     this.songTitle = '';
     this.tempo = 60;
+
+    this.selectSong;
 
     this.addMeasures = measuresFactory.addMeasures;
 
@@ -39,24 +41,17 @@ angular.module('musicApp')
       $('#my-song-dropdown-menu').toggle();
     }
 
-    this.loadSample = function() {
-      measuresFactory.currentMeasures = sampleSongFactory.sampleSong;
-      this.song = measuresFactory.currentMeasures;
-      this.songTitle = this.song.title;
-    }
+    this.discardSong = measuresFactory.discardSong;
 
-    this.discard = function() {
-      console.log('discard')
-      console.log(measuresFactory.currentMeasures)
-      measuresFactory.currentMeasures = [{currentChord: ' / / / / '}];
-      console.log(measuresFactory.currentMeasures)
-    }
   })
   .factory('measuresFactory', function() {
     return {
-      currentMeasures: [{currentChord: ' / / / / '}],
+      currentSong: [{currentChord: ' / / / / '}],
       addMeasures: function() {
-        this.song.push({currentChord: ' / / / / '})
+        this.song.push({currentChord: ' / / / / '});
+      },
+      discardSong: function(self) {
+        this.song.length = 0;
       }
     }
   })
@@ -64,10 +59,10 @@ angular.module('musicApp')
     return {
       save: function(song, title, userId, self) {
         $http.post('/api/users/'+userId+'/newsong', { song: song, title: title })
-          .success(function() {
-            self.userSongs = [];
-            findAllSongsFactory.find(userId, self);
-          });
+        .success(function() {
+          self.userSongs = [];
+          findAllSongsFactory.find(userId, self);
+        });
       }
     }
   })
@@ -78,6 +73,7 @@ angular.module('musicApp')
         .success(function(data) {
           data.forEach(function(song) {
             self.userSongs.push(song);
+            console.log('user songs', self.userSongs)
           });
         });
       }
@@ -89,34 +85,4 @@ angular.module('musicApp')
         $http.get('/api/users/'+userId+'/loadsong', { title: title });
       }
     }
-  })
-  // .factory('sampleSongFactory', function() {
-  //   return {
-  //     sampleSong: [{
-  //       title: 'my beautiful song',
-  //       chords: {
-  //         7: {build: ['A', 'C#', 'E', 'G'], chordroot: 'A',
-  //             name: '7', rel: 'I'},
-  //         maj6: {build: ['A', 'C#', 'E', 'F#'], chordroot: 'A',
-  //             name: 'maj6', rel: 'I'},
-  //         maj9: {build: ['A', 'C#', 'E', 'G#', 'B'], chordroot: 'A',
-  //             name: 'maj9', rel: 'I'},
-  //       },
-  //       currentChord: 'Amin',
-  //       id: 0,
-  //       root: 'A'
-  //     }, {
-  //       chords: {
-  //         7: {build: ['A', 'C#', 'E', 'G'], chordroot: 'A',
-  //             name: '7', rel: 'I'},
-  //         maj6: {build: ['A', 'C#', 'E', 'F#'], chordroot: 'A',
-  //             name: 'maj6', rel: 'I'},
-  //         maj9: {build: ['A', 'C#', 'E', 'G#', 'B'], chordroot: 'A',
-  //             name: 'maj9', rel: 'I'},
-  //       },
-  //       currentChord: 'A',
-  //       id: 0,
-  //       root: 'A'
-  //     }]
-  //   }
-  // });
+  });

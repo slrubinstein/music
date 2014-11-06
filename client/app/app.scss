@@ -28,7 +28,7 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 	width: 95%;
 }
 
-.measures {
+.song {
 	width: 92px;
 	margin: 10px 5px;
 }
@@ -44,7 +44,7 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 }
 
 .animate-enter {
-	-webkit-transition: 1s linear all; /* Chrome */
+	-webkit-transition: 1s linear all; 
 	transition: 1s linear all;
 	opacity: 0;
 }

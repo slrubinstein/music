@@ -10,7 +10,9 @@
     <p>Drop chord roots onto measures:</p>
     <div id="toolbar" class="btn-group btn-group-lg" ng-repeat="measure in sand.song">
       
-      <button droppable deleteable id="song{{+$index}}" class="btn btn-default btn-block dropdown-toggle song" ng-click="sand.dropdown($index)">{{measure.root}}{{measure.currentChord}}<span class="caret"></span></button>
+      <button droppable deleteable id="song{{+$index}}" class="btn btn-default btn-block dropdown-toggle song" ng-click="sand.dropdown($index)"><span class="caret"></span>{{measure.currentroot}}{{measure.currentChord}}</button>
+      <button class="btn btn-danger btn-sm" ng-click="sand.deleteCurrentMeasure($index)">X</button>
+
       <ul class="dropdown-menu" role="menu">
         <li ng-repeat="sub in sand.substitutions">
           <a href="#" ng-click="sand.updateChord($index, sub.name, sub.chordroot)">{{sub.chordroot}}{{sub.name}} {{sub.notes}}</a>

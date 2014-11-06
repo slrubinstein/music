@@ -18,7 +18,7 @@ angular.module('musicApp')
     
     this.root = '';
     this.notes = musicNotesFactory.notes;
-    this.song = measuresFactory.currentMeasures;
+    this.song = measuresFactory.currentSong;
     this.majorNumerals = romanNumeralsFactory.major;
     this.minorNumerals = romanNumeralsFactory.minor;
 

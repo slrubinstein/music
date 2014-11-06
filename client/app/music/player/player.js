@@ -42,7 +42,6 @@ angular.module('musicApp')
                 (chord.chords[chordType].frequencies).forEach(function(f) {
                   chordFreqs.push(f);
                 })
-
                 
                 allChords.push(chordFreqs);
                 allChords.push(chordFreqs);
