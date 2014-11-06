@@ -3,13 +3,8 @@
 angular.module('musicApp')
   .value('currentHover', {hover:null})
   .value('activeMeasure', {m:null})
-  .controller('MusicCtrl', function ($scope, $http, chordBuilder) {
+  .controller('MusicCtrl', function ($scope, $http) {
   	var self = this;
-
-    this.chords = chordBuilder.chords;
-    this.buildChord = function(root, index, notes) {
-      return chordBuilder.buildChord(root, index, notes);
-    }
 
     this.play = function(chord) {
       var search = '#' + chord + '-chord'

@@ -9,7 +9,7 @@ angular.module('musicApp')
         controllerAs: 'sand'
     }
   })
-  .controller('MusicSandboxCtrl', function ($scope, chordBuilder, 
+  .controller('MusicSandboxCtrl', function ($scope, 
                                             measuresFactory, activeMeasure,
                                             currentHover) {
 
@@ -26,7 +26,7 @@ angular.module('musicApp')
     }
 
     this.updateChord = function(index, name, chordroot) {   
-      activeMeasure.m.currentChord = chordroot + name;
+      activeMeasure.m.currentChord = name;
       $('.dropdown-menu').eq(this.song.indexOf(activeMeasure.m)).toggle();
       activeMeasure.m = null;
     }
@@ -36,12 +36,10 @@ angular.module('musicApp')
 
       element.on('mouseover', function(event) {
         event.preventDefault();
-        // console.log('hovering', currentHover)
       });
       element.on('mouseleave', function(event) {
         event.preventDefault();
         currentHover.hover = null;
-        // element.removeClass('mouse-over');
       })
     }
   });

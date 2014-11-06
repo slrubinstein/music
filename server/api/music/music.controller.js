@@ -11,12 +11,14 @@
 
 var _ = require('lodash');
 var Music = require('./music.model');
+var Note = require('./music.model').Note;
 
 // Get list of music
 exports.index = function(req, res) {
-  Music.find(function (err, music) {
+  Note.find(function (err, notes) {
     if(err) { return handleError(res, err); }
-    return res.json(200, music);
+    notes = _.indexBy(notes, 'keyId');
+    return res.json(200, notes);
   });
 };
 
