@@ -16,26 +16,20 @@
 	<div class="col-md-6 col-lg-6">
 		<div class="input-group">
 		  <span class="input-group-addon">Title:</span>
-		  <input type="text" class="form-control" placeholder="title" ng-model="toolbar.songTitle">
+		  <input type="text" class="form-control" placeholder="song title" value="{{toolbar.songTitle.title}}"/>
 		</div>
 		<br>
 	  <button class="btn btn-default" ng-click="toolbar.saveSong()">Save This Song</button>
 
-	  <div class="btn-group">
-		  <button class="btn btn-default btn-block dropdown-toggle" ng-click="toolbar.mySongDropdown()">Load My Song <span class="caret"></span></button>
-		  <ul role="menu" class="dropdown-menu" id="my-song-dropdown-menu">
-		  	<li ng-repeat="song in toolbar.userSongs">
-          <a href="#" ng-click="toolbar.loadSong($index)">{{song.title}}</a>
-        </li>
-		  </ul>
-		</div>
+
+    <select class="btn btn-default" ng-model="toolbar.songTitle" ng-options="song.title for song in toolbar.userSongs"></select>
+	
 
 	  <div class="btn-group">
 		  <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
 		    Load Standard <span class="caret"></span>
 		  </button>
-		  <ul role="menu">
-		  </ul>
+		  <button class="btn btn-default" ng-click="toolbar.discard()">Discard Draft</button>
 		</div>
 	</div>
 </div>

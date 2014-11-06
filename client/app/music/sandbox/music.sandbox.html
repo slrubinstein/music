@@ -8,7 +8,7 @@
 <div class="col-md-12 col-lg-12">
   <div id="score" class="col-md-12 col-lg-12">
     <p>Drop chord roots onto measures:</p>
-    <div id="toolbar" class="btn-group btn-group-lg" ng-repeat="measure in sand.song track by $index" ng-animate=" 'animate' ">
+    <div id="toolbar" class="btn-group btn-group-lg" ng-repeat="measure in sand.song">
       
       <button droppable deleteable id="song{{+$index}}" class="btn btn-default btn-block dropdown-toggle song" ng-click="sand.dropdown($index)">{{measure.currentChord}}<span class="caret"></span></button>
       <ul class="dropdown-menu" role="menu">

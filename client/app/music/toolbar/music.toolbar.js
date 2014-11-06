@@ -20,7 +20,6 @@ angular.module('musicApp')
     this.currentUser = Auth.getCurrentUser;
 
     this.userSongs = [];
-    console.log(self.userSongs, 'USER SONGS')
 
     if (this.currentUser()._id) {
       findAllSongsFactory.find(this.currentUser()._id, self);
@@ -29,9 +28,8 @@ angular.module('musicApp')
 
     this.saveSong = function() {
       this.song.title = this.songTitle;
-      saveSongFactory.save(this.song, this.song.title, this.currentUser()._id);
-      this.userSongs = [];
-      findAllSongsFactory.find(this.currentUser()._id, self);
+      saveSongFactory.save(this.song, this.song.title, this.currentUser()._id, self);
+      console.log(this.userSongs)
     }
 
     this.mySongDropdown = function() {
@@ -43,6 +41,13 @@ angular.module('musicApp')
       this.song = measuresFactory.currentMeasures;
       this.songTitle = this.song.title;
     }
+
+    this.discard = function() {
+      console.log('discard')
+      console.log(measuresFactory.currentMeasures)
+      measuresFactory.currentMeasures = [{currentChord: ' / / / / '}];
+      console.log(measuresFactory.currentMeasures)
+    }
   })
   .factory('measuresFactory', function() {
     return {
@@ -52,11 +57,14 @@ angular.module('musicApp')
       }
     }
   })
-  .factory('saveSongFactory', function($http) {
+  .factory('saveSongFactory', function($http, findAllSongsFactory) {
     return {
-      save: function(song, title, userId) {
-        console.log('saving', song, 'for', userId)
-        $http.post('/api/users/'+userId+'/newsong', { song: song, title: title });
+      save: function(song, title, userId, self) {
+        $http.post('/api/users/'+userId+'/newsong', { song: song, title: title })
+          .success(function() {
+            self.userSongs = [];
+            findAllSongsFactory.find(userId, self);
+          });
       }
     }
   })
@@ -65,13 +73,9 @@ angular.module('musicApp')
       find: function(userId, self) {
         $http.get('/api/users/'+userId+'/findallsongs', {})
         .success(function(data) {
-          console.log(data)
-          console.log(self.userSongs)
           data.forEach(function(song) {
             self.userSongs.push(song);
           });
-          console.log(self.userSongs)
-          // return data;
         });
       }
     }

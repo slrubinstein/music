@@ -21,6 +21,7 @@ angular.module('musicApp')
         $('.dropdown-menu').eq(index).toggle();
         activeMeasure.m = this.song[index]
         this.substitutions = this.song[index].chords;
+        this.song = measuresFactory.currentMeasures;
       }
     }
 
