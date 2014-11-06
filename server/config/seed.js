@@ -59,8 +59,7 @@ for (var n = -48, i = 0; n < 48; n++, i++) {
   var note = {};
   var o = Math.floor(i/12);
   var frequency = 440 * Math.pow(2, (n/12))
-  var j;
-  if (i > 11) {j = i % 12}
+  var j = i % 12
   var letter = letters[j]
   note.keyId = i;
   note.octave = o;
