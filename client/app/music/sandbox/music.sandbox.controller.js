@@ -19,7 +19,9 @@ angular.module('musicApp')
   })
   .controller('MusicSandboxCtrl', function ($scope, measuresFactory, 
                                             activeMeasure, currentHover,
-                                            updateChordFactory) {
+                                            updateChordFactory,
+                                            currentChord,
+                                            changeTargetMeasureFactory) {
 
     this.song = measuresFactory.currentSong;
     this.substitutions = [];
@@ -28,6 +30,8 @@ angular.module('musicApp')
 
     var self = this;
 
+    this.currentChord = currentChord;
+
     // $scope.$on('hovering', function(event, data) {
 
     //   self.updateHover(data.hover);
@@ -35,26 +39,46 @@ angular.module('musicApp')
     //   // console.log('data', data.hover)
     // })
 
-    this.mouseOver = function() {
-      console.log('updateHover', currentHover)
-      // $scope.$apply(function() {
-        $scope.hover = currentHover;
-      // })
-      // this.hover = element;
+
+    // DRAG N DROP
+
+    this.mouseOver = function(index) {
+      $scope.hover = currentHover;
+
+      if (this.currentChord.chord !== null) {
+        $('.dropdown-menu.splits').eq(index).toggle();
+        this.splits = true;
+      }
+    }
+
+    this.splits = false;
+
+    this.mouseLeave = function() {
+      this.splits = false;
     }
 
     this.dropdown = function(index) {
       if (this.song[index].chords) {
-        console.log($('.dropdown-menu').eq(index))
         $('.dropdown-menu').eq(index).toggle();
         activeMeasure.m = this.song[index]
         this.substitutions = this.song[index].chords;
       }
     }
 
-    this.mouseUp = function() {
-      console.log('mouse up')
+    this.mouseUp = function(index) {
+      if (this.currentChord.chord !== null) {
+        var rootNote = this.currentChord.chord;
+        var rootIndex = this.currentChord.rootIndex;
+        var measureNumber = index;
+        if (currentHover.hover !== null) {
+          changeTargetMeasureFactory.targetMeasure(rootNote, rootIndex, measureNumber)
+          this.currentChord.chord = null;
+          this.currentChord.rootIndex = null;
+          $('.dropdown-menu.splits').eq(index).toggle();
+        }
+      }
     }
+    
     this.updateChord = updateChordFactory.update;
 
     this.deleteCurrentMeasure = function(index) {

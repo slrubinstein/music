@@ -22,7 +22,9 @@ angular.module('musicApp')
       controllerAs: 'room'
     }
   })
-  .directive('draggable', function($document, currentHover, changeTargetMeasureFactory) {
+  .directive('draggable', function($document, currentHover,
+                                  changeTargetMeasureFactory,
+                                  currentChord) {
     return function(scope, element, attr) {
       var startX = 0, startY = 0, x = 0, y = 0;
       element.css({
@@ -68,9 +70,10 @@ angular.module('musicApp')
           var rootNote = clone.text();
           var rootIndex = element.index();
           var measureNumber = targetMeasure.attr('id').slice(4)
-          changeTargetMeasureFactory.targetMeasure(rootNote, rootIndex, measureNumber)
+          // changeTargetMeasureFactory.targetMeasure(rootNote, rootIndex, measureNumber)
         }
         clone.remove();
+        currentChord.chord = null;
       }
     };
   })

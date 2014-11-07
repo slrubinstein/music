@@ -16,9 +16,9 @@
         id="song{{+$index}}"
         class="btn btn-default dropdown-toggle song"
         type="button"
-        ng-mouseover="sand.mouseOver()"
+        ng-mouseover="sand.mouseOver($index)"
         ng-mouseleave="sand.mouseLeave()"
-        ng-mouseUp="sand.mouseUp()"
+        ng-mouseUp="sand.mouseUp($index)"
         ng-click="sand.dropdown($index)"><span class="caret"></span>{{measure.currentroot}}{{measure.currentChord}}</button>
 
       <button type="button" class="btn btn-danger btn-xs" ng-click="sand.deleteCurrentMeasure($index)">X</button>
@@ -28,10 +28,9 @@
           <a href="#" ng-click="sand.updateChord($index, sub.name, sub.chordroot)">{{sub.chordroot}}{{sub.name}} {{sub.notes}}</a>
         </li>
       </ul>
+      <measure-split class="dropdown-menu splits"></measure-split>
       <!--before drop-->
       <!--after drop-->
-      <measure-split ng-show="!hover.hover" ng-mouseover="sand.mouseOver"
-        ng-mouseleave="sand.mouseLeave"></measure-split>
       <!--after drop-->
 
     </div>

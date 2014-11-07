@@ -1,4 +1,5 @@
 angular.module('musicApp')
+  .value('currentChord', {chord:null, rootIndex:null})
   .directive('musicSidebar', function() {
   	return {
   		restrict: 'E',
@@ -13,7 +14,8 @@ angular.module('musicApp')
                                         newChordRootFactory,
                                         chordNotesFactory,
                                         renameChords,
-                                        romanNumeralsFactory) {
+                                        romanNumeralsFactory,
+                                        currentChord) {
     var self = this;
     
     this.root = '';
@@ -21,13 +23,16 @@ angular.module('musicApp')
     this.song = measuresFactory.currentSong;
     this.majorNumerals = romanNumeralsFactory.major;
     this.minorNumerals = romanNumeralsFactory.minor;
-
+    this.currentChord = currentChord;
     this.recreateNotes = function() {
       return $scope.notes;
     }
 
-    this.clickNumerals = function(index) {
-
+    this.chordMouseDown = function(index) {
+      this.currentChord.chord = this.notes[index];
+      this.currentChord.rootIndex = index;
+      console.log(self.notes[index])
+      console.log('current chord', this.currentChord)
     }
 
     this.clickChord = function(index) {

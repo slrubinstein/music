@@ -4,7 +4,7 @@
 	
 	<p>Drag a chord root from here:</p>
 	<div id="keyButtons">
-		<button draggable class="btn btn-default keyButtons" ng-repeat="note in sidebar.notes | limitTo: 12">{{note}}</button>
+		<button draggable class="btn btn-default keyButtons" ng-repeat="note in sidebar.notes | limitTo: 12" ng-mousedown="sidebar.chordMouseDown($index)">{{note}}</button>
 	</div>
 
 	<button class="btn btn-default" ng-repeat="num in sidebar.majorNumerals">{{num}}</button>
