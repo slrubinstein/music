@@ -47,19 +47,13 @@ angular.module('musicApp')
 
       if (this.currentChord.chord !== null) {
         $('.dropdown-menu.splits').eq(index).toggle();
-        this.splits = true;
       }
-    }
-
-    this.splits = false;
-
-    this.mouseLeave = function() {
-      this.splits = false;
     }
 
     this.dropdown = function(index) {
       if (this.song[index].chords) {
-        $('.dropdown-menu').eq(index).toggle();
+        console.log("TOGGLE", $('.dropdown-menu.measure').eq(index))
+        $('.dropdown-menu.measure').eq(index).toggle();
         activeMeasure.m = this.song[index]
         this.substitutions = this.song[index].chords;
       }
