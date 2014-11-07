@@ -68,25 +68,39 @@ angular.module('musicApp')
           var rootNote = clone.text();
           var rootIndex = element.index();
           var measureNumber = targetMeasure.attr('id').slice(4)
-          changeTargetMeasureFactory.targetMeasure(rootNote, rootIndex, measureNumber, scope)
+          changeTargetMeasureFactory.targetMeasure(rootNote, rootIndex, measureNumber)
         }
         clone.remove();
       }
     };
   })
-  .directive('droppable', function($document, currentHover) {
-    return function(scope, element, attr) {
+  .directive('droppable', function($document, $parse, currentHover) {
+    return {
+      scope: {
+        myFn: '&'
+      },
+      link: function(scope, element, attr) {
 
-      element.on('mouseover', function(event) {
-        event.preventDefault();
-        currentHover.hover = element
-        // element.addClass('mouse-over');
-      });
-      element.on('mouseleave', function(event) {
-        event.preventDefault();
-        currentHover.hover = null;
-        // element.removeClass('mouse-over');
-      })
+        element.on('mouseover', function(event) {
+          event.preventDefault();
+          currentHover.hover = element;
+
+          // scope.$emit('hovering', currentHover)
+
+          // console.log('current hover', currentHover)
+          // console.log('current hover.hover', currentHover.hover)
+          // scope.myFn.$eval();
+          // element.addClass('mouse-over');
+          // var invoker = $parse(attr.myFn);
+          // console.log('invoker', invoker)
+          // invoker(scope, {arg1: element} );
+        });
+        element.on('mouseleave', function(event) {
+          event.preventDefault();
+          currentHover.hover = null;
+          // element.removeClass('mouse-over');
+        })
+      }
     }
   })
   .factory('musicNotesFactory', function() {
@@ -102,14 +116,12 @@ angular.module('musicApp')
                                                   chordNotesFactory,
                                                   measuresFactory) {
     return {
-      targetMeasure: function(rootNote, rootIndex, measureNumber, scope) {
+      targetMeasure: function(rootNote, rootIndex, measureNumber) {
         var measureObj = newChordRootFactory.newChord(rootNote, rootIndex);
         measureObj.chords = new musicChordsFactory();
         chordNotesFactory.chordNotes(measureObj);
-        scope.$apply(function() {
-          measuresFactory.currentSong[measureNumber] = measureObj;
-          measureObj.currentroot = rootNote;
-        });
+        measuresFactory.currentSong[measureNumber] = measureObj;
+        measureObj.currentroot = rootNote;
       }
     }
   });

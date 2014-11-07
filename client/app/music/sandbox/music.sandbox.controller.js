@@ -9,6 +9,14 @@ angular.module('musicApp')
         controllerAs: 'sand'
     }
   })
+  .directive('measureSplit', function() {
+    return {
+        restrict: 'E',
+        templateUrl: 'app/music/sandbox/measure.split.html',
+        controller: 'MusicSandboxCtrl',
+        controllerAs: 'sand'
+    }
+  })
   .controller('MusicSandboxCtrl', function ($scope, measuresFactory, 
                                             activeMeasure, currentHover,
                                             updateChordFactory) {
@@ -16,14 +24,37 @@ angular.module('musicApp')
     this.song = measuresFactory.currentSong;
     this.substitutions = [];
 
+    $scope.hover = currentHover;
+
+    var self = this;
+
+    // $scope.$on('hovering', function(event, data) {
+
+    //   self.updateHover(data.hover);
+    //   console.log('hover', !!$scope.hover.hover)
+    //   // console.log('data', data.hover)
+    // })
+
+    this.mouseOver = function() {
+      console.log('updateHover', currentHover)
+      // $scope.$apply(function() {
+        $scope.hover = currentHover;
+      // })
+      // this.hover = element;
+    }
+
     this.dropdown = function(index) {
       if (this.song[index].chords) {
+        console.log($('.dropdown-menu').eq(index))
         $('.dropdown-menu').eq(index).toggle();
         activeMeasure.m = this.song[index]
         this.substitutions = this.song[index].chords;
       }
     }
 
+    this.mouseUp = function() {
+      console.log('mouse up')
+    }
     this.updateChord = updateChordFactory.update;
 
     this.deleteCurrentMeasure = function(index) {

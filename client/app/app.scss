@@ -24,8 +24,7 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 
 #score {
 	background-color: lightblue;
-	height: 500px;
-	width: 95%;
+	min-height: 500px;
 }
 
 .song {
@@ -60,4 +59,54 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 .footer{
   border:none;
   height: 20px;
+}
+
+.whole-note {
+	height: 40px;
+	width: 160px;
+	border: 1px;
+	margin: 1px;
+}
+
+.half-note {
+	height: 40px;
+	width: 80px;
+	border: 1px;
+	margin: 1px;
+}
+
+.quarter-note {
+	height: 40px;
+	width: 40px;
+	border: 1px;
+	margin: 1px;
+}
+
+.measure {
+	display: inline-block !important;
+
+	.measure-split {
+		width: 160px;
+		margin-left: 10px;
+
+		.whole-note, .half-note, .quarter-note {
+		 margin: 0;
+		 margin-left: -4px;
+		 border: 0;
+		}
+
+		.whole-note {
+			border-radius: 0;
+			border-top-left-radius: 5px;
+			border-top-right-radius: 5px;
+		}
+
+		.quarter-note#first {
+			border-bottom-left-radius: 5px;
+		}
+
+		.quarter-note#last {
+			border-bottom-right-radius: 5px;
+		}
+	}
 }

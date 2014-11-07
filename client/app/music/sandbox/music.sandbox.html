@@ -6,19 +6,35 @@
 
 
 <div class="col-md-12 col-lg-12">
-  <div id="score" class="col-md-12 col-lg-12">
-    <p>Drop chord roots onto measures:</p>
-    <div id="toolbar" class="btn-group btn-group-lg" ng-repeat="measure in sand.song">
+  <p>Drop chord roots onto measures:</p>
+  <div id="score" class="row">
+    <div class="measure dropdown" ng-repeat="measure in sand.song">
       
-      <button droppable deleteable id="song{{+$index}}" class="btn btn-default btn-block dropdown-toggle song" ng-click="sand.dropdown($index)"><span class="caret"></span>{{measure.currentroot}}{{measure.currentChord}}</button>
-      <button class="btn btn-danger btn-sm" ng-click="sand.deleteCurrentMeasure($index)">X</button>
+      <!--before drop-->
+      <button 
+        droppable
+        id="song{{+$index}}"
+        class="btn btn-default dropdown-toggle song"
+        type="button"
+        ng-mouseover="sand.mouseOver()"
+        ng-mouseleave="sand.mouseLeave()"
+        ng-mouseUp="sand.mouseUp()"
+        ng-click="sand.dropdown($index)"><span class="caret"></span>{{measure.currentroot}}{{measure.currentChord}}</button>
+
+      <button type="button" class="btn btn-danger btn-xs" ng-click="sand.deleteCurrentMeasure($index)">X</button>
 
       <ul class="dropdown-menu" role="menu">
         <li ng-repeat="sub in sand.substitutions">
           <a href="#" ng-click="sand.updateChord($index, sub.name, sub.chordroot)">{{sub.chordroot}}{{sub.name}} {{sub.notes}}</a>
         </li>
       </ul>
+      <!--before drop-->
+      <!--after drop-->
+      <measure-split ng-show="!hover.hover" ng-mouseover="sand.mouseOver"
+        ng-mouseleave="sand.mouseLeave"></measure-split>
+      <!--after drop-->
 
     </div>
+
 	</div>
 </div>

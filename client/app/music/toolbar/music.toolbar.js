@@ -8,12 +8,14 @@ angular.module('musicApp')
     }
   })
   .controller('ToolbarCtrl', function ($scope, measuresFactory,
-                                          saveSongFactory, Auth,
-                                          findAllSongsFactory, playerFactory) {
+                                      saveSongFactory, Auth,
+                                      findAllSongsFactory, playerFactory,
+                                      musicNotesFactory, changeTargetMeasureFactory) {
     var self = this;
     this.song = measuresFactory.currentSong;
     this.songTitle = '';
     this.tempo = 60;
+    this.notes = musicNotesFactory.notes;
 
     this.selectSong;
 
@@ -25,6 +27,12 @@ angular.module('musicApp')
 
     if (this.currentUser()._id) {
       findAllSongsFactory.find(this.currentUser()._id, self);
+    }
+
+    this.addChordMeasure = function(note, index) {
+      this.addMeasures();
+      var measureNumber = this.song.length - 1;
+      changeTargetMeasureFactory.targetMeasure(note, index, measureNumber, $scope);
     }
 
     this.play = function() {
