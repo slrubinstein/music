@@ -24,8 +24,7 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 
 #score {
 	background-color: lightblue;
-	height: 500px;
-	width: 95%;
+	min-height: 500px;
 }
 
 .song {
@@ -60,4 +59,8 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 .footer{
   border:none;
   height: 20px;
+}
+
+.measure {
+	display: inline-block !important;
 }

@@ -2,18 +2,29 @@
 <!-- parent controller: MusicSandboxCtrl as sand -->
 
 <div class="col-md-12 col-lg-12">
-	<div class="col-md-6 col-lg-6">
-		<button id="addMeasures" class="btn btn-default" ng-click="toolbar.addMeasures()">Add Measures</button><br>
-  	<div class="btn-group">
-		  <p class="btn btn-default">Tempo {{toolbar.tempo}} bpm</p>
-		  
-		  <button type="button" class="btn btn-default">Up</button>
-		  <button type="button" class="btn btn-default">Dn</button>
+	<div class="col-md-8 col-lg-8">
+	<p>Add Measures</p><br>
+
+		<div class="btn-toolbar" role="toolbar">
+			<div class="btn-group">
+				<button class="btn-group btn btn-default" ng-click="toolbar.addMeasures()"> / / / / </button>
+				<button
+					class="btn-group btn btn-default"
+						ng-repeat="note in toolbar.notes | limitTo: 12"
+						ng-click="toolbar.addChordMeasure(note, $index)">{{note}}</button>
+			</div>
+		</div>
+
+	  <div class="btn-group">
+		 	<p class="btn btn-default">Tempo {{toolbar.tempo}} bpm</p>
+				  
+		 	<button type="button" class="btn btn-default">Up</button>
+		 	<button type="button" class="btn btn-default">Dn</button>
 		</div><br>
-  	<button class="btn btn-default" ng-click="toolbar.play()">Play/Pause</button>
+	  <button class="btn btn-default" ng-click="toolbar.play()">Play/Pause</button>
 	</div>
 
-	<div class="col-md-6 col-lg-6">
+	<div class="col-md-4 col-lg-4">
 		<div class="input-group">
 		  <span class="input-group-addon">Title:</span>
 		  <input type="text" class="form-control" placeholder="song title" value="{{toolbar.songTitle}}" ng-model="toolbar.songTitle"/>
@@ -24,6 +35,8 @@
 
     Load My Songs<select class="btn btn-default" ng-model="toolbar.title" ng-options="song.title for song in toolbar.userSongs"></select>
 	
+			</div>
+		</div>
 
 	  <div class="btn-group">
 		  <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">

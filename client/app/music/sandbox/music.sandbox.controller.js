@@ -17,6 +17,7 @@ angular.module('musicApp')
     this.substitutions = [];
 
     this.dropdown = function(index) {
+      console.log(this.song[index])
       if (this.song[index].chords) {
         $('.dropdown-menu').eq(index).toggle();
         activeMeasure.m = this.song[index]

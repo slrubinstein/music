@@ -102,14 +102,12 @@ angular.module('musicApp')
                                                   chordNotesFactory,
                                                   measuresFactory) {
     return {
-      targetMeasure: function(rootNote, rootIndex, measureNumber, scope) {
+      targetMeasure: function(rootNote, rootIndex, measureNumber) {
         var measureObj = newChordRootFactory.newChord(rootNote, rootIndex);
         measureObj.chords = new musicChordsFactory();
         chordNotesFactory.chordNotes(measureObj);
-        scope.$apply(function() {
-          measuresFactory.currentSong[measureNumber] = measureObj;
-          measureObj.currentroot = rootNote;
-        });
+        measuresFactory.currentSong[measureNumber] = measureObj;
+        measureObj.currentroot = rootNote;
       }
     }
   });
