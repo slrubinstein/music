@@ -31,18 +31,15 @@
 		</div>
 		<br>
 	  <button class="btn btn-default" ng-click="toolbar.saveSong()">Save This Song</button>
+		<button class="btn btn-danger" ng-click="toolbar.discardSong(toolbar)">Discard Draft</button>
+	</div>
+	<div class="col-md-4 col-lg-4">
 
+  My Songs:<select class="btn btn-default" ng-model="toolbar.mySong" ng-options="song as song for song in toolbar.userSongs"></select>
 
-    Load My Songs<select class="btn btn-default" ng-model="toolbar.title" ng-options="song.title for song in toolbar.userSongs"></select>
-	
-			</div>
-		</div>
+	<button class="btn btn-default" ng-click="toolbar.loadMySong()">Load My Song</button>
 
-	  <div class="btn-group">
-		  <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-		    Load Standard <span class="caret"></span>
-		  </button>
-		  <button class="btn btn-default" ng-click="toolbar.discardSong(toolbar)">Discard Draft</button>
-		</div>
+ 	Standards:<select class="btn btn-default" ng-model="toolbar.standard" ng-options="song.title for song in toolbar.standards"></select>
+	<button class="btn btn-default">Load Standard</button>
 	</div>
 </div>

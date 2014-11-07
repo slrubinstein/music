@@ -14,7 +14,8 @@ router.put('/:id/password', auth.isAuthenticated(), controller.changePassword);
 router.get('/:id', auth.isAuthenticated(), controller.show);
 router.post('/', controller.create);
 router.post('/:id/newsong', auth.isAuthenticated(), controller.addSong);
-router.get('/:id/loadsong', auth.isAuthenticated(), controller.loadSong);
 router.get('/:id/findallsongs', controller.findallsongs);
+router.get('/:id/title/:title', auth.isAuthenticated(), controller.loadSong);
+
 
 module.exports = router;

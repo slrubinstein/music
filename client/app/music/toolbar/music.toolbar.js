@@ -11,7 +11,8 @@ angular.module('musicApp')
                                           saveSongFactory, Auth,
                                           findAllSongsFactory, playerFactory,
                                           musicNotesFactory,
-                                          changeTargetMeasureFactory) {
+                                          changeTargetMeasureFactory,
+                                          loadSongFactory) {
     var self = this;
     this.song = measuresFactory.currentSong;
     this.songTitle = '';
@@ -26,11 +27,16 @@ angular.module('musicApp')
 
     this.userSongs = [];
 
+    this.mySong = '';
+
+    this.discardSong = measuresFactory.discardSong;
+
     if (this.currentUser()._id) {
       findAllSongsFactory.find(this.currentUser()._id, self);
     }
 
     this.addChordMeasure = function(note, index) {
+      console.log('user songs', this.userSongs)
       this.addMeasures();
       var measureNumber = this.song.length - 1;
       changeTargetMeasureFactory.targetMeasure(note, index, measureNumber, $scope);
@@ -43,14 +49,17 @@ angular.module('musicApp')
     this.saveSong = function() {
       this.song.title = this.songTitle;
       saveSongFactory.save(this.song, this.song.title, this.currentUser()._id, self);
-      console.log(this.userSongs)
     }
 
-    this.mySongDropdown = function() {
-      $('#my-song-dropdown-menu').toggle();
+    this.loadMySong = function() {
+      this.discardSong(this);
+      loadSongFactory.load(this.currentUser()._id, this.mySong, self);
     }
 
-    this.discardSong = measuresFactory.discardSong;
+    // this.mySongDropdown = function() {
+    //   $('#my-song-dropdown-menu').toggle();
+    // }
+
 
   })
   .factory('measuresFactory', function() {
@@ -78,20 +87,27 @@ angular.module('musicApp')
   .factory('findAllSongsFactory', function($http) {
     return {
       find: function(userId, self) {
-        $http.get('/api/users/'+userId+'/findallsongs', {})
+        $http.get('/api/users/'+userId+'/findallsongs')
         .success(function(data) {
           data.forEach(function(song) {
-            self.userSongs.push(song);
-            console.log('user songs', self.userSongs)
+            self.userSongs.push(song.title);
           });
+        })
+        .error(function() {
+          console.log("err");
         });
       }
     }
   })
   .factory('loadSongFactory', function($http) {
     return {
-      load: function(title, userId) {
-        $http.get('/api/users/'+userId+'/loadsong', { title: title });
+      load: function(userId, title, self) {
+        $http.get('/api/users/'+userId+'/title/'+title)
+        .success(function(data) {
+          data.song.forEach(function(measure) {
+            self.song.push(measure);
+          })
+        });
       }
     }
   });
