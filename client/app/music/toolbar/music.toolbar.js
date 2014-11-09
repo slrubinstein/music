@@ -12,14 +12,15 @@ angular.module('musicApp')
                                           findAllSongsFactory, playerFactory,
                                           musicNotesFactory,
                                           changeTargetMeasureFactory,
-                                          loadSongFactory) {
+                                          loadSongFactory, 
+                                          findAllStandardsFactory) {
     var self = this;
     this.song = measuresFactory.currentSong;
     this.songTitle = '';
     this.tempo = 60;
     this.notes = musicNotesFactory.notes;
-
-    this.selectSong;
+    this.standards = [];
+    this.selectStandard;
 
     this.addMeasures = measuresFactory.addMeasures;
 
@@ -35,8 +36,9 @@ angular.module('musicApp')
       findAllSongsFactory.find(this.currentUser()._id, self);
     }
 
+    findAllStandardsFactory.find(self);
+
     this.addChordMeasure = function(note, index) {
-      console.log('user songs', this.userSongs)
       this.addMeasures();
       var measureNumber = this.song.length - 1;
       changeTargetMeasureFactory.targetMeasure(note, index, measureNumber, $scope);
@@ -107,6 +109,21 @@ angular.module('musicApp')
           data.song.forEach(function(measure) {
             self.song.push(measure);
           })
+        });
+      }
+    }
+  })
+  .factory('findAllStandardsFactory', function($http) {
+    return {
+      find: function(self) {
+        $http.get('/api/music/standards')
+        .success(function(titles) {
+          titles.forEach(function(song) {
+            self.standards.push(song.title);
+          });
+        })
+        .error(function() {
+          console.log("err");
         });
       }
     }

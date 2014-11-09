@@ -3,10 +3,9 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
-var MusicSchema = new Schema({
-  name: String,
-  info: String,
-  active: Boolean
+var StandardSchema = new Schema({
+  title: String,
+  song: Array
 });
 
 var NoteSchema = new Schema({
@@ -19,5 +18,6 @@ var NoteSchema = new Schema({
 });
 
 var Note = mongoose.model('Note', NoteSchema);
+var Standard = mongoose.model('Standard', StandardSchema)
 
-module.exports = {'Note': Note};
+module.exports = {'Note': Note, 'Standard': Standard};

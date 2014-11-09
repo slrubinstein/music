@@ -11,13 +11,14 @@ angular.module('musicApp')
   })
   .controller('MusicSandboxCtrl', function ($scope, measuresFactory, 
                                             activeMeasure, currentHover,
-                                            updateChordFactory) {
+                                            updateChordFactory,
+                                            playerFactory) {
 
     this.song = measuresFactory.currentSong;
     this.substitutions = [];
+    var self = this;
 
     this.dropdown = function(index) {
-      console.log(this.song[index])
       if (this.song[index].chords) {
         $('.dropdown-menu').eq(index).toggle();
         activeMeasure.m = this.song[index]
@@ -25,7 +26,11 @@ angular.module('musicApp')
       }
     }
 
-    this.updateChord = updateChordFactory.update;
+    this.updateChord = function(index, name, chordroot) {
+      console.log(activeMeasure.m.chords[name])
+      playerFactory.playExample([activeMeasure.m.chords[name]])
+      updateChordFactory.update(index, name, chordroot, self);
+    }
 
     this.deleteCurrentMeasure = function(index) {
       this.song.splice(index, 1);
@@ -33,23 +38,11 @@ angular.module('musicApp')
   })
   .factory('updateChordFactory', function(activeMeasure, musicNotesFactory) {
     return {
-      update:function(index, name, chordroot) {
+      update:function(index, name, chordroot, self) {
         activeMeasure.m.currentChord = name;
-        $('.dropdown-menu').eq(this.song.indexOf(activeMeasure.m)).toggle();
+        $('.dropdown-menu').eq(self.song.indexOf(activeMeasure.m)).toggle();
         activeMeasure.m.currentroot = chordroot;
         activeMeasure.m = null;
       }
     }
   })
-  // .directive('deleteable', function($document, currentHover) {
-  //   return function(scope, element, attr) {
-
-  //     element.on('mouseover', function(event) {
-  //       event.preventDefault();
-  //     });
-  //     element.on('mouseleave', function(event) {
-  //       event.preventDefault();
-  //       currentHover.hover = null;
-  //     })
-  //   }
-  // });

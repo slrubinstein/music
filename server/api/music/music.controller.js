@@ -12,13 +12,23 @@
 var _ = require('lodash');
 var Music = require('./music.model');
 var Note = require('./music.model').Note;
+var Standard = require('./music.model').Standard;
 
-// Get list of music
+// Get list of notes
 exports.index = function(req, res) {
   Note.find(function (err, notes) {
     if(err) { return handleError(res, err); }
     notes = _.indexBy(notes, 'keyId');
     return res.json(200, notes);
+  });
+};
+
+// Get list of standards
+exports.showAll = function(req, res) {
+  Standard.find(function (err, songs) {
+    if(err) { return handleError(res, err); }
+    // var titles = songs.title;
+    return res.json(200, songs);
   });
 };
 

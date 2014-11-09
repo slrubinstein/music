@@ -8,6 +8,7 @@
 var Thing = require('../api/thing/thing.model');
 var User = require('../api/user/user.model');
 var Note = require('../api/music/music.model').Note;
+var Standard = require('../api/music/music.model').Standard;
 var teoria = require('teoria');
 
 Thing.find({}).remove(function() {
@@ -81,24 +82,52 @@ Note.find({}).remove(function() {
 
 
 
-// Music.find({}).remove(function() {
-//   Music.create({
-//     a4 : teoria.note('a4'),
-//     info : 'Integration with popular tools such as Bower, Grunt, Karma, Mocha, JSHint, Node Inspector, Livereload, Protractor, Jade, Stylus, Sass, CoffeeScript, and Less.'
-//   }, {
-//     name : 'Server and Client integration',
-//     info : 'Built with a powerful and fun stack: MongoDB, Express, AngularJS, and Node.'
-//   }, {
-//     name : 'Smart Build System',
-//     info : 'Build system ignores `spec` files, allowing you to keep tests alongside code. Automatic injection of scripts and styles into your index.html'
-//   },  {
-//     name : 'Modular Structure',
-//     info : 'Best practice client and server structures allow for more code reusability and maximum scalability'
-//   },  {
-//     name : 'Optimized Build',
-//     info : 'Build process packs up your templates as a single JavaScript payload, minifies your scripts/css/images, and rewrites asset names for caching.'
-//   },{
-//     name : 'Deployment Ready',
-//     info : 'Easily deploy your app to Heroku or Openshift with the heroku and openshift subgenerators'
-//   });
-// });
+var AllOfMe = { title: 'All of Me',
+                song:
+                 [ { root: 'C',
+                     currentChord: 'maj7',
+                     id: 3,
+                     chords: [Object],
+                     currentroot: 'C' },
+                   { root: 'C',
+                     currentChord: 'maj7',
+                     id: 3,
+                     chords: [Object],
+                     currentroot: 'C' },
+                   { root: 'E',
+                     currentChord: '7',
+                     id: 7,
+                     chords: [Object],
+                     currentroot: 'E' },
+                   { root: 'E',
+                     currentChord: '7',
+                     id: 7,
+                     chords: [Object],
+                     currentroot: 'E' },
+                   { root: 'A',
+                     currentChord: '7',
+                     id: 0,
+                     chords: [Object],
+                     currentroot: 'A' },
+                   { root: 'A',
+                     currentChord: '7',
+                     id: 0,
+                     chords: [Object],
+                     currentroot: 'A' },
+                   { root: 'D',
+                     currentChord: 'm',
+                     id: 5,
+                     chords: [Object],
+                     currentroot: 'D' },
+                   { root: 'D',
+                     currentChord: 'm7',
+                     id: 5,
+                     chords: [Object],
+                     currentroot: 'D' } ] }
+
+Standard.find({}).remove(function() {
+  Standard.create({
+    title: AllOfMe.title,
+    song: AllOfMe.song
+  });
+});

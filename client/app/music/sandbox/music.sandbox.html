@@ -9,7 +9,7 @@
     <div id="score" class="row">
     <div class="measure dropdown" ng-repeat="measure in sand.song">
       
-      <button droppable deleteable id="song{{+$index}}" class="btn btn-default btn-block dropdown-toggle song" ng-click="sand.dropdown($index)"><span class="caret"></span>{{measure.currentroot}}{{measure.currentChord}}</button>
+      <button droppable id="song{{+$index}}" class="btn btn-default btn-block dropdown-toggle song" ng-click="sand.dropdown($index)"><span class="caret"></span>{{measure.currentroot}}{{measure.currentChord}}</button>
       <button class="btn btn-danger btn-sm" ng-click="sand.deleteCurrentMeasure($index)">X</button>
 
       <ul class="dropdown-menu" role="menu">

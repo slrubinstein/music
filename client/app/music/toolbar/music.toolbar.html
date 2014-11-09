@@ -39,7 +39,8 @@
 
 	<button class="btn btn-default" ng-click="toolbar.loadMySong()">Load My Song</button>
 
- 	Standards:<select class="btn btn-default" ng-model="toolbar.standard" ng-options="song.title for song in toolbar.standards"></select>
+ 	Standards:<select class="btn btn-default" ng-model="toolbar.selectStandard" ng-options="song as song for song in toolbar.standards"></select>
+
 	<button class="btn btn-default">Load Standard</button>
 	</div>
 </div>

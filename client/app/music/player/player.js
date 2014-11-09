@@ -36,19 +36,33 @@ angular.module('musicApp')
               var allChords = []
 
               song.forEach(function(chord) {
+                console.log('chord', chord)
                 var chordType = chord.currentChord
 
                 var chordFreqs = [];
-                (chord.chords[chordType].frequencies).forEach(function(f) {
-                  chordFreqs.push(f);
-                })
-                
-                allChords.push(chordFreqs);
-                allChords.push(chordFreqs);
-                allChords.push(chordFreqs);
-                allChords.push(chordFreqs);
-              })
 
+                // case for full song
+                if (chord.chords) {
+                  (chord.chords[chordType].frequencies).forEach(function(f) {
+                    chordFreqs.push(f);
+                  });
+                  
+                  allChords.push(chordFreqs);
+                  allChords.push(chordFreqs);
+                  allChords.push(chordFreqs);
+                  allChords.push(chordFreqs);
+                }
+              
+
+              // case for single chord
+              else {
+                chord.frequencies.forEach(function(f) {
+                  chordFreqs.push(f);
+                });
+                allChords.push(chordFreqs);
+              }
+            })
+            
               var songPattern = new PSequence(allChords);
 
               this.audiolet.scheduler.play([songPattern], 1,
