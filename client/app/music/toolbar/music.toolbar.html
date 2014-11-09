@@ -3,15 +3,16 @@
 
 <div class="col-md-12 col-lg-12">
 	<div class="col-md-8 col-lg-8">
-	<p>Add Measures</p><br>
+	<p>Click to add a measure or drag on top of a
+		measure to change it.</p><br>
 
 		<div class="btn-toolbar" role="toolbar">
 			<div class="btn-group">
-				<button class="btn-group btn btn-default" ng-click="toolbar.addMeasures()"> / / / / </button>
-				<button
-					class="btn-group btn btn-default"
+				<li class="btn-group btn btn-default draggable" ng-click="toolbar.addMeasures()"> / / / / </li>
+				<li
+					class="btn-group btn btn-default draggable"
 						ng-repeat="note in toolbar.notes | limitTo: 12"
-						ng-click="toolbar.addChordMeasure(note, $index)">{{note}}</button>
+						ng-click="toolbar.addChordMeasure(note, $index)">{{note}}</li>
 			</div>
 		</div>
 

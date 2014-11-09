@@ -1,4 +1,5 @@
 angular.module('musicApp')
+  .value('dragging', {drag: false})
   .directive('toolbar', function() {
     return {
         restrict: 'E',
@@ -12,8 +13,9 @@ angular.module('musicApp')
                                           findAllSongsFactory, playerFactory,
                                           musicNotesFactory,
                                           changeTargetMeasureFactory,
-                                          loadSongFactory, 
-                                          findAllStandardsFactory) {
+                                          loadSongFactory, dragging,
+                                          findAllStandardsFactory,
+                                          droppableFactory) {
     var self = this;
     this.song = measuresFactory.currentSong;
     this.songTitle = '';
@@ -39,9 +41,12 @@ angular.module('musicApp')
     findAllStandardsFactory.find(self);
 
     this.addChordMeasure = function(note, index) {
-      this.addMeasures();
-      var measureNumber = this.song.length - 1;
-      changeTargetMeasureFactory.targetMeasure(note, index, measureNumber, $scope);
+      if (!dragging.drag) {
+        this.addMeasures();
+        var measureNumber = this.song.length - 1;
+        changeTargetMeasureFactory.targetMeasure(note, index, measureNumber, $scope);
+        droppableFactory.droppable();
+      }
     }
 
     this.play = function() {
@@ -62,6 +67,44 @@ angular.module('musicApp')
     //   $('#my-song-dropdown-menu').toggle();
     // }
 
+
+    // JQUERY UI
+
+    
+
+    // this.makeDroppable = function() {
+    //   setTimeout(function() {
+    //     console.log($('.droppable'))
+    //     $( ".droppable" ).droppable({
+    //       over: function() {
+    //         console.log('over')
+    //       },
+    //       drop: function(event, ui) {
+    //         console.log('event', event)
+    //         console.log('ui', ui)
+
+    //         // changeTargetMeasureFactory.targetMeasure(note, index, measureNumber, $scope);
+    //       }
+    //     })
+    //   })
+    // }
+
+    setTimeout(function() {
+      $(function() {
+        $('.draggable').draggable({
+          revert: true,
+          start: function(event) {
+            // reset .droppables to be droppable
+            droppableFactory.droppable();
+            dragging.drag = true;
+            console.log('event', event.target.innerHTML)
+          },
+          stop: function() {
+            dragging.drag = false;
+          },
+          revertDuration: 200
+        });
+      }), 0}) 
 
   })
   .factory('measuresFactory', function() {

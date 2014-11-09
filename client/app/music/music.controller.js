@@ -3,6 +3,7 @@
 angular.module('musicApp')
   .value('currentHover', {hover:null})
   .value('activeMeasure', {m:null})
+  .value('currentChord', {c:null})
   .controller('MusicCtrl', function ($scope, $http) {
   	var self = this;
 
@@ -74,26 +75,26 @@ angular.module('musicApp')
       }
     };
   })
-  .directive('droppable', function($document, currentHover) {
-    return function(scope, element, attr) {
+  // .directive('droppable', function($document, currentHover) {
+  //   return function(scope, element, attr) {
 
-      element.on('mouseover', function(event) {
-        event.preventDefault();
-        currentHover.hover = element
-        // element.addClass('mouse-over');
-      });
-      element.on('mouseleave', function(event) {
-        event.preventDefault();
-        currentHover.hover = null;
-        // element.removeClass('mouse-over');
-      })
-    }
-  })
+  //     element.on('mouseover', function(event) {
+  //       event.preventDefault();
+  //       currentHover.hover = element
+  //       // element.addClass('mouse-over');
+  //     });
+  //     element.on('mouseleave', function(event) {
+  //       event.preventDefault();
+  //       currentHover.hover = null;
+  //       // element.removeClass('mouse-over');
+  //     })
+  //   }
+  // })
   .factory('musicNotesFactory', function() {
     return {
       notes: ['A', 'Bb', 'B', 'C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab',
               'A', 'Bb', 'B', 'C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab',
-              'A', 'Bb', 'B', 'C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab',]
+              'A', 'Bb', 'B', 'C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab']
     }
   })
   .factory('changeTargetMeasureFactory', function(newChordRootFactory,
@@ -108,6 +109,7 @@ angular.module('musicApp')
         chordNotesFactory.chordNotes(measureObj);
         measuresFactory.currentSong[measureNumber] = measureObj;
         measureObj.currentroot = rootNote;
+        
       }
     }
   });

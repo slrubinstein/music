@@ -3,12 +3,17 @@
 <div class="col-sm-2 col-md-2 col-lg-2 sidebar jumbotron container">
 	
 	<p>Drag a chord root from here:</p>
-	<div id="keyButtons">
-		<button draggable class="btn btn-default keyButtons" ng-repeat="note in sidebar.notes | limitTo: 12">{{note}}</button>
+	<div id="keyButtons" class="droppable-add">
+		<li 
+			class="btn btn-default keyButtons draggable" 
+			ng-repeat="note in sidebar.notes | limitTo: 12"
+			ng-click="sidebar.testClick()">{{note}}</li>
 	</div>
 
 	<button class="btn btn-default" ng-repeat="num in sidebar.majorNumerals">{{num}}</button>
 
+
+	<li class="btn btn-default keyButtons draggable" ng-repeat="test in tests">JDFLKDSJF</li>
 </div>
 
 <div class="col-sm-9 col-md-10 ">

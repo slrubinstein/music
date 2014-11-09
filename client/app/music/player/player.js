@@ -41,6 +41,9 @@ angular.module('musicApp')
 
                 var chordFreqs = [];
 
+                // is the player distinguishing betw
+                // Im7 iiim7 and vim7??
+
                 // case for full song
                 if (chord.chords) {
                   (chord.chords[chordType].frequencies).forEach(function(f) {

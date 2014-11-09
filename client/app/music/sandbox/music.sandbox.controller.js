@@ -12,11 +12,16 @@ angular.module('musicApp')
   .controller('MusicSandboxCtrl', function ($scope, measuresFactory, 
                                             activeMeasure, currentHover,
                                             updateChordFactory,
-                                            playerFactory) {
+                                            playerFactory,
+                                            currentChord,
+                                            droppableFactory) {
 
     this.song = measuresFactory.currentSong;
     this.substitutions = [];
     var self = this;
+    this.setDroppable = droppableFactory.droppable;
+
+    this.setDroppable();
 
     this.dropdown = function(index) {
       if (this.song[index].chords) {
@@ -35,6 +40,7 @@ angular.module('musicApp')
     this.deleteCurrentMeasure = function(index) {
       this.song.splice(index, 1);
     }
+    
   })
   .factory('updateChordFactory', function(activeMeasure, musicNotesFactory) {
     return {
@@ -43,6 +49,29 @@ angular.module('musicApp')
         $('.dropdown-menu').eq(self.song.indexOf(activeMeasure.m)).toggle();
         activeMeasure.m.currentroot = chordroot;
         activeMeasure.m = null;
+        
       }
     }
   })
+  .factory('droppableFactory', function(currentChord, changeTargetMeasureFactory) {
+    return {
+      droppable: function() {
+
+        setTimeout(function() {
+
+          $( ".droppable" ).droppable({
+            over: function() {
+              console.log('over')
+            },
+            drop: function(event, ui) {
+              var note = ui.draggable.text()
+              var index = ui.draggable.index()
+              var measureNumber = event.target.id.slice(4);
+              changeTargetMeasureFactory.targetMeasure(note, index, measureNumber);
+
+            }
+          })
+        })
+      }
+    }
+  })    
