@@ -27,13 +27,10 @@ angular.module('musicApp')
       return $scope.notes;
     }
 
-    this.clickNumerals = function(index) {
-
+    this.showSong = function() {
+      console.log('Current Song: ', this.song)
     }
 
-    this.testClick = function() {
-      console.log('clicked')
-    }
     this.clickChord = function(index) {
       this.root = self.notes[index];
       this.id = index;

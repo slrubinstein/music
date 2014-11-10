@@ -4,6 +4,7 @@ angular.module('musicApp')
   .value('currentHover', {hover:null})
   .value('activeMeasure', {m:null})
   .value('currentChord', {c:null})
+  .value('activeBeat', {b:null})
   .controller('MusicCtrl', function ($scope, $http) {
   	var self = this;
 
@@ -75,21 +76,6 @@ angular.module('musicApp')
       }
     };
   })
-  // .directive('droppable', function($document, currentHover) {
-  //   return function(scope, element, attr) {
-
-  //     element.on('mouseover', function(event) {
-  //       event.preventDefault();
-  //       currentHover.hover = element
-  //       // element.addClass('mouse-over');
-  //     });
-  //     element.on('mouseleave', function(event) {
-  //       event.preventDefault();
-  //       currentHover.hover = null;
-  //       // element.removeClass('mouse-over');
-  //     })
-  //   }
-  // })
   .factory('musicNotesFactory', function() {
     return {
       notes: ['A', 'Bb', 'B', 'C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab',
@@ -107,8 +93,10 @@ angular.module('musicApp')
         var measureObj = newChordRootFactory.newChord(rootNote, rootIndex);
         measureObj.chords = new musicChordsFactory();
         chordNotesFactory.chordNotes(measureObj);
-        measuresFactory.currentSong[measureNumber] = measureObj;
         measureObj.currentroot = rootNote;
+
+        var fourBeatMeasure = [measureObj, measureObj, measureObj, measureObj];
+        measuresFactory.currentSong[measureNumber] = fourBeatMeasure;
         
       }
     }

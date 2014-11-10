@@ -23,11 +23,11 @@ angular.module('musicApp')
   .factory('newChordRootFactory', function() {
   	return {
   		newChord: function(rootNote, rootIndex) {
-  			var chordRoot = {};
-	      chordRoot.root = rootNote;
-	      chordRoot.currentChord = 'M';
-	      chordRoot.id = rootIndex;
-	      return chordRoot;
+  			var newMeasure = {};
+	      newMeasure.root = rootNote;
+	      newMeasure.currentChord = 'M';
+	      newMeasure.id = rootIndex;
+	      return newMeasure;
 	    }
   	}
   })

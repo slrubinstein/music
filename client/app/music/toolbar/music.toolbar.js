@@ -43,6 +43,7 @@ angular.module('musicApp')
     this.addChordMeasure = function(note, index) {
       if (!dragging.drag) {
         this.addMeasures();
+        console.log('song length', this.song.length)
         var measureNumber = this.song.length - 1;
         changeTargetMeasureFactory.targetMeasure(note, index, measureNumber, $scope);
         droppableFactory.droppable();
@@ -50,7 +51,7 @@ angular.module('musicApp')
     }
 
     this.play = function() {
-      playerFactory.playExample(this.song); 
+      playerFactory.playSong(this.song); 
     }
 
     this.saveSong = function() {
@@ -62,32 +63,6 @@ angular.module('musicApp')
       this.discardSong(this);
       loadSongFactory.load(this.currentUser()._id, this.mySong, self);
     }
-
-    // this.mySongDropdown = function() {
-    //   $('#my-song-dropdown-menu').toggle();
-    // }
-
-
-    // JQUERY UI
-
-    
-
-    // this.makeDroppable = function() {
-    //   setTimeout(function() {
-    //     console.log($('.droppable'))
-    //     $( ".droppable" ).droppable({
-    //       over: function() {
-    //         console.log('over')
-    //       },
-    //       drop: function(event, ui) {
-    //         console.log('event', event)
-    //         console.log('ui', ui)
-
-    //         // changeTargetMeasureFactory.targetMeasure(note, index, measureNumber, $scope);
-    //       }
-    //     })
-    //   })
-    // }
 
     setTimeout(function() {
       $(function() {
@@ -108,9 +83,15 @@ angular.module('musicApp')
   })
   .factory('measuresFactory', function() {
     return {
-      currentSong: [{currentChord: ' / / / / '}],
+      currentSong: [[{currentChord: ' / '},
+                     {currentChord: ' / '},
+                     {currentChord: ' / '},
+                     {currentChord: ' / '}]],
       addMeasures: function() {
-        this.song.push({currentChord: ' / / / / '});
+        this.song.push([{currentChord: ' / '},
+                        {currentChord: ' / '},
+                        {currentChord: ' / '},
+                        {currentChord: ' / '}]);
       },
       discardSong: function(self) {
         this.song.length = 0;
