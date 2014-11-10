@@ -33,7 +33,9 @@ angular.module('musicApp')
         var SchedulerApp = function() {
           this.audiolet = new Audiolet();
 
-          var allChords = []
+          var notes = ['A', 'Bb', 'B', 'C', 'C#', 'D', 
+                       'Eb','E', 'F', 'F#', 'G', 'Ab'];
+          var allChords = [];
 
           song.forEach(function(measure) {
 
@@ -42,8 +44,22 @@ angular.module('musicApp')
             // Im7 iiim7 and vim7??
 
             measure.forEach(function(beat) {
+              var chordType = '';
+              
+              if (beat.currentroot === beat.root) {
+                chordType = beat.currentChord;
+              } 
+              else {
+                var distance = (notes.indexOf(beat.currentroot) - notes.indexOf(beat.root));
+                if (distance === 4 || distance === -8) {
+                  chordType = 'iii' + beat.currentChord;
+                } 
+                else if (distance === 9 || distance === -3) {
+                  chordType = 'vi' + beat.currentChord;
+                }
+              }
+
               var chordFreqs = [];
-              var chordType = beat.currentChord;
               var frequencies = beat.chords[chordType].frequencies;
               frequencies.forEach(function(f) {
                 chordFreqs.push(f);
@@ -70,7 +86,7 @@ angular.module('musicApp')
 
       //-------------------------------------------------------------//
 
-      playOne: function(chord) {
+      playOne: function(beat) {
         var Synth = function(audiolet, frequency) {
               AudioletGroup.call(this, audiolet, 0, 1);
               // Basic wave
@@ -98,9 +114,27 @@ angular.module('musicApp')
         var SchedulerApp = function() {
             this.audiolet = new Audiolet();
 
+            var notes = ['A', 'Bb', 'B', 'C', 'C#', 'D', 
+                       'Eb','E', 'F', 'F#', 'G', 'Ab'];
             var chordFreqs = [];
+            var chordType;
 
-            chord.frequencies.forEach(function(f) {
+            if (beat.currentroot === beat.root) {
+              chordType = beat.currentChord;
+            }
+            else {
+              var distance = (notes.indexOf(beat.currentroot) - notes.indexOf(beat.root));
+              if (distance === 4 || distance === -8) {
+                chordType = 'iii' + beat.currentChord;
+              } 
+              else if (distance === 9 || distance === -3) {
+                chordType = 'vi' + beat.currentChord;
+              }
+            }
+
+            var frequencies = beat.chords[chordType].frequencies;
+
+            frequencies.forEach(function(f) {
               chordFreqs.push(f);
             });
             
@@ -118,7 +152,7 @@ angular.module('musicApp')
           }
         };
 
-        var app = new SchedulerApp(chord);
+        var app = new SchedulerApp(beat);
       }
     }
   })

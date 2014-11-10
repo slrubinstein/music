@@ -31,9 +31,9 @@ angular.module('musicApp')
     }
 
     this.updateChord = function(name, chordroot, event, beatIndex) {
-      console.log('active beat', activeMeasure.m[beatIndex])
-      playerFactory.playOne(activeMeasure.m[beatIndex].chords[name])
       updateChordFactory.update(name, chordroot, event, beatIndex);
+      playerFactory.playOne(activeMeasure.m[beatIndex], name);
+      activeMeasure.m = null;
     }
 
     this.deleteCurrentMeasure = function(index) {
@@ -47,7 +47,7 @@ angular.module('musicApp')
         activeMeasure.m[beat].currentChord = chordName;
         activeMeasure.m[beat].currentroot = chordroot;
         $(event.target).closest('.dropdown-menu').toggle();
-        activeMeasure.m = null;
+        
       }
     }
   })
