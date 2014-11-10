@@ -12,16 +12,12 @@ angular.module('musicApp')
                                         measuresFactory,
                                         newChordRootFactory,
                                         chordNotesFactory,
-                                        renameChords,
-                                        romanNumeralsFactory,
                                         currentChord, droppableFactory) {
     var self = this;
     $scope.tests = [1, 2]
     this.root = '';
     this.notes = musicNotesFactory.notes;
     this.song = measuresFactory.currentSong;
-    this.majorNumerals = romanNumeralsFactory.major;
-    this.minorNumerals = romanNumeralsFactory.minor;
 
     this.recreateNotes = function() {
       return $scope.notes;
@@ -46,9 +42,9 @@ angular.module('musicApp')
       }), 0
     }) 
   
-  .factory('romanNumeralsFactory', function() {
-    return {
-      major: ['I', 'ii', 'iii', 'iv', 'V', 'vi', 'vii'],
-      minor: ['i', 'ii', 'III', 'iv', 'V', 'vi', 'VII']
-    }
-  })
+  // .factory('romanNumeralsFactory', function() {
+  //   return {
+  //     major: ['I', 'ii', 'iii', 'IV', 'V', 'vi', 'vii'],
+  //     minor: ['i', 'ii', 'III', 'iv', 'V', 'vi', 'VII']
+  //   }
+  // })

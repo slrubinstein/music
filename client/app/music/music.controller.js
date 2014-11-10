@@ -24,58 +24,58 @@ angular.module('musicApp')
       controllerAs: 'room'
     }
   })
-  .directive('draggable', function($document, currentHover, changeTargetMeasureFactory) {
-    return function(scope, element, attr) {
-      var startX = 0, startY = 0, x = 0, y = 0;
-      element.css({
-       position: 'relative',
-          'z-index': 2
-        });
-      element.on('mousedown', function(event) {
-        // Prevent default dragging of selected content
-        event.preventDefault();
-        var clone = element.clone();
-        clone.appendTo(element);
-        clone.offset({
-          top: event.pageY,
-          left: event.pageX
-        });
-        startX = event.screenX - x;
-        startY = event.screenY - y;
+  // .directive('draggable', function($document, currentHover, changeTargetFactory) {
+  //   return function(scope, element, attr) {
+  //     var startX = 0, startY = 0, x = 0, y = 0;
+  //     element.css({
+  //      position: 'relative',
+  //         'z-index': 2
+  //       });
+  //     element.on('mousedown', function(event) {
+  //       // Prevent default dragging of selected content
+  //       event.preventDefault();
+  //       var clone = element.clone();
+  //       clone.appendTo(element);
+  //       clone.offset({
+  //         top: event.pageY,
+  //         left: event.pageX
+  //       });
+  //       startX = event.screenX - x;
+  //       startY = event.screenY - y;
 
-        $document.on('mousemove', clone, mousemove);
-        $document.on('mouseup', clone, mouseup);
-      });
+  //       $document.on('mousemove', clone, mousemove);
+  //       $document.on('mouseup', clone, mouseup);
+  //     });
 
-      function mousemove(event) {
-        y = event.screenY - startY;
-        x = event.screenX - startX + 2;
-        var clone = event.data;
+  //     function mousemove(event) {
+  //       y = event.screenY - startY;
+  //       x = event.screenX - startX + 2;
+  //       var clone = event.data;
         
-        clone.css({
-          top: y + 'px',
-          left:  x + 'px'
-        });
-      }
+  //       clone.css({
+  //         top: y + 'px',
+  //         left:  x + 'px'
+  //       });
+  //     }
 
-      function mouseup(event) {
-        event.preventDefault();
-        var clone = event.data;
-        $document.off('mousemove', mousemove);
-        $document.off('mouseup', mouseup);
-        y = 0;
-        x = 0;
-        if (currentHover.hover !== null) {
-          var targetMeasure = currentHover.hover;
-          var rootNote = clone.text();
-          var rootIndex = element.index();
-          var measureNumber = targetMeasure.attr('id').slice(4)
-          changeTargetMeasureFactory.targetMeasure(rootNote, rootIndex, measureNumber, scope)
-        }
-        clone.remove();
-      }
-    };
-  })
+  //     function mouseup(event) {
+  //       event.preventDefault();
+  //       var clone = event.data;
+  //       $document.off('mousemove', mousemove);
+  //       $document.off('mouseup', mouseup);
+  //       y = 0;
+  //       x = 0;
+  //       if (currentHover.hover !== null) {
+  //         var targetMeasure = currentHover.hover;
+  //         var rootNote = clone.text();
+  //         var rootIndex = element.index();
+  //         var measureNumber = targetMeasure.attr('id').slice(4)
+  //         changeTargetFactory.targetMeasure(rootNote, rootIndex, measureNumber, scope)
+  //       }
+  //       clone.remove();
+  //     }
+  //   };
+  // })
   .factory('musicNotesFactory', function() {
     return {
       notes: ['A', 'Bb', 'B', 'C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab',
@@ -83,26 +83,32 @@ angular.module('musicApp')
               'A', 'Bb', 'B', 'C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab']
     }
   })
-  .factory('changeTargetMeasureFactory', function(newChordRootFactory,
+  .factory('changeTargetFactory', function(newChordRootFactory,
                                                   musicNotesFactory,
                                                   musicChordsFactory,
                                                   chordNotesFactory,
                                                   measuresFactory) {
     return {
-      targetMeasure: function(rootNote, rootIndex, measureNumber) {
+      targetMeasure: function(rootNote, rootIndex, measureNumber, beats) {
 
         var newMeasure = [];
 
-        for (var i = 0; i < 4; i++) {
+        for (var i = 0; i < beats; i++) {
           var chordObj = newChordRootFactory.newChord(rootNote, rootIndex);
           chordObj.chords = new musicChordsFactory();
           chordNotesFactory.chordNotes(chordObj);
           chordObj.currentroot = rootNote;
           newMeasure.push(chordObj)
         }
-
-        measuresFactory.currentSong[measureNumber] = newMeasure;
-        
+        measuresFactory.currentSong[measureNumber] = newMeasure;  
+      },
+      targetBeat: function(rootNote, rootIndex, measureNumber, beatIndex) {
+        var newBeat = newChordRootFactory.newChord(rootNote, rootIndex);
+        newBeat.chords = new musicChordsFactory();
+        chordNotesFactory.chordNotes(newBeat);
+        newBeat.currentroot = rootNote;
+        measuresFactory.currentSong[measureNumber].splice(beatIndex, 1, newBeat);
       }
+
     }
   });

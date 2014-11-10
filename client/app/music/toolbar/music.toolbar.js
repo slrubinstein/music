@@ -12,7 +12,7 @@ angular.module('musicApp')
                                           saveSongFactory, Auth,
                                           findAllSongsFactory, playerFactory,
                                           musicNotesFactory,
-                                          changeTargetMeasureFactory,
+                                          changeTargetFactory,
                                           loadSongFactory, dragging,
                                           findAllStandardsFactory,
                                           droppableFactory) {
@@ -20,6 +20,8 @@ angular.module('musicApp')
     this.song = measuresFactory.currentSong;
     this.songTitle = '';
     this.tempo = 60;
+    this.beatsPerMeasure = 4;
+
     this.notes = musicNotesFactory.notes;
     this.standards = [];
     this.selectStandard;
@@ -44,7 +46,7 @@ angular.module('musicApp')
       if (!dragging.drag) {
         this.addMeasures();
         var measureNumber = this.song.length - 1;
-        changeTargetMeasureFactory.targetMeasure(note, index, measureNumber);
+        changeTargetFactory.targetMeasure(note, index, measureNumber, this.beatsPerMeasure);
         droppableFactory.droppable();
       }
     }

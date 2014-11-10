@@ -44,48 +44,26 @@ angular.module('musicApp')
   .factory('updateChordFactory', function(activeMeasure, musicNotesFactory) {
     return {
       update:function(chordName, chordroot, event, beat) {
-
-        console.log('event', event)
-
-        console.log('active measure', activeMeasure.m)
-
-        console.log('current beat', activeMeasure.m[beat])
-
-        // console.log('current beat chordName', activeMeasure.m[beat].currentChord)
-
-        // console.log('next beat chordName', activeMeasure.m[beat+1].currentChord)
-
         activeMeasure.m[beat].currentChord = chordName;
         activeMeasure.m[beat].currentroot = chordroot;
-
-        // var testBeat = activeMeasure.m[beat]
-        // testBeat.currentChord = chordName;
-        // testBeat.currentroot = chordroot;
-        // activeMeasure.m.splice(beat, 1, testBeat)
-
-
-        console.log('AFTER current beat chordName', activeMeasure.m[beat].currentChord)
-
-        // console.log('AFTER next beat chordName', activeMeasure.m[beat+1].currentChord)
-
         $(event.target).closest('.dropdown-menu').toggle();
         activeMeasure.m = null;
-        
       }
     }
   })
-  .factory('droppableFactory', function(currentChord, changeTargetMeasureFactory) {
+  .factory('droppableFactory', function(currentChord, changeTargetFactory) {
     return {
       droppable: function() {
         setTimeout(function() {
           $( ".droppable" ).droppable({
             accept: '.draggable',
             drop: function(event, ui) {
+              var beatIndex = $(event.target).parent().index()
               var note = ui.draggable.text()
               // subtracting 1 from index to account for rest measure
               var index = ui.draggable.index() - 1;
               var measureNumber = $(event.target).closest('.measure').attr('id').slice(4);
-              changeTargetMeasureFactory.targetMeasure(note, index, measureNumber);
+              changeTargetFactory.targetBeat(note, index, measureNumber, beatIndex);
             }
           })
         })

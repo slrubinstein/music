@@ -40,7 +40,11 @@ angular.module('musicApp')
 	      	// chord is the array of nums in each chordObj.chords
 		      for (var chord in measureObj.chords) {
 		      	// rename chord with root (zero index in build property)
-		      	measureObj.chords[chord].chordroot = musicNotesFactory.notes[measureObj.id + measureObj.chords[chord].build[0]]
+		      	var rootIndex = measureObj.id + measureObj.chords[chord].build[0];
+		      	if (rootIndex < 0) { 
+		      		rootIndex += 12 
+		      	}
+		      	measureObj.chords[chord].chordroot = musicNotesFactory.notes[rootIndex];
 		      	measureObj.chords[chord].frequencies = [];
 
 		      	// find frequency from notes json
@@ -49,8 +53,12 @@ angular.module('musicApp')
 		      		var thisFreq = notes[measureObj.id+num+48].frequency;
 		      		measureObj.chords[chord].frequencies.push(thisFreq)
 		      	});
+
 			      // create a new arr to hold the transformed nums to letters
 			      var arr = (measureObj.chords[chord].build).map(function(num) {
+			      	if (num < 0) {
+			      		num += 12
+			      	}
 		          num = musicNotesFactory.notes[num + measureObj.id]
 		          return num;
 		        })
@@ -62,16 +70,3 @@ angular.module('musicApp')
 	    }
 	  }
 	})
-	.factory('renameChords', function() {
-		return {
-			rename: function(chordObj, self) {
-				// give subs names based on first index in chord structure
-				for (name in chordObj.chords) {
-					var oldName = name;
-					name = self.notes[chordObj.chords[name][0]] + ' ' + name;
-				}
-				return chordObj;
-			}
-		}
-	})
-	
