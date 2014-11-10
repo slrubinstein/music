@@ -7,20 +7,48 @@
 <div class="col-md-12 col-lg-12">
     <p>Drop chord roots onto measures:</p>
     <div id="score" class="row">
-    <div class="measure dropdown" ng-repeat="measure in sand.song">
+
+    <div class="measure btn-group" ng-repeat="measure in sand.song">
       
-      <button id="song{{+$index}}" class="btn btn-default btn-block dropdown-toggle song droppable" ng-click="sand.dropdown($index)"><span class="caret"></span>{{measure.currentroot}}{{measure.currentChord}}</button>
-      <button class="btn btn-danger btn-sm" ng-click="sand.deleteCurrentMeasure($index)">X</button>
+      <button 
+        id="song{{+$index}}" 
+        class="btn btn-default droppable" 
+        ng-click="sand.dropdown($event, $index, 0)">
+        <!-- <span class="caret"></span> -->
+        {{measure.currentroot}}{{measure.currentChord}}</button>
+  
 
       <ul class="dropdown-menu" role="menu">
         <li ng-repeat="sub in sand.substitutions">
-          <a href="#" ng-click="sand.updateChord($index, sub.name, sub.chordroot)">{{sub.chordroot}}{{sub.name}} {{sub.notes}}</a>
+          <a href="#" ng-click="sand.updateChord(sub.name, sub.chordroot, $event)">{{sub.chordroot}}{{sub.name}} {{sub.notes}}</a>
         </li>
       </ul>
-     <!--  <p id="draggable">DRAG</p>
-      <button id="droppable" class="btn btn-lg btn-default">DROP</button> -->
+
+      <button 
+        id="song{{+$index}}" 
+        class="btn btn-default droppable" 
+        ng-click="sand.dropdown($event, $index, 1)">
+        <!-- <span class="caret"></span> -->
+        {{measure.currentroot}}{{measure.currentChord}}</button>
+
+      <ul class="dropdown-menu" role="menu">
+        <li ng-repeat="sub in sand.substitutions">
+          <a href="#" ng-click="sand.updateChord(sub.name, sub.chordroot, $event)">{{sub.chordroot}}{{sub.name}} {{sub.notes}}</a>
+        </li>
+      </ul>
 
     </div>
+
+    <div class="btn-group">
+      <button class="btn btn-default" ng-click="add(4)">1</button>
+      <button class="btn btn-default" ng-click="add(5)">2</button>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-default" ng-repeat="num in nums">{{num}}</button>
+
+    </div>
+
   </div>
 </div>
 </div>

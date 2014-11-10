@@ -23,18 +23,27 @@ angular.module('musicApp')
 
     this.setDroppable();
 
-    this.dropdown = function(index) {
-      if (this.song[index].chords) {
-        $('.dropdown-menu').eq(index).toggle();
-        activeMeasure.m = this.song[index]
-        this.substitutions = this.song[index].chords;
+
+    $scope.nums = [1,2,3]
+    $scope.add = function(num) {
+
+      $scope.nums.push(num)
+    }
+
+
+    this.dropdown = function(event, songIndex, beatIndex) {
+      if (this.song[songIndex].chords) {
+        console.log('event', $(event.target).next())
+        $(event.target).next().toggle();
+
+        activeMeasure.m = this.song[songIndex]
+        this.substitutions = this.song[songIndex].chords;
       }
     }
 
-    this.updateChord = function(index, name, chordroot) {
-      console.log(activeMeasure.m.chords[name])
+    this.updateChord = function(name, chordroot, event) {
       playerFactory.playExample([activeMeasure.m.chords[name]])
-      updateChordFactory.update(index, name, chordroot, self);
+      updateChordFactory.update(name, chordroot, event);
     }
 
     this.deleteCurrentMeasure = function(index) {
@@ -44,9 +53,9 @@ angular.module('musicApp')
   })
   .factory('updateChordFactory', function(activeMeasure, musicNotesFactory) {
     return {
-      update:function(index, name, chordroot, self) {
-        activeMeasure.m.currentChord = name;
-        $('.dropdown-menu').eq(self.song.indexOf(activeMeasure.m)).toggle();
+      update:function(chordName, chordroot, event) {
+        activeMeasure.m.currentChord = chordName;
+        $(event.target).closest('.dropdown-menu').toggle();
         activeMeasure.m.currentroot = chordroot;
         activeMeasure.m = null;
         
