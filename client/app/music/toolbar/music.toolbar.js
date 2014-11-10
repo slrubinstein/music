@@ -97,7 +97,6 @@ angular.module('musicApp')
             // reset .droppables to be droppable
             droppableFactory.droppable();
             dragging.drag = true;
-            console.log('event', event.target.innerHTML)
           },
           stop: function() {
             dragging.drag = false;

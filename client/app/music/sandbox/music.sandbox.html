@@ -5,18 +5,17 @@
 <music-audio></music-audio>
 
 <div class="col-md-12 col-lg-12">
-    <p>Drop chord roots onto measures:</p>
-    <div id="score" class="row">
+  <div ui-sortable id="score" class="row" ng-model="sand.song">
 
-    <div class="measure btn-group" ng-repeat="measure in sand.song">
+    <div class="measure btn-group" ng-repeat="measure in sand.song" >
       
-      <button 
+      <li 
         id="song{{+$index}}" 
         class="btn btn-default droppable" 
         ng-click="sand.dropdown($event, $index, 0)">
         <!-- <span class="caret"></span> -->
-        {{measure.currentroot}}{{measure.currentChord}}</button>
-  
+        {{measure.currentroot}}{{measure.currentChord}}</li>
+
 
       <ul class="dropdown-menu" role="menu">
         <li ng-repeat="sub in sand.substitutions">
@@ -24,12 +23,12 @@
         </li>
       </ul>
 
-      <button 
+      <li 
         id="song{{+$index}}" 
         class="btn btn-default droppable" 
         ng-click="sand.dropdown($event, $index, 1)">
         <!-- <span class="caret"></span> -->
-        {{measure.currentroot}}{{measure.currentChord}}</button>
+        {{measure.currentroot}}{{measure.currentChord}}</li>
 
       <ul class="dropdown-menu" role="menu">
         <li ng-repeat="sub in sand.substitutions">
@@ -37,18 +36,8 @@
         </li>
       </ul>
 
-    </div>
-
-    <div class="btn-group">
-      <button class="btn btn-default" ng-click="add(4)">1</button>
-      <button class="btn btn-default" ng-click="add(5)">2</button>
-    </div>
-
-    <div class="btn-group">
-      <button class="btn btn-default" ng-repeat="num in nums">{{num}}</button>
+      <button class="btn btn-danger btn-xs" ng-click="sand.deleteCurrentMeasure($index)">X</button>
 
     </div>
-
   </div>
-</div>
 </div>

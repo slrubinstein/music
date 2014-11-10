@@ -22,18 +22,14 @@ angular.module('musicApp')
     this.setDroppable = droppableFactory.droppable;
 
     this.setDroppable();
-
-
-    $scope.nums = [1,2,3]
-    $scope.add = function(num) {
-
-      $scope.nums.push(num)
+    
+    this.showSong = function() {
+      console.log(this.song)
     }
-
+    
 
     this.dropdown = function(event, songIndex, beatIndex) {
       if (this.song[songIndex].chords) {
-        console.log('event', $(event.target).next())
         $(event.target).next().toggle();
 
         activeMeasure.m = this.song[songIndex]
@@ -69,9 +65,7 @@ angular.module('musicApp')
         setTimeout(function() {
 
           $( ".droppable" ).droppable({
-            over: function() {
-              console.log('over')
-            },
+            accept: '.draggable',
             drop: function(event, ui) {
               var note = ui.draggable.text()
               var index = ui.draggable.index()
