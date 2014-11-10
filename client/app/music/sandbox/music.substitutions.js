@@ -11,7 +11,7 @@ angular.module('musicApp')
       this['9'] = {name: '9', rel: 'I', build: [0, 4, 7, 10, 14]}
       this['7+5'] = {name: '7+5', rel: 'I', build: [0, 4, 8, 10]};
       // minor substitutions
-      this.minorTriad = {name: 'm', rel: 'I', build: [0, 3, 7]};
+      this.m = {name: 'm', rel: 'I', build: [0, 3, 7]};
       this.m6 = {name: 'm6', rel: 'I', build: [0, 3, 7, 9]};
       this.m7 = {name: 'm7', rel: 'I', build: [0, 3, 7, 10]};
       // relative minor substitutions

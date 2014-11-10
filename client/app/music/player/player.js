@@ -9,7 +9,7 @@ angular.module('musicApp')
         var Synth = function(audiolet, frequency) {
           AudioletGroup.call(this, audiolet, 0, 1);
           // Basic wave
-          this.saw = new Saw(audiolet, frequency * 2);
+          this.saw = new Saw(audiolet, frequency * 1/2);
 
           // Gain envelope
           this.gain = new Gain(audiolet);
@@ -98,15 +98,12 @@ angular.module('musicApp')
         var SchedulerApp = function() {
             this.audiolet = new Audiolet();
 
-            console.log('chord', chord)
-
             var chordFreqs = [];
 
             chord.frequencies.forEach(function(f) {
               chordFreqs.push(f);
             });
             
-            console.log('fs', chordFreqs)
             var chordPattern = new PSequence([chordFreqs]);
 
             this.audiolet.scheduler.play([chordPattern], 1,

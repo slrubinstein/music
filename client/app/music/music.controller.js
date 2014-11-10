@@ -90,13 +90,18 @@ angular.module('musicApp')
                                                   measuresFactory) {
     return {
       targetMeasure: function(rootNote, rootIndex, measureNumber) {
-        var measureObj = newChordRootFactory.newChord(rootNote, rootIndex);
-        measureObj.chords = new musicChordsFactory();
-        chordNotesFactory.chordNotes(measureObj);
-        measureObj.currentroot = rootNote;
 
-        var fourBeatMeasure = [measureObj, measureObj, measureObj, measureObj];
-        measuresFactory.currentSong[measureNumber] = fourBeatMeasure;
+        var newMeasure = [];
+
+        for (var i = 0; i < 4; i++) {
+          var chordObj = newChordRootFactory.newChord(rootNote, rootIndex);
+          chordObj.chords = new musicChordsFactory();
+          chordNotesFactory.chordNotes(chordObj);
+          chordObj.currentroot = rootNote;
+          newMeasure.push(chordObj)
+        }
+
+        measuresFactory.currentSong[measureNumber] = newMeasure;
         
       }
     }

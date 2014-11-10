@@ -43,9 +43,8 @@ angular.module('musicApp')
     this.addChordMeasure = function(note, index) {
       if (!dragging.drag) {
         this.addMeasures();
-        console.log('song length', this.song.length)
         var measureNumber = this.song.length - 1;
-        changeTargetMeasureFactory.targetMeasure(note, index, measureNumber, $scope);
+        changeTargetMeasureFactory.targetMeasure(note, index, measureNumber);
         droppableFactory.droppable();
       }
     }
@@ -83,15 +82,9 @@ angular.module('musicApp')
   })
   .factory('measuresFactory', function() {
     return {
-      currentSong: [[{currentChord: ' / '},
-                     {currentChord: ' / '},
-                     {currentChord: ' / '},
-                     {currentChord: ' / '}]],
+      currentSong: [],
       addMeasures: function() {
-        this.song.push([{currentChord: ' / '},
-                        {currentChord: ' / '},
-                        {currentChord: ' / '},
-                        {currentChord: ' / '}]);
+        this.song.push([]);
       },
       discardSong: function(self) {
         this.song.length = 0;

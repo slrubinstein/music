@@ -44,12 +44,16 @@ angular.module('musicApp')
   .factory('updateChordFactory', function(activeMeasure, musicNotesFactory) {
     return {
       update:function(chordName, chordroot, event, beat) {
-        // console.log('selected beat:',
-        //   $(event.target).closest('.dropdown-menu').prev())
 
-        // console.log('current measure', activeMeasure.m)
-        // console.log('beat', beat)
-        // console.log('current beat', activeMeasure.m[beat])
+        console.log('event', event)
+
+        console.log('active measure', activeMeasure.m)
+
+        console.log('current beat', activeMeasure.m[beat])
+
+        // console.log('current beat chordName', activeMeasure.m[beat].currentChord)
+
+        // console.log('next beat chordName', activeMeasure.m[beat+1].currentChord)
 
         activeMeasure.m[beat].currentChord = chordName;
         activeMeasure.m[beat].currentroot = chordroot;
@@ -59,6 +63,10 @@ angular.module('musicApp')
         // testBeat.currentroot = chordroot;
         // activeMeasure.m.splice(beat, 1, testBeat)
 
+
+        console.log('AFTER current beat chordName', activeMeasure.m[beat].currentChord)
+
+        // console.log('AFTER next beat chordName', activeMeasure.m[beat+1].currentChord)
 
         $(event.target).closest('.dropdown-menu').toggle();
         activeMeasure.m = null;
