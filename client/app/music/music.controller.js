@@ -43,11 +43,10 @@ angular.module('musicApp')
         for (var i = 0; i < beats; i++) {
           var chordObj = newChordRootFactory.newChord(rootNote, rootIndex);
           chordObj.chords = new musicChordsFactory();
-          chordNotesFactory.chordNotes(chordObj);
           chordObj.currentroot = rootNote;
           newMeasure.push(chordObj)
         }
-        // playerFactory.playOne(newMeasure[0], 'M');
+        newMeasure = chordNotesFactory.chordNotes(newMeasure);
         measuresFactory.currentSong[measureNumber] = newMeasure;  
       },
       targetBeat: function(rootNote, rootIndex, measureNumber, beatIndex) {
