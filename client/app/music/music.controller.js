@@ -24,58 +24,6 @@ angular.module('musicApp')
       controllerAs: 'room'
     }
   })
-  // .directive('draggable', function($document, currentHover, changeTargetFactory) {
-  //   return function(scope, element, attr) {
-  //     var startX = 0, startY = 0, x = 0, y = 0;
-  //     element.css({
-  //      position: 'relative',
-  //         'z-index': 2
-  //       });
-  //     element.on('mousedown', function(event) {
-  //       // Prevent default dragging of selected content
-  //       event.preventDefault();
-  //       var clone = element.clone();
-  //       clone.appendTo(element);
-  //       clone.offset({
-  //         top: event.pageY,
-  //         left: event.pageX
-  //       });
-  //       startX = event.screenX - x;
-  //       startY = event.screenY - y;
-
-  //       $document.on('mousemove', clone, mousemove);
-  //       $document.on('mouseup', clone, mouseup);
-  //     });
-
-  //     function mousemove(event) {
-  //       y = event.screenY - startY;
-  //       x = event.screenX - startX + 2;
-  //       var clone = event.data;
-        
-  //       clone.css({
-  //         top: y + 'px',
-  //         left:  x + 'px'
-  //       });
-  //     }
-
-  //     function mouseup(event) {
-  //       event.preventDefault();
-  //       var clone = event.data;
-  //       $document.off('mousemove', mousemove);
-  //       $document.off('mouseup', mouseup);
-  //       y = 0;
-  //       x = 0;
-  //       if (currentHover.hover !== null) {
-  //         var targetMeasure = currentHover.hover;
-  //         var rootNote = clone.text();
-  //         var rootIndex = element.index();
-  //         var measureNumber = targetMeasure.attr('id').slice(4)
-  //         changeTargetFactory.targetMeasure(rootNote, rootIndex, measureNumber, scope)
-  //       }
-  //       clone.remove();
-  //     }
-  //   };
-  // })
   .factory('musicNotesFactory', function() {
     return {
       notes: ['A', 'Bb', 'B', 'C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab',
@@ -108,6 +56,12 @@ angular.module('musicApp')
         chordNotesFactory.chordNotes(newBeat);
         newBeat.currentroot = rootNote;
         measuresFactory.currentSong[measureNumber].splice(beatIndex, 1, newBeat);
+      },
+      targetRest: function(measureNumber, beatIndex) {
+        var rest = {
+          currentChord: '/'
+        }
+        measuresFactory.currentSong[measureNumber].splice(beatIndex, 1, rest);
       }
 
     }

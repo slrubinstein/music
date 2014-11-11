@@ -42,6 +42,11 @@ angular.module('musicApp')
 
     findAllStandardsFactory.find(self);
 
+    this.addRest = function() {
+      if (!dragging.drag) {
+        this.addMeasures(this.beatsPerMeasure);
+      }
+    }
     this.addChordMeasure = function(note, index) {
       if (!dragging.drag) {
         this.addMeasures();
@@ -85,8 +90,12 @@ angular.module('musicApp')
   .factory('measuresFactory', function() {
     return {
       currentSong: [],
-      addMeasures: function() {
-        this.song.push([]);
+      addMeasures: function(beats) {
+        var measure = [];
+        for (var i = 0; i < beats; i++) {
+          measure.push({currentChord: '/'});
+        }
+        this.song.push(measure);
       },
       discardSong: function(self) {
         this.song.length = 0;

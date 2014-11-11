@@ -9,18 +9,22 @@
 
     <div id="song{{+$index}}" class="measure" ng-repeat="measure in sand.song track by $index" >
       
-      <div class="btn-group" ng-repeat="beat in sand.song[$index] track by $index">
+      <div class="btn-group" >
         <li 
-          class="btn btn-default droppable" 
+          ng-repeat="beat in sand.song[$index] track by $index"
+          class="btn btn-default droppable beat" 
           ng-click="sand.dropdown($event, $parent.$index, $index)">
-          {{measure[$index].currentroot}}{{measure[$index].currentChord}}</li>
+          {{measure[$index].currentroot}}{{measure[$index].currentChord}}
+
+          <ul class="dropdown-menu" role="menu">
+            <li ng-repeat="sub in sand.substitutions">
+              <a href="#" ng-click="sand.updateChord(sub.name, sub.chordroot, $event, $parent.$index)">{{sub.chordroot}}{{sub.name}} {{sub.notes}}</a>
+            </li>
+          </ul>
+
+        </li>
 
 
-        <ul class="dropdown-menu" role="menu">
-          <li ng-repeat="sub in sand.substitutions">
-            <a href="#" ng-click="sand.updateChord(sub.name, sub.chordroot, $event, $parent.$index)">{{sub.chordroot}}{{sub.name}} {{sub.notes}}</a>
-          </li>
-        </ul>
       </div>
 
       <button class="btn btn-danger btn-xs" ng-click="sand.deleteCurrentMeasure($index)">X</button>

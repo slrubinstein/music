@@ -39,10 +39,6 @@ angular.module('musicApp')
 
           song.forEach(function(measure) {
 
-
-            // is the player distinguishing betw
-            // Im7 iiim7 and vim7??
-
             measure.forEach(function(beat) {
               var chordType = '';
               
@@ -59,11 +55,19 @@ angular.module('musicApp')
                 }
               }
 
+              console.log('beat', beat)
               var chordFreqs = [];
-              var frequencies = beat.chords[chordType].frequencies;
-              frequencies.forEach(function(f) {
-                chordFreqs.push(f);
-              });
+
+              // check for rests
+              if (beat.currentChord === '/') {
+                chordFreqs = [];
+              }
+              else {
+                var frequencies = beat.chords[chordType].frequencies;
+                frequencies.forEach(function(f) {
+                  chordFreqs.push(f);
+                });
+              }
               allChords.push(chordFreqs);
             })
           })

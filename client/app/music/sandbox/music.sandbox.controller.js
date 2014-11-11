@@ -15,16 +15,17 @@ angular.module('musicApp')
                                             playerFactory, currentChord,
                                             activeBeat, droppableFactory) {
 
+    var self = this;
     this.song = measuresFactory.currentSong;
     this.substitutions = [];
-    var self = this;
     this.setDroppable = droppableFactory.droppable;
 
     this.setDroppable();
 
     this.dropdown = function(event, songIndex, beatIndex) {
       if (this.song[songIndex][beatIndex].chords) {
-        $(event.target).next().toggle();
+        console.log(event.target)
+        $($(event.target).children()[0]).toggle();
         activeMeasure.m = this.song[songIndex];
         this.substitutions = this.song[songIndex][beatIndex].chords;
       }
@@ -58,12 +59,19 @@ angular.module('musicApp')
           $( ".droppable" ).droppable({
             accept: '.draggable',
             drop: function(event, ui) {
-              var beatIndex = $(event.target).parent().index()
+              console.log($(event.target).index())
+              var beatIndex = $(event.target).index()
               var note = ui.draggable.text()
               // subtracting 1 from index to account for rest measure
               var index = ui.draggable.index() - 1;
               var measureNumber = $(event.target).closest('.measure').attr('id').slice(4);
-              changeTargetFactory.targetBeat(note, index, measureNumber, beatIndex);
+
+              if (ui.draggable.attr('id') === 'rest') {
+                changeTargetFactory.targetRest(measureNumber, beatIndex)
+              }
+              else {
+                changeTargetFactory.targetBeat(note, index, measureNumber, beatIndex);
+              }
             }
           })
         })

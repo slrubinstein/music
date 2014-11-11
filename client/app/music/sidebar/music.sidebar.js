@@ -19,6 +19,7 @@ angular.module('musicApp')
     this.notes = musicNotesFactory.notes;
     this.song = measuresFactory.currentSong;
 
+
     this.recreateNotes = function() {
       return $scope.notes;
     }
@@ -39,12 +40,6 @@ angular.module('musicApp')
 
     setTimeout(function() {
       droppableFactory.droppable();
-      }), 0
-    }) 
+    }), 0
+  });
   
-  // .factory('romanNumeralsFactory', function() {
-  //   return {
-  //     major: ['I', 'ii', 'iii', 'IV', 'V', 'vi', 'vii'],
-  //     minor: ['i', 'ii', 'III', 'iv', 'V', 'vi', 'VII']
-  //   }
-  // })
