@@ -3,7 +3,7 @@
 
 <toolbar></toolbar>
 <music-audio></music-audio>
-
+<h1>{{sand.dropdownOpen}}</h1>
 <div class="col-md-12 col-lg-12">
   <div ui-sortable id="score" class="row" ng-model="sand.song">
 
@@ -12,13 +12,28 @@
       <div class="btn-group" >
         <li 
           ng-repeat="beat in sand.song[$index] track by $index"
-          class="btn btn-default droppable beat" 
+          class="btn btn-default dropdown-toggle droppable beat" 
+          data-toggle="dropdown"
           ng-click="sand.dropdown($event, $parent.$index, $index)">
-          {{measure[$index].currentroot}}{{measure[$index].currentChord}}
+          <span class="caret dropdown-toggle"></span>
+          {{measure[$index].currentroot }}{{measure[$index].currentChord}}
 
           <ul class="dropdown-menu" role="menu">
-            <li ng-repeat="sub in sand.substitutions">
-              <a href="#" ng-click="sand.updateChord(sub.name, sub.chordroot, $event, $parent.$index)">{{sub.chordroot}}{{sub.name}} {{sub.notes}}</a>
+            <li>Major Substitutions</li>
+            <li ng-repeat="sub in sand.majorSubs">
+              <a href="#" ng-click="sand.updateChord(sub.name, sub.chordroot, $event, $parent.$index)">{{sub.chordroot }}{{sub.name}} {{sub.notes}}</a>
+            </li>
+            <li>Minor Substitutions</li>
+            <li ng-repeat="sub in sand.minorSubs">
+              <a href="#" ng-click="sand.updateChord(sub.name, sub.chordroot, $event, $parent.$index)">{{sub.chordroot }}{{sub.name}} {{sub.notes}}</a>
+            </li>
+            <li>Tonic Substitutions</li>
+            <li ng-repeat="sub in sand.tonicSubs">
+              <a href="#" ng-click="sand.updateChord(sub.name, sub.chordroot, $event, $parent.$index)">{{sub.chordroot }}{{sub.name}} {{sub.notes}}</a>
+            </li>
+            <li>Dominant 7 Chords</li>
+            <li ng-repeat="sub in sand.D7s">
+              <a href="#" ng-click="sand.updateChord(sub.name, sub.chordroot, $event, $parent.$index)">{{sub.chordroot }}{{sub.name}} {{sub.notes}}</a>
             </li>
           </ul>
 

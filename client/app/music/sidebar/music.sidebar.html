@@ -1,10 +1,17 @@
 <!-- controller: SidebarCtrl as sidebar -->
 
 <div class="col-sm-2 col-md-2 col-lg-2 sidebar jumbotron container">
-	
-	<h2 ng-show="!sidebar.song.length">Click a note name to add a chord</h2>
-	<h2 ng-show="sidebar.song.length">Drag a chord over a beat to change that beat</h2>
-	<h2 ng-show="sidebar.song.length">Click on a chord in your song to see common substitutions</h2>
+
+	<h2 ng-show="!sidebar.instructions.addChord">
+		Click a note name to add a chord</h2>
+	<h2 ng-show="sidebar.instructions.addChord && !sidebar.instructions.changeChord">
+		Drag a chord over a beat to change that beat</h2>
+	<h2 ng-show="sidebar.instructions.addChord && sidebar.instructions.changeChord
+			&& !sidebar.instructions.changeSubstitution">
+		Click on a chord in your song to see common substitutions</h2>
+	<h2 ng-show="sidebar.instructions.addChord && sidebar.instructions.changeChord
+			&& sidebar.instructions.changeSubstitution">
+			Now make some music and save it, or load a jazz standard!</h2>
 
 	<button ng-click="sidebar.showSong()">Log Song</button>
 

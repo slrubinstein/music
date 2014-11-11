@@ -33,8 +33,9 @@ angular.module('musicApp')
         var SchedulerApp = function() {
           this.audiolet = new Audiolet();
 
-          var notes = ['A', 'Bb', 'B', 'C', 'C#', 'D', 
-                       'Eb','E', 'F', 'F#', 'G', 'Ab'];
+          var notes = ['A', 'B\u266d', 'B', 'C', 'C\u266f', 'D',
+                         'E\u266d', 'E', 'F', 'F\u266f', 'G', 'A\u266d'];
+
           var allChords = [];
 
           song.forEach(function(measure) {
@@ -53,9 +54,17 @@ angular.module('musicApp')
                 else if (distance === 9 || distance === -3) {
                   chordType = 'vi' + beat.currentChord;
                 }
+                else if (distance === -1 || distance === 11) {
+                chordType = 'vii' + beat.currentChord;
+                }
+                else if (distance === -9 || distance === 3) {
+                  chordType = '\u266fii' + beat.currentChord;
+                }
+                else if (distance === 6) {
+                  chordType = '\u266fIV' + beat.currentChord;
+                }
               }
 
-              console.log('beat', beat)
               var chordFreqs = [];
 
               // check for rests
@@ -118,12 +127,10 @@ angular.module('musicApp')
         var SchedulerApp = function() {
             this.audiolet = new Audiolet();
 
-            var notes = ['A', 'Bb', 'B', 'C', 'C#', 'D', 
-                       'Eb','E', 'F', 'F#', 'G', 'Ab'];
+            var notes = ['A', 'B\u266d', 'B', 'C', 'C\u266f', 'D',
+                         'E\u266d', 'E', 'F', 'F\u266f', 'G', 'A\u266d'];
             var chordFreqs = [];
             var chordType;
-
-            console.log(beat)
 
             if (beat.currentroot === beat.root) {
               chordType = beat.currentChord;
@@ -136,11 +143,17 @@ angular.module('musicApp')
               else if (distance === 9 || distance === -3) {
                 chordType = 'vi' + beat.currentChord;
               }
+              else if (distance === -1 || distance === 11) {
+                chordType = 'vii' + beat.currentChord;
+              }
+              else if (distance === -9 || distance === 3) {
+                chordType = '\u266fii' + beat.currentChord;
+              }
+              else if (distance === 6) {
+                chordType = '\u266fIV' + beat.currentChord;
+              }
             }
 
-            console.log(chordType)
-            console.log(beat.chords[chordType])
-            console.log(beat.chords[chordType].build)
 
             var frequencies = beat.chords[chordType].frequencies;
 

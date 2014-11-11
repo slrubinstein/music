@@ -8,34 +8,33 @@ angular.module('musicApp')
   .controller('MusicCtrl', function ($scope, $http) {
   	var self = this;
 
-    this.play = function(chord) {
-      var search = '#' + chord + '-chord'
-      if ($(search)[0]) {
-        $(search)[0].play();
-      }
-    }
-
   })
-  .directive('musicRoom', function() {
-    return {
-      restrict: 'E',
-      templateUrl: 'app/templates/music.room.html',
-      controller: 'MusicRoomCtrl',
-      controllerAs: 'room'
+  .filter('accidentals', function() {
+    return function(input) {
+      if (input.slice(1)=== "flat") {
+        var str = input.slice(0,1) + String.fromCharCode(9837);
+        return str;
+      }
+      if (input.slice(1)=== "sharp") {
+        var str = input.slice(0,1) + String.fromCharCode(9839);
+        return str;
+      }
+      return input;
     }
   })
   .factory('musicNotesFactory', function() {
     return {
-      notes: ['A', 'Bb', 'B', 'C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab',
-              'A', 'Bb', 'B', 'C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab',
-              'A', 'Bb', 'B', 'C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab']
+      notes: ['A', 'B\u266d', 'B', 'C', 'C\u266f', 'D', 'E\u266d', 'E', 'F', 'F\u266f', 'G', 'A\u266d',
+              'A', 'B\u266d', 'B', 'C', 'C\u266f', 'D', 'E\u266d', 'E', 'F', 'F\u266f', 'G', 'A\u266d',
+              'A', 'B\u266d', 'B', 'C', 'C\u266f', 'D', 'E\u266d', 'E', 'F', 'F\u266f', 'G', 'A\u266d']
     }
   })
   .factory('changeTargetFactory', function(newChordRootFactory,
                                                   musicNotesFactory,
                                                   musicChordsFactory,
                                                   chordNotesFactory,
-                                                  measuresFactory) {
+                                                  measuresFactory,
+                                                  playerFactory) {
     return {
       targetMeasure: function(rootNote, rootIndex, measureNumber, beats) {
 
@@ -48,6 +47,7 @@ angular.module('musicApp')
           chordObj.currentroot = rootNote;
           newMeasure.push(chordObj)
         }
+        // playerFactory.playOne(newMeasure[0], 'M');
         measuresFactory.currentSong[measureNumber] = newMeasure;  
       },
       targetBeat: function(rootNote, rootIndex, measureNumber, beatIndex) {

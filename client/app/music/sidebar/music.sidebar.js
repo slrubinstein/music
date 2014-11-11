@@ -7,17 +7,24 @@ angular.module('musicApp')
   		controllerAs: 'sidebar'
   	}
   })
+  .value('instructions', {
+    addChord: false,
+    changeChord: false,
+    changeSubstitution: false
+  })
   .controller('SidebarCtrl', function ($scope, musicChordsFactory,
                                         musicNotesFactory,
                                         measuresFactory,
                                         newChordRootFactory,
-                                        chordNotesFactory,
+                                        chordNotesFactory, instructions,
                                         currentChord, droppableFactory) {
     var self = this;
-    $scope.tests = [1, 2]
     this.root = '';
     this.notes = musicNotesFactory.notes;
     this.song = measuresFactory.currentSong;
+
+    // instructions checker
+    this.instructions = instructions;
 
 
     this.recreateNotes = function() {
@@ -27,19 +34,5 @@ angular.module('musicApp')
     this.showSong = function() {
       console.log('Current Song: ', this.song)
     }
-
-    this.clickChord = function(index) {
-      this.root = self.notes[index];
-      this.id = index;
-
-      var measureObj = newChordRootFactory.newChord(this);
-      measureObj.chords = new musicChordsFactory();
-      measureObj.chords = chordNotesFactory.chordNotes(measureObj.chords, measureObj.id, measureObj. root, this);
-      this.song[this.song.length-1] = measureObj;
-    }
-
-    setTimeout(function() {
-      droppableFactory.droppable();
-    }), 0
   });
   

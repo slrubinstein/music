@@ -67,6 +67,18 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 }
 
 .beat {
-	width: 64px;
+	width: 100px;
 	border: 1px;
+	font-size: 150%;
+}
+
+body {
+	font-family: 'Chewy', normal;
+}
+
+.btn {
+}
+
+.dropdown-menu {
+	display: none;
 }

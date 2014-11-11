@@ -16,7 +16,8 @@ angular.module('musicApp')
                                           loadSongFactory, dragging,
                                           findAllStandardsFactory,
                                           droppableFactory,
-                                          chordNotesFactory) {
+                                          chordNotesFactory,
+                                          instructions) {
     var self = this;
     this.song = measuresFactory.currentSong;
     this.songTitle = '';
@@ -26,6 +27,7 @@ angular.module('musicApp')
     this.notes = musicNotesFactory.notes;
     this.standards = [];
     this.selectStandard;
+    this.instructions = instructions;
 
     this.addMeasures = measuresFactory.addMeasures;
 
@@ -49,13 +51,13 @@ angular.module('musicApp')
       }
     }
     this.addChordMeasure = function(note, index) {
+      this.instructions.addChord = true;
       if (!dragging.drag) {
         this.addMeasures();
         var measureNumber = this.song.length - 1;
         changeTargetFactory.targetMeasure(note, index, measureNumber, this.beatsPerMeasure);
         droppableFactory.droppable();
-
-        
+        // if (this.song[measureNumber][0].frequencies) 
       }
     }
 
@@ -76,7 +78,10 @@ angular.module('musicApp')
     setTimeout(function() {
       $(function() {
         $('.draggable').draggable({
-          revert: true,
+          revert: 'invalid',
+          cursor: 'grabbing',
+          helper: 'clone',
+          zIndex: 10,
           start: function(event) {
             // reset .droppables to be droppable
             droppableFactory.droppable();

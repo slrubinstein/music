@@ -2,21 +2,24 @@ angular.module('musicApp')
   .factory('musicChordsFactory', function() {
     var MakeChords = function() {
     	// major substitutions
-      this.M = {name: 'M', rel: 'I', build: [0, 4, 7]};
-      this.maj6 = {name: 'maj6', rel: 'I', build: [0, 4, 7, 9]};
-      this.maj7 = {name: 'maj7', rel: 'I', build: [0, 4, 7, 11]};
-      this.maj9 = {name: 'maj9', rel: 'I', build: [0, 4, 7, 11, 14]}
+      this.M = {name: 'M', rel: 'I', build: [0, 4, 7], use: 'majorSub'};
+      this.maj6 = {name: 'maj6', rel: 'I', build: [0, 4, 7, 9], use: 'majorSub'};
+      this.maj7 = {name: 'maj7', rel: 'I', build: [0, 4, 7, 11], use: 'majorSub'};
+      this.maj9 = {name: 'maj9', rel: 'I', build: [0, 4, 7, 11, 14], use: 'majorSub'};
       // dominant 7 substitutions
-      this['7'] = {name: '7', rel: 'I', build: [0, 4, 7, 10]};
-      this['9'] = {name: '9', rel: 'I', build: [0, 4, 7, 10, 14]}
-      this['7+5'] = {name: '7+5', rel: 'I', build: [0, 4, 8, 10]};
+      this['7'] = {name: '7', rel: 'I', build: [0, 4, 7, 10], use: 'D7'};
+      this['9'] = {name: '9', rel: 'I', build: [0, 4, 7, 10, 14], use: 'D7'};
+      this['7+5'] = {name: '7+5', rel: 'I', build: [0, 4, 8, 10], use: 'D7'};
+      this['vii\u00B07'] = {name: '\u00B07', rel: 'vii', build: [-1, 2, 5, 8], use: 'D7'};
+      this['\u266fii\u00B07'] = {name: '\u00B07', rel: '\u266fii', build: [3, 6, 9, 12], use: 'D7'};
+      this['\u266fIV7'] = {name: '7', rel: '\u266fIV', build: [6, 10, 13, 16], use: 'D7'};
       // minor substitutions
-      this.m = {name: 'm', rel: 'I', build: [0, 3, 7]};
-      this.m6 = {name: 'm6', rel: 'I', build: [0, 3, 7, 9]};
-      this.m7 = {name: 'm7', rel: 'I', build: [0, 3, 7, 10]};
-      // relative minor substitutions
-      this.vim7 = {name: 'm7', rel: 'vi', build: [-3, 0, 4, 7]};
-      this.iiim7 = {name: 'm7', rel: 'iii', build: [4, 7, 11, 14]};
+      this.m = {name: 'm', rel: 'I', build: [0, 3, 7], use: 'minorSub'};
+      this.m6 = {name: 'm6', rel: 'I', build: [0, 3, 7, 9], use: 'minorSub'};
+      this.m7 = {name: 'm7', rel: 'I', build: [0, 3, 7, 10], use: 'minorSub'};
+      // tonic substitutions
+      this.vim7 = {name: 'm7', rel: 'vi', build: [-3, 0, 4, 7], use: 'tonicSub'};
+      this.iiim7 = {name: 'm7', rel: 'iii', build: [4, 7, 11, 14], use: 'tonicSub'};
     }
     return MakeChords;
   })
@@ -67,8 +70,7 @@ angular.module('musicApp')
 		      }
 		    })
 				.success(function() {
-					console.log(chordObj)
-					playerFactory.playOne(chordObj, 'M');
+					playerFactory.playOne(chordObj)
 				})
 	      return chordObj;
 	    }
