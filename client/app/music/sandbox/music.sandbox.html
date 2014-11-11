@@ -3,7 +3,7 @@
 
 <toolbar></toolbar>
 <music-audio></music-audio>
-<h1>{{sand.dropdownOpen}}</h1>
+
 <div class="col-md-12 col-lg-12">
   <div ui-sortable id="score" class="row" ng-model="sand.song">
 
@@ -21,19 +21,19 @@
           <ul class="dropdown-menu" role="menu">
             <li>Major Substitutions</li>
             <li ng-repeat="sub in sand.majorSubs">
-              <a href="#" ng-click="sand.updateChord(sub.name, sub.chordroot, $event, $parent.$index)">{{sub.chordroot }}{{sub.name}} {{sub.notes}}</a>
+              <a href="#" ng-click="sand.updateChord(sub.name, sub.chordroot, $event, $parent.$index)">{{sub.chordroot}}{{sub.name}} {{sub.notes}}</a>
             </li>
             <li>Minor Substitutions</li>
             <li ng-repeat="sub in sand.minorSubs">
-              <a href="#" ng-click="sand.updateChord(sub.name, sub.chordroot, $event, $parent.$index)">{{sub.chordroot }}{{sub.name}} {{sub.notes}}</a>
+              <a href="#" ng-click="sand.updateChord(sub.name, sub.chordroot, $event, $parent.$index)">{{sub.chordroot}}{{sub.name}} {{sub.notes}}</a>
             </li>
             <li>Tonic Substitutions</li>
             <li ng-repeat="sub in sand.tonicSubs">
-              <a href="#" ng-click="sand.updateChord(sub.name, sub.chordroot, $event, $parent.$index)">{{sub.chordroot }}{{sub.name}} {{sub.notes}}</a>
+              <a href="#" ng-click="sand.updateChord(sub.name, sub.chordroot, $event, $parent.$index)">{{sub.chordroot}}{{sub.name}} {{sub.notes}}</a>
             </li>
             <li>Dominant 7 Chords</li>
             <li ng-repeat="sub in sand.D7s">
-              <a href="#" ng-click="sand.updateChord(sub.name, sub.chordroot, $event, $parent.$index)">{{sub.chordroot }}{{sub.name}} {{sub.notes}}</a>
+              <a href="#" ng-click="sand.updateChord(sub.name, sub.chordroot, $event, $parent.$index)">{{sub.chordroot}}{{sub.name}} {{sub.notes}}</a>
             </li>
           </ul>
 

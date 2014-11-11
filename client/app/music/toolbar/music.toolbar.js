@@ -16,7 +16,6 @@ angular.module('musicApp')
                                           loadSongFactory, dragging,
                                           findAllStandardsFactory,
                                           droppableFactory,
-                                          chordNotesFactory,
                                           instructions) {
     var self = this;
     this.song = measuresFactory.currentSong;
@@ -38,6 +37,14 @@ angular.module('musicApp')
     this.mySong = '';
 
     this.discardSong = measuresFactory.discardSong;
+
+    this.tempoUp = function() {
+      this.tempo += 2;
+    }
+    this.tempoDown = function() {
+      this.tempo -= 2;
+    }
+
 
     if (this.currentUser()._id) {
       findAllSongsFactory.find(this.currentUser()._id, self);

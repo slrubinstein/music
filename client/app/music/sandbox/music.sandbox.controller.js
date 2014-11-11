@@ -67,9 +67,7 @@ angular.module('musicApp')
       updateChordFactory.update(name, chordroot, event, beatIndex);
       playerFactory.playOne(activeMeasure.m[beatIndex], name);
       activeMeasure.m = null;
-      console.log(self)
       self.dropdownOpen = false;
-      console.log('after')
     }
 
     this.deleteCurrentMeasure = function(index) {

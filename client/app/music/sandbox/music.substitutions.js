@@ -73,8 +73,7 @@ angular.module('musicApp')
 			    })
      		})
 				.success(function() {
-					console.log('playing')
-					playerFactory.playOne(measure[0])
+					playerFactory.playOne(measure[0]);
 				})
 	      return measure;
 	    }

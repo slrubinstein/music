@@ -52,11 +52,12 @@ angular.module('musicApp')
       targetBeat: function(rootNote, rootIndex, measureNumber, beatIndex) {
         var newBeat = newChordRootFactory.newChord(rootNote, rootIndex);
         newBeat.chords = new musicChordsFactory();
-        chordNotesFactory.chordNotes(newBeat);
+        chordNotesFactory.chordNotes([newBeat]);
         newBeat.currentroot = rootNote;
         measuresFactory.currentSong[measureNumber].splice(beatIndex, 1, newBeat);
       },
       targetRest: function(measureNumber, beatIndex) {
+
         var rest = {
           currentChord: '/'
         }

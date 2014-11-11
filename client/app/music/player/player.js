@@ -60,7 +60,7 @@ angular.module('musicApp')
                 else if (distance === -9 || distance === 3) {
                   chordType = '\u266fii' + beat.currentChord;
                 }
-                else if (distance === 6) {
+                else if (distance === 6 || distance == -6) {
                   chordType = '\u266fIV' + beat.currentChord;
                 }
               }
@@ -87,11 +87,11 @@ angular.module('musicApp')
         };
 
         SchedulerApp.prototype.playChord = function(chord) {
-            for (var i = 0; i < chord.length; i++) {
-                var frequency = chord[i]
-                var synth = new Synth(this.audiolet, frequency);
-                synth.connect(this.audiolet.output);
-            }
+          for (var i = 0; i < chord.length; i++) {
+            var frequency = chord[i]
+            var synth = new Synth(this.audiolet, frequency);
+            synth.connect(this.audiolet.output);
+          }
         };
 
         var app = new SchedulerApp(song);
@@ -149,11 +149,10 @@ angular.module('musicApp')
               else if (distance === -9 || distance === 3) {
                 chordType = '\u266fii' + beat.currentChord;
               }
-              else if (distance === 6) {
+              else if (distance === 6 || distance === -6) {
                 chordType = '\u266fIV' + beat.currentChord;
               }
             }
-
 
             var frequencies = beat.chords[chordType].frequencies;
 

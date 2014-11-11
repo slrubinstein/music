@@ -18,9 +18,17 @@
 	  <div class="btn-group">
 		 	<p class="btn btn-default">Tempo {{toolbar.tempo}} bpm</p>
 				  
-		 	<button type="button" class="btn btn-default">Up</button>
-		 	<button type="button" class="btn btn-default">Dn</button>
-		</div><br>
+		 	<button 
+		 		type="button"
+		 		class="btn btn-default"
+		 		ng-click=toolbar.tempoUp()>Up</button>
+		 	<button 
+		 		type="button" 
+		 		class="btn btn-default"
+		 		ng-click=toolbar.tempoDown()>Dn</button>
+		</div>
+		<br>
+
 	  <button class="btn btn-default" ng-click="toolbar.play()">Play/Pause</button>
 	</div>
 
