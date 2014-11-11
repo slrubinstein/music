@@ -31,42 +31,46 @@ angular.module('musicApp')
 	    }
   	}
   })
-  .factory('chordNotesFactory', function($http, musicNotesFactory) {
+  .factory('chordNotesFactory', function($http, musicNotesFactory, playerFactory) {
 		return {
-			chordNotes: function(measureObj) {
+			chordNotes: function(chordObj) {
 
-     		$http.get('/api/music', {}).success(function(notes) {
+     		$http.get('/api/music').success(function(notes) {
       		
 	      	// chord is the array of nums in each chordObj.chords
-		      for (var chord in measureObj.chords) {
+		      for (var chord in chordObj.chords) {
 		      	// rename chord with root (zero index in build property)
-		      	var rootIndex = measureObj.id + measureObj.chords[chord].build[0];
+		      	var rootIndex = chordObj.id + chordObj.chords[chord].build[0];
 		      	if (rootIndex < 0) { 
 		      		rootIndex += 12 
 		      	}
-		      	measureObj.chords[chord].chordroot = musicNotesFactory.notes[rootIndex];
-		      	measureObj.chords[chord].frequencies = [];
+		      	chordObj.chords[chord].chordroot = musicNotesFactory.notes[rootIndex];
+		      	chordObj.chords[chord].frequencies = [];
 
 		      	// find frequency from notes json
 		      	// middle A is notes[38] + id + num in build
-		      	measureObj.chords[chord].build.forEach(function(num) {
-		      		var thisFreq = notes[measureObj.id+num+48].frequency;
-		      		measureObj.chords[chord].frequencies.push(thisFreq)
+		      	chordObj.chords[chord].build.forEach(function(num) {
+		      		var thisFreq = notes[chordObj.id+num+48].frequency;
+		      		chordObj.chords[chord].frequencies.push(thisFreq)
 		      	});
 
 			      // create a new arr to hold the transformed nums to letters
-			      var arr = (measureObj.chords[chord].build).map(function(num) {
+			      var arr = (chordObj.chords[chord].build).map(function(num) {
 			      	if (num < 0) {
 			      		num += 12
 			      	}
-		          num = musicNotesFactory.notes[num + measureObj.id]
+		          num = musicNotesFactory.notes[num + chordObj.id]
 		          return num;
 		        })
 		        // replace the chord of nums with chord of letters in each
-		        measureObj.chords[chord].notes = arr;
+		        chordObj.chords[chord].notes = arr;
 		      }
 		    })
-	      return measureObj;
+				.success(function() {
+					console.log(chordObj)
+					playerFactory.playOne(chordObj, 'M');
+				})
+	      return chordObj;
 	    }
 	  }
 	})

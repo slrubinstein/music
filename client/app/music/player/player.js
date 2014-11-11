@@ -123,6 +123,8 @@ angular.module('musicApp')
             var chordFreqs = [];
             var chordType;
 
+            console.log(beat)
+
             if (beat.currentroot === beat.root) {
               chordType = beat.currentChord;
             }
@@ -136,12 +138,16 @@ angular.module('musicApp')
               }
             }
 
+            console.log(chordType)
+            console.log(beat.chords[chordType])
+            console.log(beat.chords[chordType].build)
+
             var frequencies = beat.chords[chordType].frequencies;
 
             frequencies.forEach(function(f) {
               chordFreqs.push(f);
             });
-            
+
             var chordPattern = new PSequence([chordFreqs]);
 
             this.audiolet.scheduler.play([chordPattern], 1,

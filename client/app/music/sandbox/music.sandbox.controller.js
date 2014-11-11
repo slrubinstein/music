@@ -24,7 +24,6 @@ angular.module('musicApp')
 
     this.dropdown = function(event, songIndex, beatIndex) {
       if (this.song[songIndex][beatIndex].chords) {
-        console.log(event.target)
         $($(event.target).children()[0]).toggle();
         activeMeasure.m = this.song[songIndex];
         this.substitutions = this.song[songIndex][beatIndex].chords;
@@ -45,6 +44,8 @@ angular.module('musicApp')
   .factory('updateChordFactory', function(activeMeasure, musicNotesFactory) {
     return {
       update:function(chordName, chordroot, event, beat) {
+        console.log('active measure', activeMeasure.m)
+        console.log('beat', beat)
         activeMeasure.m[beat].currentChord = chordName;
         activeMeasure.m[beat].currentroot = chordroot;
         $(event.target).closest('.dropdown-menu').toggle();
@@ -59,7 +60,6 @@ angular.module('musicApp')
           $( ".droppable" ).droppable({
             accept: '.draggable',
             drop: function(event, ui) {
-              console.log($(event.target).index())
               var beatIndex = $(event.target).index()
               var note = ui.draggable.text()
               // subtracting 1 from index to account for rest measure

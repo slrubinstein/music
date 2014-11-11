@@ -15,7 +15,8 @@ angular.module('musicApp')
                                           changeTargetFactory,
                                           loadSongFactory, dragging,
                                           findAllStandardsFactory,
-                                          droppableFactory) {
+                                          droppableFactory,
+                                          chordNotesFactory) {
     var self = this;
     this.song = measuresFactory.currentSong;
     this.songTitle = '';
@@ -53,6 +54,8 @@ angular.module('musicApp')
         var measureNumber = this.song.length - 1;
         changeTargetFactory.targetMeasure(note, index, measureNumber, this.beatsPerMeasure);
         droppableFactory.droppable();
+
+        
       }
     }
 

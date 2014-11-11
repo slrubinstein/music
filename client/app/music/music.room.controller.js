@@ -22,12 +22,9 @@ angular.module('musicApp')
       var chordRoot = {};
       chordRoot.chords = new musicChordsFactory();
       chordRoot.root = this.root;
-      console.log(chordRoot.chords)
       chordRoot.id = this.id;
-      console.log('new chord root', chordRoot)
       this.chordNotes(chordRoot);
       this.subs = chordRoot.chords;
-      console.log(this.subs)
     }
   })
 
