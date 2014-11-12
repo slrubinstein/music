@@ -5,8 +5,10 @@ angular.module('musicApp')
 
     return {
 
-      playSong: function(song) {
+      playSong: function(song, bpm) {
+
         var Synth = function(audiolet, frequency) {
+
           AudioletGroup.call(this, audiolet, 0, 1);
           // Basic wave
           this.saw = new Saw(audiolet, frequency * 1/2);
@@ -30,8 +32,9 @@ angular.module('musicApp')
         };
         extend(Synth, AudioletGroup);
 
-        var SchedulerApp = function() {
+        var SchedulerApp = function(song, bpm) {
           this.audiolet = new Audiolet();
+          this.audiolet.scheduler.setTempo(bpm)
 
           var notes = ['A', 'B\u266d', 'B', 'C', 'C\u266f', 'D',
                          'E\u266d', 'E', 'F', 'F\u266f', 'G', 'A\u266d'];
@@ -93,8 +96,7 @@ angular.module('musicApp')
             synth.connect(this.audiolet.output);
           }
         };
-
-        var app = new SchedulerApp(song);
+        var app = new SchedulerApp(song, bpm);
       },
 
       //-------------------------------------------------------------//

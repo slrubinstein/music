@@ -20,7 +20,7 @@ angular.module('musicApp')
     var self = this;
     this.song = measuresFactory.currentSong;
     this.songTitle = '';
-    this.tempo = 60;
+    this.tempo = 120;
     this.beatsPerMeasure = 4;
 
     this.notes = musicNotesFactory.notes;
@@ -69,7 +69,7 @@ angular.module('musicApp')
     }
 
     this.play = function() {
-      playerFactory.playSong(this.song); 
+      playerFactory.playSong(this.song, this.tempo); 
     }
 
     this.saveSong = function() {
