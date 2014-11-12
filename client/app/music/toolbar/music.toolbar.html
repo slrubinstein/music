@@ -1,18 +1,25 @@
 <!-- controller: ToolbarCtrl as toolbar -->
 <!-- parent controller: MusicSandboxCtrl as sand -->
 
+
+<h1>Jazz Chord Substitutor</h1>
+
+
 <div class="col-md-12 col-lg-12">
 	<div class="col-md-8 col-lg-8">
 		<h2>{{toolbar.songTitle}}</h2>
 
 		<div class="btn-toolbar" role="toolbar">
 			<div class="btn-group">
-				<li id="rest" class="btn-group btn btn-default draggable" ng-click="toolbar.addRest()"> &#x1d13d; / &#x1d13b; / &#119099;</li>
+				<li id="rest" class="btn-group btn btn-default draggable" ng-click="toolbar.addRest()">  / / / / </li>
 				<li
 					class="btn-group btn btn-default draggable"
 						ng-repeat="note in toolbar.notes | limitTo: 12"
-						ng-click="toolbar.addChordMeasure(note, $index)">{{ note | accidentals }}</li>
+						ng-click="toolbar.addChordMeasure(note, $index)">{{ note }}</li>
 			</div>
+
+			<a id="q-mark" class="btn btn-default data-title" href="#" data-toggle="tooltip" tooltip="Click a note to add a measure to your song">?</a>
+
 		</div>
 
 	  <div class="btn-group">
@@ -21,11 +28,11 @@
 		 	<button 
 		 		type="button"
 		 		class="btn btn-default"
-		 		ng-click=toolbar.tempoUp()>Up</button>
+		 		ng-click=toolbar.tempoUp()>&#8593;</button>
 		 	<button 
 		 		type="button" 
 		 		class="btn btn-default"
-		 		ng-click=toolbar.tempoDown()>Dn</button>
+		 		ng-click=toolbar.tempoDown()>&#8595;</button>
 		</div>
 		<br>
 
@@ -33,22 +40,26 @@
 	</div>
 
 	<div class="col-md-4 col-lg-4">
-		<div class="input-group">
-		  <span class="input-group-addon">Title:</span>
-		  <input type="text" class="form-control" placeholder="song title" value="{{toolbar.songTitle}}" ng-model="toolbar.songTitle"/>
+		<div class="row">
+			<div class="input-group">
+			  <span class="input-group-addon">Title:</span>
+			  <input type="text" class="form-control" placeholder="song title" value="{{toolbar.songTitle}}" ng-model="toolbar.songTitle"/>
+			</div>
+
+			<br>
+		  <button id="save" class="btn btn-default" ng-click="toolbar.saveSong()">Save This Song</button>
+			<button class="btn btn-default toolbar" ng-click="toolbar.discardSong(toolbar)">Discard Draft</button>
 		</div>
-		<br>
-	  <button class="btn btn-default" ng-click="toolbar.saveSong()">Save This Song</button>
-		<button class="btn btn-danger" ng-click="toolbar.discardSong(toolbar)">Discard Draft</button>
-	</div>
-	<div class="col-md-4 col-lg-4">
 
-  My Songs:<select class="btn btn-default" ng-model="toolbar.mySong" ng-options="song as song for song in toolbar.userSongs"></select>
+		<div class="row">
+		  My Songs:<select class="btn btn-default" ng-model="toolbar.mySong" ng-options="song as song for song in toolbar.userSongs"></select>
 
-	<button class="btn btn-default" ng-click="toolbar.loadMySong()">Load My Song</button>
+			<button class="btn btn-default toolbar" ng-click="toolbar.loadMySong()">Load My Song</button>
+		</div>
+		<div class="row">
+		 	Standards:<select class="btn btn-default" ng-model="toolbar.selectStandard" ng-options="song as song for song in toolbar.standards"></select>
 
- 	Standards:<select class="btn btn-default" ng-model="toolbar.selectStandard" ng-options="song as song for song in toolbar.standards"></select>
-
-	<button class="btn btn-default">Load Standard</button>
+			<button class="btn btn-default toolbar">Load Standard</button>
+		</div>
 	</div>
 </div>

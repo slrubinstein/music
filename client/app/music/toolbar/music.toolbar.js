@@ -38,11 +38,14 @@ angular.module('musicApp')
 
     this.discardSong = measuresFactory.discardSong;
 
+    // $('#q-mark').
+
+
     this.tempoUp = function() {
-      this.tempo += 2;
+      this.tempo += 4;
     }
     this.tempoDown = function() {
-      this.tempo -= 2;
+      this.tempo -= 4;
     }
 
 
@@ -64,7 +67,6 @@ angular.module('musicApp')
         var measureNumber = this.song.length - 1;
         changeTargetFactory.targetMeasure(note, index, measureNumber, this.beatsPerMeasure);
         droppableFactory.droppable();
-        // if (this.song[measureNumber][0].frequencies) 
       }
     }
 
@@ -151,6 +153,7 @@ angular.module('musicApp')
           data.song.forEach(function(measure) {
             self.song.push(measure);
           })
+          self.songTitle = data.title;
         });
       }
     }

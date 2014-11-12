@@ -19,28 +19,28 @@
           {{measure[$index].currentroot }}{{measure[$index].currentChord}}
 
           <ul class="dropdown-menu" role="menu">
-            <li>Major Substitutions</li>
+            <li>&nbsp; Major Substitutions</li>
             <li ng-repeat="sub in sand.majorSubs">
               <a href="#" ng-click="sand.updateChord(sub.name, sub.chordroot, $event, $parent.$index)">
                 <table class="table"><tr><td>{{sub.chordroot}}{{sub.name}}</td>
                   <td> &#40; {{sub.notes.join(', ')}} &#41; </td></tr>
                 </table></a>
             </li>
-            <li>Minor Substitutions</li>
+            <li>&nbsp; Minor Substitutions</li>
             <li ng-repeat="sub in sand.minorSubs">
               <a href="#" ng-click="sand.updateChord(sub.name, sub.chordroot, $event, $parent.$index)">
                 <table class="table"><tr><td>{{sub.chordroot}}{{sub.name}}</td>
                   <td> &#40; {{sub.notes.join(', ')}} &#41; </td></tr>
                 </table></a>
             </li>
-            <li>Tonic Substitutions</li>
+            <li>&nbsp; Tonic Substitutions</li>
             <li ng-repeat="sub in sand.tonicSubs">
               <a href="#" ng-click="sand.updateChord(sub.name, sub.chordroot, $event, $parent.$index)">
                 <table class="table"><tr><td>{{sub.chordroot}}{{sub.name}}</td>
                   <td> &#40; {{sub.notes.join(', ')}} &#41; </td></tr>
                 </table></a>
             </li>
-            <li>Dominant 7 Chords</li>
+            <li>&nbsp; Dominant 7 Chords</li>
             <li ng-repeat="sub in sand.D7s">
               <a href="#" ng-click="sand.updateChord(sub.name, sub.chordroot, $event, $parent.$index)">
                 <table class="table"><tr><td>{{sub.chordroot}}{{sub.name}}</td>

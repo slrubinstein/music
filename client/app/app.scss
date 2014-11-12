@@ -8,6 +8,7 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
  * App-wide Styles
  */
 
+
 .browsehappy {
     margin: 0.2em 0;
     background: #ccc;
@@ -22,10 +23,6 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 @import 'main/main.scss';
 // endinjector
 
-#score {
-	background-color: lightblue;
-	min-height: 500px;
-}
 
 /*.song {
 	width: 92px;
@@ -69,18 +66,19 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 .beat {
 	width: 100px;
 	border: 1px;
-	font-size: 150%;
+	font-size: 120%;
 }
 
-body {
+h1, h2 {
 	font-family: 'Chewy', normal;
+	margin-left: 20px;
 }
 
 .btn {
 }
 
 .dropdown-menu {
-	font-size: 90%;
+	font-size: 85%;
 }
 
 .table {
@@ -91,3 +89,58 @@ body {
 a {
 	height: 40px;
 }
+
+#q-mark {
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  padding: 6px 0;
+  font-size: 12px;
+  line-height: 1.42;
+  border-radius: 15px;
+}
+
+#rest {
+	font-family: FreeSerif;
+}
+
+.sidebar {
+	height: 100%;
+}
+
+select {
+	width: 100px;
+}
+
+#save {
+	width: 167px;
+}
+
+.toolbar {
+	width: 120px;
+}
+
+.btn-toolbar li {
+	font-size: 85%;
+}
+
+body {
+	/*background-color: #00C490*/
+}
+
+.navbar {
+	/*background-color: #0034C4;*/
+	/*color: #C49000;*/
+	font-weight: bold;
+}
+
+#score {
+	background-color: lightblue;
+	min-height: 500px;
+	margin: 10px 20px;
+	border-radius: 10px;
+}
+
+/*.btn:hover {
+	background-color: #C40034;
+};*/

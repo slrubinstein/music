@@ -8,29 +8,30 @@ angular.module('musicApp')
       playSong: function(song, bpm) {
 
         var Synth = function(audiolet, frequency) {
+              AudioletGroup.call(this, audiolet, 0, 1);
+              // Basic wave
+              this.sine = new Sine(audiolet, frequency * 1);
+              this.sine2 = new Sine(audiolet, frequency * .5);
 
-          AudioletGroup.call(this, audiolet, 0, 1);
-          // Basic wave
-          this.saw = new Saw(audiolet, frequency * 1/2);
+              // Gain envelope
+              this.gain = new Gain(audiolet);
+              this.env = new PercussiveEnvelope(audiolet, 1, 0.2, 0.1,
+                  function() {
+                      this.audiolet.scheduler.addRelative(0, this.remove.bind(this));
+                  }.bind(this)
+              );
+              this.envMulAdd = new MulAdd(audiolet, .2, 0);
 
-          // Gain envelope
-          this.gain = new Gain(audiolet);
-          this.env = new PercussiveEnvelope(audiolet, 1, 0.2, 0.1,
-              function() {
-                  this.audiolet.scheduler.addRelative(0, this.remove.bind(this));
-              }.bind(this)
-          );
-          this.envMulAdd = new MulAdd(audiolet, .2, 0);
+              // Main signal path
+              this.sine.connect(this.gain);
+              this.sine2.connect(this.gain);
+              this.gain.connect(this.outputs[0]);
 
-          // Main signal path
-          this.saw.connect(this.gain);
-          this.gain.connect(this.outputs[0]);
-
-          // Envelope
-          this.env.connect(this.envMulAdd);
-          this.envMulAdd.connect(this.gain, 0, 1);
-        };
-        extend(Synth, AudioletGroup);
+              // Envelope
+              this.env.connect(this.envMulAdd);
+              this.envMulAdd.connect(this.gain, 0, 1);
+          };
+          extend(Synth, AudioletGroup);
 
         var SchedulerApp = function(song, bpm) {
           this.audiolet = new Audiolet();
@@ -105,7 +106,8 @@ angular.module('musicApp')
         var Synth = function(audiolet, frequency) {
               AudioletGroup.call(this, audiolet, 0, 1);
               // Basic wave
-              this.saw = new Saw(audiolet, frequency * 1/2);
+              this.sine = new Sine(audiolet, frequency * 1);
+              this.sine2 = new Sine(audiolet, frequency * .5);
 
               // Gain envelope
               this.gain = new Gain(audiolet);
@@ -116,8 +118,8 @@ angular.module('musicApp')
               );
               this.envMulAdd = new MulAdd(audiolet, .2, 0);
 
-              // Main signal path
-              this.saw.connect(this.gain);
+              this.sine.connect(this.gain);
+              this.sine2.connect(this.gain);
               this.gain.connect(this.outputs[0]);
 
               // Envelope
@@ -155,6 +157,7 @@ angular.module('musicApp')
                 chordType = '\u266fIV' + beat.currentChord;
               }
             }
+            console.log('playing')
 
             var frequencies = beat.chords[chordType].frequencies;
 
