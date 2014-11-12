@@ -59,7 +59,7 @@
 		<div class="row">
 		 	Standards:<select class="btn btn-default" ng-model="toolbar.selectStandard" ng-options="song as song for song in toolbar.standards"></select>
 
-			<button class="btn btn-default toolbar">Load Standard</button>
+			<button class="btn btn-default toolbar" ng-click="toolbar.loadStandard()">Load Standard</button>
 		</div>
 	</div>
 </div>

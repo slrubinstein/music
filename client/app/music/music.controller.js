@@ -9,19 +9,6 @@ angular.module('musicApp')
   	var self = this;
 
   })
-  .filter('accidentals', function() {
-    return function(input) {
-      if (input.slice(1)=== "flat") {
-        var str = input.slice(0,1) + String.fromCharCode(9837);
-        return str;
-      }
-      if (input.slice(1)=== "sharp") {
-        var str = input.slice(0,1) + String.fromCharCode(9839);
-        return str;
-      }
-      return input;
-    }
-  })
   .factory('musicNotesFactory', function() {
     return {
       notes: ['A', 'B\u266d', 'B', 'C', 'C\u266f', 'D', 'E\u266d', 'E', 'F', 'F\u266f', 'G', 'A\u266d',

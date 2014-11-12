@@ -32,12 +32,13 @@ exports.showAll = function(req, res) {
   });
 };
 
-// Get a single music
+// Get a single standard
 exports.show = function(req, res) {
-  Music.findById(req.params.id, function (err, music) {
+  var title = req.params.title;
+  Standard.findOne({title: title}, function (err, song) {
     if(err) { return handleError(res, err); }
-    if(!music) { return res.send(404); }
-    return res.json(music);
+    if(!song) { return res.send(404); }
+    return res.json(song);
   });
 };
 

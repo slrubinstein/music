@@ -81,7 +81,12 @@ angular.module('musicApp')
 
     this.loadMySong = function() {
       this.discardSong(this);
-      loadSongFactory.load(this.currentUser()._id, this.mySong, self);
+      loadSongFactory.loadMySong(this.currentUser()._id, this.mySong, self);
+    }
+
+    this.loadStandard = function() {
+      this.discardSong(this);
+      loadSongFactory.loadStandard(this.selectStandard, self);
     }
 
     setTimeout(function() {
@@ -147,7 +152,7 @@ angular.module('musicApp')
   })
   .factory('loadSongFactory', function($http) {
     return {
-      load: function(userId, title, self) {
+      loadMySong: function(userId, title, self) {
         $http.get('/api/users/'+userId+'/title/'+title)
         .success(function(data) {
           data.song.forEach(function(measure) {
@@ -155,6 +160,15 @@ angular.module('musicApp')
           })
           self.songTitle = data.title;
         });
+      },
+      loadStandard: function(standardTitle, self) {
+        $http.get('/api/music/standards/'+standardTitle)
+        .success(function(data) {
+          data.song.forEach(function(measure) {
+            self.song.push(measure)
+          })
+          self.songTitle = data.title;
+        })
       }
     }
   })

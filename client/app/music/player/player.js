@@ -157,7 +157,6 @@ angular.module('musicApp')
                 chordType = '\u266fIV' + beat.currentChord;
               }
             }
-            console.log('playing')
 
             var frequencies = beat.chords[chordType].frequencies;
 

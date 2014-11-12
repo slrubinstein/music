@@ -108,7 +108,6 @@ exports.findallsongs = function(req, res, next) {
   var userId = req.params.id;
   User.findById(userId, function (err, user) {
     if (user) {
-      console.log('USER', user)
       res.json(user.songs)
     } else {
       res.send(403);
@@ -122,7 +121,6 @@ exports.findallsongs = function(req, res, next) {
 exports.loadSong = function(req, res, next) {
   var userId = req.params.id;
   var title = req.params.title;
-  console.log(title)
   User.findById(userId, function (err, user) {
     var ret;
     if (user) {
@@ -131,7 +129,6 @@ exports.loadSong = function(req, res, next) {
           ret = song;
         }
       })
-      console.log('returning', ret)
       res.json(ret)
     } else {
       res.send(403);
