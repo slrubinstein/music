@@ -23,12 +23,9 @@ $fa-font-path: "/bower_components/font-awesome/fonts";
 @import 'main/main.scss';
 // endinjector
 
-
-/*.song {
-	width: 92px;
-	margin: 10px 5px;
-}*/
-
+/**
+ * Custom Styles
+ */
 #toolbar {
 	margin: 5px;
 }
@@ -124,13 +121,7 @@ select {
 	font-size: 85%;
 }
 
-body {
-	/*background-color: #00C490*/
-}
-
 .navbar {
-	/*background-color: #0034C4;*/
-	/*color: #C49000;*/
 	font-weight: bold;
 }
 
@@ -140,10 +131,6 @@ body {
 	margin: 10px 20px;
 	border-radius: 10px;
 }
-
-/*.btn:hover {
-	background-color: #C40034;
-};*/
 
 .form-control {
 	margin-right: 30px;

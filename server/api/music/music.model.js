@@ -5,7 +5,9 @@ var mongoose = require('mongoose'),
 
 var StandardSchema = new Schema({
   title: String,
-  song: Array
+  song: Array,
+  tempo: Number,
+  beatsPerMeasure: Number
 });
 
 var NoteSchema = new Schema({

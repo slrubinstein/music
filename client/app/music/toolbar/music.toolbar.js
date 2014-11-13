@@ -17,49 +17,51 @@ angular.module('musicApp')
                                           findAllStandardsFactory,
                                           droppableFactory,
                                           instructions) {
+    
+    // shared variables
     var self = this;
+
+    // factories
     this.song = measuresFactory.currentSong;
+    this.notes = musicNotesFactory.notes;
+    this.addMeasures = measuresFactory.addMeasures;
+    this.discardSong = measuresFactory.discardSong;
+    
+    // customizable variables for each song
     this.songTitle = '';
     this.tempo = 120;
     this.beatsPerMeasure = 4;
 
-    this.notes = musicNotesFactory.notes;
+    // songs loaded from database
     this.standards = [];
     this.selectStandard;
-    this.instructions = instructions;
-
-    this.addMeasures = measuresFactory.addMeasures;
-
-    this.currentUser = Auth.getCurrentUser;
-
     this.userSongs = [];
-
-    this.mySong = '';
-
-    this.discardSong = measuresFactory.discardSong;
-
-    // $('#q-mark').
-
-
-    this.tempoUp = function() {
-      this.tempo += 4;
-    }
-    this.tempoDown = function() {
-      this.tempo -= 4;
-    }
-
-
+    this.mySong;
+    findAllStandardsFactory.find(self);
+    // if user is logged in
+    this.currentUser = Auth.getCurrentUser;
     if (this.currentUser()._id) {
       findAllSongsFactory.find(this.currentUser()._id, self);
     }
 
-    findAllStandardsFactory.find(self);
+    // instructions not in use as of now
+    this.instructions = instructions;
+    
+
+    this.tempoUp = function() {
+      this.tempo += 4;
+    }
+
+    this.tempoDown = function() {
+      this.tempo -= 4;
+    }
 
     this.addRest = function() {
       if (!dragging.drag) {
         this.addMeasures(this.beatsPerMeasure);
       }
     }
+
     this.addChordMeasure = function(note, index) {
       this.instructions.addChord = true;
       if (!dragging.drag) {
@@ -89,6 +91,7 @@ angular.module('musicApp')
       loadSongFactory.loadStandard(this.selectStandard, self);
     }
 
+    // set chord buttons as draggable AFTER they are ng-repeated onto the page
     setTimeout(function() {
       $(function() {
         $('.draggable').draggable({
@@ -150,6 +153,21 @@ angular.module('musicApp')
       }
     }
   })
+  .factory('findAllStandardsFactory', function($http) {
+    return {
+      find: function(self) {
+        $http.get('/api/music/standards')
+        .success(function(titles) {
+          titles.forEach(function(song) {
+            self.standards.push(song.title);
+          });
+        })
+        .error(function() {
+          console.log("err");
+        });
+      }
+    }
+  })
   .factory('loadSongFactory', function($http) {
     return {
       loadMySong: function(userId, title, self) {
@@ -169,21 +187,6 @@ angular.module('musicApp')
           })
           self.songTitle = data.title;
         })
-      }
-    }
-  })
-  .factory('findAllStandardsFactory', function($http) {
-    return {
-      find: function(self) {
-        $http.get('/api/music/standards')
-        .success(function(titles) {
-          titles.forEach(function(song) {
-            self.standards.push(song.title);
-          });
-        })
-        .error(function() {
-          console.log("err");
-        });
       }
     }
   });
