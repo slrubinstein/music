@@ -4,9 +4,7 @@ angular.module('musicApp')
   .factory('playerFactory', function() {
 
     return {
-
-      playSong: function(song, bpm) {
-
+      makeSynth: function() {
         var Synth = function(audiolet, frequency) {
               AudioletGroup.call(this, audiolet, 0, 1);
               // Basic wave
@@ -32,7 +30,12 @@ angular.module('musicApp')
               this.envMulAdd.connect(this.gain, 0, 1);
           };
           extend(Synth, AudioletGroup);
+        return Synth;
+      },
 
+      playSong: function(song, bpm) {
+
+        var Synth = this.makeSynth();
         var SchedulerApp = function(song, bpm) {
           this.audiolet = new Audiolet();
           this.audiolet.scheduler.setTempo(bpm)
@@ -103,30 +106,7 @@ angular.module('musicApp')
       //-------------------------------------------------------------//
 
       playOne: function(beat) {
-        var Synth = function(audiolet, frequency) {
-              AudioletGroup.call(this, audiolet, 0, 1);
-              // Basic wave
-              this.sine = new Sine(audiolet, frequency * 1);
-              this.sine2 = new Sine(audiolet, frequency * .5);
-
-              // Gain envelope
-              this.gain = new Gain(audiolet);
-              this.env = new PercussiveEnvelope(audiolet, 1, 0.2, 0.1,
-                  function() {
-                      this.audiolet.scheduler.addRelative(0, this.remove.bind(this));
-                  }.bind(this)
-              );
-              this.envMulAdd = new MulAdd(audiolet, .2, 0);
-
-              this.sine.connect(this.gain);
-              this.sine2.connect(this.gain);
-              this.gain.connect(this.outputs[0]);
-
-              // Envelope
-              this.env.connect(this.envMulAdd);
-              this.envMulAdd.connect(this.gain, 0, 1);
-          };
-          extend(Synth, AudioletGroup);
+        var Synth = this.makeSynth();
 
         var SchedulerApp = function() {
             this.audiolet = new Audiolet();
