@@ -33,7 +33,42 @@ angular.module('musicApp')
         return Synth;
       },
 
+      determineChordType: function(chordRoot, currentRoot, currentChord) {
+        var chordType = '';
+
+        // console.log('chordroot', chordRoot)
+        // console.log('currentroot', currentRoot)
+        // console.log('current chord', currentChord)
+
+        var notes = ['A', 'B\u266d', 'B', 'C', 'C\u266f', 'D',
+                         'E\u266d', 'E', 'F', 'F\u266f', 'G', 'A\u266d'];
+              
+          if (currentRoot === chordRoot) {
+            chordType = currentChord;
+          } 
+          else {
+            var distance = (notes.indexOf(currentRoot) - notes.indexOf(chordRoot));
+            if (distance === 4 || distance === -8) {
+              chordType = 'iii' + currentChord;
+            } 
+            else if (distance === 9 || distance === -3) {
+              chordType = 'vi' + currentChord;
+            }
+            else if (distance === -1 || distance === 11) {
+            chordType = 'vii' + currentChord;
+            }
+            else if (distance === -9 || distance === 3) {
+              chordType = '\u266fii' + currentChord;
+            }
+            else if (distance === 6 || distance == -6) {
+              chordType = '\u266fIV' + currentChord;
+            }
+          }
+        return chordType;
+      },
+
       playSong: function(song, bpm) {
+        var self = this;
 
         var Synth = this.makeSynth();
         var SchedulerApp = function(song, bpm) {
@@ -48,37 +83,36 @@ angular.module('musicApp')
           song.forEach(function(measure) {
 
             measure.forEach(function(beat) {
-              var chordType = '';
+              // var chordType = '';
               
-              if (beat.currentroot === beat.root) {
-                chordType = beat.currentChord;
-              } 
-              else {
-                var distance = (notes.indexOf(beat.currentroot) - notes.indexOf(beat.root));
-                if (distance === 4 || distance === -8) {
-                  chordType = 'iii' + beat.currentChord;
-                } 
-                else if (distance === 9 || distance === -3) {
-                  chordType = 'vi' + beat.currentChord;
-                }
-                else if (distance === -1 || distance === 11) {
-                chordType = 'vii' + beat.currentChord;
-                }
-                else if (distance === -9 || distance === 3) {
-                  chordType = '\u266fii' + beat.currentChord;
-                }
-                else if (distance === 6 || distance == -6) {
-                  chordType = '\u266fIV' + beat.currentChord;
-                }
-              }
-
+              // if (beat.currentroot === beat.root) {
+              //   chordType = beat.currentChord;
+              // } 
+              // else {
+              //   var distance = (notes.indexOf(beat.currentroot) - notes.indexOf(beat.root));
+              //   if (distance === 4 || distance === -8) {
+              //     chordType = 'iii' + beat.currentChord;
+              //   } 
+              //   else if (distance === 9 || distance === -3) {
+              //     chordType = 'vi' + beat.currentChord;
+              //   }
+              //   else if (distance === -1 || distance === 11) {
+              //   chordType = 'vii' + beat.currentChord;
+              //   }
+              //   else if (distance === -9 || distance === 3) {
+              //     chordType = '\u266fii' + beat.currentChord;
+              //   }
+              //   else if (distance === 6 || distance == -6) {
+              //     chordType = '\u266fIV' + beat.currentChord;
+              //   }
+              // }
               var chordFreqs = [];
-
               // check for rests
               if (beat.currentChord === '/') {
                 chordFreqs = [];
               }
               else {
+                var chordType = self.determineChordType(beat.root, beat.currentroot, beat.currentChord)
                 var frequencies = beat.chords[chordType].frequencies;
                 frequencies.forEach(function(f) {
                   chordFreqs.push(f);
@@ -106,37 +140,40 @@ angular.module('musicApp')
       //-------------------------------------------------------------//
 
       playOne: function(beat) {
+        var self = this;
         var Synth = this.makeSynth();
 
         var SchedulerApp = function() {
             this.audiolet = new Audiolet();
 
-            var notes = ['A', 'B\u266d', 'B', 'C', 'C\u266f', 'D',
-                         'E\u266d', 'E', 'F', 'F\u266f', 'G', 'A\u266d'];
+            // var notes = ['A', 'B\u266d', 'B', 'C', 'C\u266f', 'D',
+            //              'E\u266d', 'E', 'F', 'F\u266f', 'G', 'A\u266d'];
             var chordFreqs = [];
-            var chordType;
+            // var chordType;
 
-            if (beat.currentroot === beat.root) {
-              chordType = beat.currentChord;
-            }
-            else {
-              var distance = (notes.indexOf(beat.currentroot) - notes.indexOf(beat.root));
-              if (distance === 4 || distance === -8) {
-                chordType = 'iii' + beat.currentChord;
-              } 
-              else if (distance === 9 || distance === -3) {
-                chordType = 'vi' + beat.currentChord;
-              }
-              else if (distance === -1 || distance === 11) {
-                chordType = 'vii' + beat.currentChord;
-              }
-              else if (distance === -9 || distance === 3) {
-                chordType = '\u266fii' + beat.currentChord;
-              }
-              else if (distance === 6 || distance === -6) {
-                chordType = '\u266fIV' + beat.currentChord;
-              }
-            }
+            // if (beat.currentroot === beat.root) {
+            //   chordType = beat.currentChord;
+            // }
+            // else {
+            //   var distance = (notes.indexOf(beat.currentroot) - notes.indexOf(beat.root));
+            //   if (distance === 4 || distance === -8) {
+            //     chordType = 'iii' + beat.currentChord;
+            //   } 
+            //   else if (distance === 9 || distance === -3) {
+            //     chordType = 'vi' + beat.currentChord;
+            //   }
+            //   else if (distance === -1 || distance === 11) {
+            //     chordType = 'vii' + beat.currentChord;
+            //   }
+            //   else if (distance === -9 || distance === 3) {
+            //     chordType = '\u266fii' + beat.currentChord;
+            //   }
+            //   else if (distance === 6 || distance === -6) {
+            //     chordType = '\u266fIV' + beat.currentChord;
+            //   }
+            // }
+
+            var chordType = self.determineChordType(beat.root, beat.currentroot, beat.currentChord)
 
             var frequencies = beat.chords[chordType].frequencies;
 

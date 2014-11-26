@@ -69,7 +69,6 @@ angular.module('musicApp')
         var measureNumber = this.song.length - 1;
         changeTargetFactory.targetMeasure(note, index, measureNumber, this.beatsPerMeasure);
         droppableFactory.droppable();
-        this.play();
       }
     }
 
