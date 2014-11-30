@@ -36,10 +36,6 @@ angular.module('musicApp')
       determineChordType: function(chordRoot, currentRoot, currentChord) {
         var chordType = '';
 
-        // console.log('chordroot', chordRoot)
-        // console.log('currentroot', currentRoot)
-        // console.log('current chord', currentChord)
-
         var notes = ['A', 'B\u266d', 'B', 'C', 'C\u266f', 'D',
                          'E\u266d', 'E', 'F', 'F\u266f', 'G', 'A\u266d'];
               
@@ -75,37 +71,12 @@ angular.module('musicApp')
           this.audiolet = new Audiolet();
           this.audiolet.scheduler.setTempo(bpm)
 
-          var notes = ['A', 'B\u266d', 'B', 'C', 'C\u266f', 'D',
-                         'E\u266d', 'E', 'F', 'F\u266f', 'G', 'A\u266d'];
-
           var allChords = [];
 
           song.forEach(function(measure) {
 
             measure.forEach(function(beat) {
-              // var chordType = '';
-              
-              // if (beat.currentroot === beat.root) {
-              //   chordType = beat.currentChord;
-              // } 
-              // else {
-              //   var distance = (notes.indexOf(beat.currentroot) - notes.indexOf(beat.root));
-              //   if (distance === 4 || distance === -8) {
-              //     chordType = 'iii' + beat.currentChord;
-              //   } 
-              //   else if (distance === 9 || distance === -3) {
-              //     chordType = 'vi' + beat.currentChord;
-              //   }
-              //   else if (distance === -1 || distance === 11) {
-              //   chordType = 'vii' + beat.currentChord;
-              //   }
-              //   else if (distance === -9 || distance === 3) {
-              //     chordType = '\u266fii' + beat.currentChord;
-              //   }
-              //   else if (distance === 6 || distance == -6) {
-              //     chordType = '\u266fIV' + beat.currentChord;
-              //   }
-              // }
+
               var chordFreqs = [];
               // check for rests
               if (beat.currentChord === '/') {
@@ -146,32 +117,7 @@ angular.module('musicApp')
         var SchedulerApp = function() {
             this.audiolet = new Audiolet();
 
-            // var notes = ['A', 'B\u266d', 'B', 'C', 'C\u266f', 'D',
-            //              'E\u266d', 'E', 'F', 'F\u266f', 'G', 'A\u266d'];
             var chordFreqs = [];
-            // var chordType;
-
-            // if (beat.currentroot === beat.root) {
-            //   chordType = beat.currentChord;
-            // }
-            // else {
-            //   var distance = (notes.indexOf(beat.currentroot) - notes.indexOf(beat.root));
-            //   if (distance === 4 || distance === -8) {
-            //     chordType = 'iii' + beat.currentChord;
-            //   } 
-            //   else if (distance === 9 || distance === -3) {
-            //     chordType = 'vi' + beat.currentChord;
-            //   }
-            //   else if (distance === -1 || distance === 11) {
-            //     chordType = 'vii' + beat.currentChord;
-            //   }
-            //   else if (distance === -9 || distance === 3) {
-            //     chordType = '\u266fii' + beat.currentChord;
-            //   }
-            //   else if (distance === 6 || distance === -6) {
-            //     chordType = '\u266fIV' + beat.currentChord;
-            //   }
-            // }
 
             var chordType = self.determineChordType(beat.root, beat.currentroot, beat.currentChord)
 
